@@ -11,6 +11,7 @@ interface EnviarMensagemAlunoProps {
   aluno: Array<AlunosTurmaType>
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function EnviarMensagemAluno({ aluno }: EnviarMensagemAlunoProps) {
   return (
     <div className="flex flex-col">

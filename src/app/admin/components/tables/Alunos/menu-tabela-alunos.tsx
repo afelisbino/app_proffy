@@ -13,6 +13,7 @@ interface MenuTabelaAlunoProps {
   dadosAluno: AlunosTurmaType
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function MenuTabelaAluno({ dadosAluno }: MenuTabelaAlunoProps) {
   return (
     <DropdownMenu>

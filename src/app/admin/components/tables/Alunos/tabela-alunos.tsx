@@ -19,7 +19,7 @@ import React from 'react'
 import { AlunosTurmaType } from '@/app/admin/schemas/SchemaAlunosTurma'
 import { colunasTabelaNotificacaoAlunosTurma } from '../NotificacoesTurmas/colunas-tabela-alunos-turma'
 import { Button } from '@/components/ui/button'
-import { ArrowRightLeft, Pencil, Plus } from 'lucide-react'
+import { ArrowRightLeft, Plus } from 'lucide-react'
 
 interface TabelaAlunosProps {
   data: Array<AlunosTurmaType>

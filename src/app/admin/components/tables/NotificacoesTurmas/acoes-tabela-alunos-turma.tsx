@@ -16,6 +16,7 @@ interface MenuTabelaNotificacaoAlunosTurmaProps {
 }
 
 export function MenuTabelaNotificacaoAlunosTurma({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   dadosAluno,
 }: MenuTabelaNotificacaoAlunosTurmaProps) {
   return (

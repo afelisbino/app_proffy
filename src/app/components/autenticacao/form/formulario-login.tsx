@@ -32,6 +32,7 @@ export default function FormularioLogin() {
     },
   })
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function onSubmit(values: z.infer<typeof formSchema>) {
     router.push('/admin/painel')
   }
