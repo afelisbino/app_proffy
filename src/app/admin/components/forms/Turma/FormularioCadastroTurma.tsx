@@ -33,7 +33,7 @@ export function FormularioCadastroTurma() {
 
   return (
     <Form {...formCadastroTurma}>
-      <form onSubmit={formCadastroTurma.handleSubmit()} className="space-y-8">
+      <form className="space-y-8">
         <FormField
           control={formCadastroTurma.control}
           name="nome"
