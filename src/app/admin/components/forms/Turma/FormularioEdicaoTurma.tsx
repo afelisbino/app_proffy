@@ -42,7 +42,7 @@ export function FormularioEdicaoTurma({
 
   return (
     <Form {...formEdicaoTurma}>
-      <form onSubmit={formEdicaoTurma.handleSubmit()} className="space-y-8">
+      <form className="space-y-8">
         <FormField
           control={formEdicaoTurma.control}
           name="nome"
