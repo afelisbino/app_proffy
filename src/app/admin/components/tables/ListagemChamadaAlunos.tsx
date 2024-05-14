@@ -1,13 +1,14 @@
+import { UserCheck, UserX } from 'lucide-react'
+
 import { Button } from '@/components/ui/button'
 import {
   Table,
-  TableHeader,
-  TableHead,
   TableBody,
-  TableRow,
   TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from '@/components/ui/table'
-import { UserCheck, UserX } from 'lucide-react'
 
 export default function ListagemChamadaAlunos() {
   return (

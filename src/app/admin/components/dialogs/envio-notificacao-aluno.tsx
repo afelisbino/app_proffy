@@ -1,9 +1,10 @@
 import {
-  DialogHeader,
   DialogContent,
-  DialogTitle,
   DialogDescription,
+  DialogHeader,
+  DialogTitle,
 } from '@/components/ui/dialog'
+
 import { EnviarMensagemAluno } from '../message/enviar-mensagem'
 
 export function NotificarResponsavelAluno() {

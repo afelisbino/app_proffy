@@ -1,6 +1,8 @@
-import { Checkbox } from '@/components/ui/checkbox'
-import { AlunoAusentesType } from '../../../schemas/SchemaAlunosAusentes'
 import { ColumnDef } from '@tanstack/react-table'
+
+import { Checkbox } from '@/components/ui/checkbox'
+
+import { AlunoAusentesType } from '../../../schemas/SchemaAlunosAusentes'
 
 export const colunasTabelaAlunosAusente: ColumnDef<AlunoAusentesType>[] = [
   {

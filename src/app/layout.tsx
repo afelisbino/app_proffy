@@ -1,7 +1,8 @@
 import { cn } from '@/lib/utils'
+
 import { Inter as FontSans } from 'next/font/google'
 
-import '../styles/globals.css'
+import '@/styles/globals.css'
 import { ThemeProvider } from '@/components/theme/theme-provider'
 
 export const fontSans = FontSans({

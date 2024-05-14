@@ -1,5 +1,15 @@
 'use client'
 
+import {
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from '@tanstack/react-table'
+import { CheckCheck, Trash } from 'lucide-react'
+import React from 'react'
+
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -10,17 +20,10 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import {
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  useReactTable,
-} from '@tanstack/react-table'
-import { CheckCheck, Trash } from 'lucide-react'
-import { colunasTabelaAlunosAusente } from './colunas-tabela-alunos-ausentes'
+
 import { AlunoAusentesType } from '../../../schemas/SchemaAlunosAusentes'
-import React from 'react'
+
+import { colunasTabelaAlunosAusente } from './colunas-tabela-alunos-ausentes'
 
 interface TabelaAlunosAusentesProps {
   data: AlunoAusentesType[]

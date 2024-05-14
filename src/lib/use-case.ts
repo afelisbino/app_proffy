@@ -1,6 +1,7 @@
+import { atom, useAtom } from 'jotai'
+
 import { TurmaType } from '@/app/admin/schemas/SchemaAlunosTurma'
 import { MensagemAlunoType } from '@/app/admin/schemas/SchemaMensagemAlunos'
-import { atom, useAtom } from 'jotai'
 
 type ConfigMensagensAlunoType = {
   selected: MensagemAlunoType['id'] | null

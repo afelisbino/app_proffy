@@ -1,8 +1,8 @@
+import { Metadata } from 'next'
+
 import Header from '@/components/Header'
 import { Sidebar } from '@/components/SidebarNav/sidebar'
 import { TooltipProvider } from '@/components/ui/tooltip'
-
-import { Metadata } from 'next'
 
 interface AdminLayoutProps {
   children: React.ReactNode

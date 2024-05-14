@@ -1,6 +1,10 @@
 import { ColumnDef } from '@tanstack/react-table'
-import { AlunosTurmaType } from '../../../schemas/SchemaAlunosTurma'
+
 import { Checkbox } from '@/components/ui/checkbox'
+import { aplicarMascaraDocumento } from '@/lib/utils'
+
+import { AlunosTurmaType } from '../../../schemas/SchemaAlunosTurma'
+
 import { MenuTabelaAluno } from './menu-tabela-alunos'
 
 export const colunasTabelaAlunosTurma: ColumnDef<AlunosTurmaType>[] = [
@@ -25,6 +29,17 @@ export const colunasTabelaAlunosTurma: ColumnDef<AlunosTurmaType>[] = [
     ),
     enableSorting: false,
     enableHiding: false,
+  },
+  {
+    accessorKey: 'cpf',
+    header: 'Documento',
+    enableSorting: false,
+    enableHiding: false,
+    cell: ({ row }) => (
+      <div className="md:w-48">
+        {aplicarMascaraDocumento(row.getValue('cpf'))}
+      </div>
+    ),
   },
   {
     accessorKey: 'nome',

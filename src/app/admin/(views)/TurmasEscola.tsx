@@ -1,13 +1,16 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
-import ListagemTurmasEscola from '../components/lists/ListagemTurmasEscola'
 import { Pencil, Plus } from 'lucide-react'
+
+import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
-import { CadastroTurma } from '../components/dialogs/cadastro-turma'
+import { Separator } from '@/components/ui/separator'
 import { useTurmaEscola } from '@/lib/use-case'
-import { TabelaAlunos } from '../components/tables/Alunos/tabela-alunos'
+
+import { CadastroTurma } from '../components/dialogs/cadastro-turma'
 import { EditarTurma } from '../components/dialogs/edicao-turma'
+import ListagemTurmasEscola from '../components/lists/ListagemTurmasEscola'
+import { TabelaAlunos } from '../components/tables/Alunos/tabela-alunos'
 
 export default function TurmasEscola() {
   const [turmaSelecionada] = useTurmaEscola()
@@ -20,7 +23,7 @@ export default function TurmasEscola() {
           <DialogTrigger asChild>
             <Button variant={'default'} className="w-full shadow gap-2">
               <Plus />
-              Nova turma
+              Turma
             </Button>
           </DialogTrigger>
           <CadastroTurma />
@@ -33,7 +36,7 @@ export default function TurmasEscola() {
               disabled={!turmaSelecionada.selected}
             >
               <Pencil />
-              Editar turma
+              Editar
             </Button>
           </DialogTrigger>
           <EditarTurma
@@ -44,6 +47,7 @@ export default function TurmasEscola() {
           />
         </Dialog>
       </div>
+      <Separator />
       <div className="flex-1">
         <TabelaAlunos data={[]} />
       </div>

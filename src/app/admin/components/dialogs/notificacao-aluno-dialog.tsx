@@ -1,14 +1,15 @@
 import {
   DialogContent,
-  DialogHeader,
   DialogDescription,
+  DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { Separator } from '@/components/ui/separator'
+import { useMensagemAluno } from '@/lib/use-case'
+
+import { MensagemAlunoType } from '../../schemas/SchemaMensagemAlunos'
 import { ListagemMensagensAluno } from '../lists/ListagemMensagensAlunos'
 import { VisualizacaoMensagem } from '../message/visualizacao-message'
-import { useMensagemAluno } from '@/lib/use-case'
-import { MensagemAlunoType } from '../../schemas/SchemaMensagemAlunos'
-import { Separator } from '@/components/ui/separator'
 
 const mensagens: MensagemAlunoType[] = [
   {

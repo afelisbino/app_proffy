@@ -1,9 +1,11 @@
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { MensagemAlunoType } from '../../schemas/SchemaMensagemAlunos'
-import { cn } from '@/lib/utils'
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { useMensagemAluno } from '@/lib/use-case'
+import { cn } from '@/lib/utils'
+
+import { MensagemAlunoType } from '../../schemas/SchemaMensagemAlunos'
 
 interface ListaMensagensAlunoProps {
   mensagens: Array<MensagemAlunoType>

@@ -1,6 +1,9 @@
 import { ColumnDef } from '@tanstack/react-table'
-import { AlunosTurmaType } from '../../../schemas/SchemaAlunosTurma'
+
 import { Checkbox } from '@/components/ui/checkbox'
+
+import { AlunosTurmaType } from '../../../schemas/SchemaAlunosTurma'
+
 import { MenuTabelaNotificacaoAlunosTurma } from './acoes-tabela-alunos-turma'
 
 export const colunasTabelaNotificacaoAlunosTurma: ColumnDef<AlunosTurmaType>[] =

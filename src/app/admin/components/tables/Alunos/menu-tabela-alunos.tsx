@@ -1,13 +1,15 @@
+import { ArrowRightLeft, MoreVertical, Pencil, Trash } from 'lucide-react'
+
 import { Button } from '@/components/ui/button'
-import { AlunosTurmaType } from '../../../schemas/SchemaAlunosTurma'
+import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { ArrowRightLeft, MoreVertical, Pencil, Trash } from 'lucide-react'
-import { Dialog, DialogTrigger } from '@/components/ui/dialog'
+
+import { AlunosTurmaType } from '../../../schemas/SchemaAlunosTurma'
 
 interface MenuTabelaAlunoProps {
   dadosAluno: AlunosTurmaType

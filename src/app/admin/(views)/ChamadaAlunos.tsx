@@ -1,10 +1,11 @@
-import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
+import { Separator } from '@/components/ui/separator'
+
 import CalendarioChamada from '../components/calendars/CalendarioChamada'
 import { DialogFinalizacaoChamadaAluno } from '../components/dialogs/finalizacao-chamada-turma'
-import ListagemChamadaAlunos from '../components/tables/ListagemChamadaAlunos'
 import ListagemTurmasEscola from '../components/lists/ListagemTurmasEscola'
+import ListagemChamadaAlunos from '../components/tables/ListagemChamadaAlunos'
 
 export default function ChamadaAlunos() {
   return (

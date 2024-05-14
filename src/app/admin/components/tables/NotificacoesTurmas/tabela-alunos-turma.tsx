@@ -1,15 +1,18 @@
 'use client'
 
-import { Input } from '@/components/ui/input'
-import { AlunosTurmaType } from '../../../schemas/SchemaAlunosTurma'
-import { colunasTabelaNotificacaoAlunosTurma } from './colunas-tabela-alunos-turma'
 import {
-  useReactTable,
-  getCoreRowModel,
-  getPaginationRowModel,
-  getFilteredRowModel,
   flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  useReactTable,
 } from '@tanstack/react-table'
+import { MessageSquareShare } from 'lucide-react'
+import React from 'react'
+
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogTrigger } from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
 import {
   Table,
   TableBody,
@@ -18,11 +21,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import React from 'react'
-import { Button } from '@/components/ui/button'
-import { MessageSquareShare } from 'lucide-react'
-import { Dialog, DialogTrigger } from '@/components/ui/dialog'
+
+import { AlunosTurmaType } from '../../../schemas/SchemaAlunosTurma'
 import { NotificarResponsavelAluno } from '../../dialogs/envio-notificacao-aluno'
+
+import { colunasTabelaNotificacaoAlunosTurma } from './colunas-tabela-alunos-turma'
 
 interface DataTableNotificacaoAlunosTurmaProps {
   data: Array<AlunosTurmaType>

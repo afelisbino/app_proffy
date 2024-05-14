@@ -1,3 +1,5 @@
+import { User } from 'lucide-react'
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,9 +9,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Button } from '../ui/button'
 
-import { User } from 'lucide-react'
+import { Button } from '../ui/button'
 
 export function UserNav() {
   return (

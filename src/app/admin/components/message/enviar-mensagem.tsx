@@ -1,10 +1,12 @@
+import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+import { Send } from 'lucide-react'
+
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Textarea } from '@/components/ui/textarea'
-import { format } from 'date-fns'
+
 import { AlunosTurmaType } from '../../schemas/SchemaAlunosTurma'
-import { Send } from 'lucide-react'
-import { ptBR } from 'date-fns/locale'
 import ListagemTemplatesAssunto from '../lists/ListagemAssuntosMensagens'
 
 interface EnviarMensagemAlunoProps {

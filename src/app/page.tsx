@@ -1,4 +1,5 @@
 import Image from 'next/image'
+
 import FormularioLogin from './components/autenticacao/form/formulario-login'
 
 export default function Home() {

@@ -1,16 +1,17 @@
 'use client'
 
 import { Home, Inbox, SlidersHorizontal, Speech, Users } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+
 import { Button } from '@/components/ui/button'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import Link from 'next/link'
-import Image from 'next/image'
 import { cn } from '@/lib/utils'
-import { usePathname } from 'next/navigation'
 
 export function Sidebar() {
   const pathname = usePathname()
@@ -144,15 +145,15 @@ export function Sidebar() {
               asChild
               className={cn(
                 'rounded-full shadow',
-                pathname === '/admin/escola' &&
+                pathname.includes('/admin/escola/') &&
                   'bg-app-red-600 hover:bg-app-red-700',
               )}
             >
-              <Link href={'/admin/escola'}>
+              <Link href={'/admin/escola/usuarios'}>
                 <SlidersHorizontal
                   className={cn(
                     'size-5',
-                    pathname === '/admin/escola' && 'text-white',
+                    pathname.includes('/admin/escola/') && 'text-white',
                   )}
                 />
               </Link>

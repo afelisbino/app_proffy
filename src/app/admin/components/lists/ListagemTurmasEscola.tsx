@@ -1,7 +1,8 @@
 'use client'
 
 import { Check, ChevronsUpDown } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import React from 'react'
+
 import { Button } from '@/components/ui/button'
 import {
   Command,
@@ -15,9 +16,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import React from 'react'
-import { turmaType } from '../../api/turma'
 import { useTurmaEscola } from '@/lib/use-case'
+import { cn } from '@/lib/utils'
+
+import { turmaType } from '../../api/turma'
 
 export default function ListagemTurmasEscola() {
   const [turmaSelecionada, selecionarTurma] = useTurmaEscola()

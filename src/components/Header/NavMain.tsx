@@ -1,6 +1,8 @@
-import { cn } from '@/lib/utils'
-import { NavMainIten, itensNav } from './NavMainItens'
 import { PropsWithChildren } from 'react'
+
+import { cn } from '@/lib/utils'
+
+import { itensNav, NavMainIten } from './NavMainItens'
 
 export function NavMain({
   listaItensMenu,

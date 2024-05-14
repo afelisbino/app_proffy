@@ -4,8 +4,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { FormularioEdicaoTurma } from '../forms/Turma/FormularioEdicaoTurma'
+
 import { TurmaType } from '../../schemas/SchemaAlunosTurma'
+import { FormularioEdicaoTurma } from '../forms/Turma/FormularioEdicaoTurma'
 
 interface DialogEdicaoTurmaProps {
   turma: TurmaType

@@ -1,12 +1,5 @@
-import { Input } from '@/components/ui/input'
-import {
-  Table,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-} from '@/components/ui/table'
+'use client'
+
 import {
   flexRender,
   getCoreRowModel,
@@ -14,12 +7,30 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { colunasTabelaAlunosTurma } from './coluna-tabela-alunos'
-import React from 'react'
-import { AlunosTurmaType } from '@/app/admin/schemas/SchemaAlunosTurma'
-import { colunasTabelaNotificacaoAlunosTurma } from '../NotificacoesTurmas/colunas-tabela-alunos-turma'
-import { Button } from '@/components/ui/button'
 import { ArrowRightLeft, Plus } from 'lucide-react'
+import React from 'react'
+
+import { AlunosTurmaType } from '@/app/admin/schemas/SchemaAlunosTurma'
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogTrigger } from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
+
+import { MatriculaAlunoDialog } from '../../dialogs/matricula-aluno'
+
+import { colunasTabelaAlunosTurma } from './coluna-tabela-alunos'
 
 interface TabelaAlunosProps {
   data: Array<AlunosTurmaType>
@@ -42,28 +53,61 @@ export function TabelaAlunos({ data }: TabelaAlunosProps) {
   return (
     <div className="space-y-2 w-full">
       <div className="flex flex-col md:flex-row gap-2 md:justify-between">
-        <Input
-          placeholder="Filtrar pelo nome do aluno..."
-          className="w-full md:w-64"
-          disabled={data?.length === 0}
-          value={(table.getColumn('nome')?.getFilterValue() as string) ?? ''}
-          onChange={(event) =>
-            table.getColumn('nome')?.setFilterValue(event.target.value)
-          }
-        />
+        <div className="flex gap-2">
+          <Input
+            placeholder="Filtrar pelo CPF..."
+            className="w-full md:w-48"
+            disabled={data?.length === 0}
+            value={(table.getColumn('cpf')?.getFilterValue() as string) ?? ''}
+            onChange={(event) =>
+              table.getColumn('cpf')?.setFilterValue(event.target.value)
+            }
+          />
+          <Input
+            placeholder="Filtrar pelo nome do aluno..."
+            className="w-full md:w-64"
+            disabled={data?.length === 0}
+            value={(table.getColumn('nome')?.getFilterValue() as string) ?? ''}
+            onChange={(event) =>
+              table.getColumn('nome')?.setFilterValue(event.target.value)
+            }
+          />
+        </div>
 
         <div className="flex flex-col md:flex-row gap-2">
-          <Button className="bg-app-orange-500 hover:bg-app-orange-600 w-full shadow text-background gap-2">
-            <Plus />
-            Nova matrícula
-          </Button>
-          <Button
-            className="bg-app-red-500 hover:bg-app-red-600 shadow text-background gap-2 w-full"
-            disabled={table.getSelectedRowModel().rows.length === 0}
-          >
-            <ArrowRightLeft />
-            Transferir alunos
-          </Button>
+          <Tooltip>
+            <Dialog>
+              <DialogTrigger asChild>
+                <TooltipTrigger asChild>
+                  <Button
+                    size={'icon'}
+                    className="bg-app-orange-500 hover:bg-app-orange-600 shadow text-background gap-2 p-2"
+                  >
+                    <Plus className="size-5" />
+                  </Button>
+                </TooltipTrigger>
+              </DialogTrigger>
+              <MatriculaAlunoDialog idTurma={''} />
+            </Dialog>
+            <TooltipContent side="bottom" sideOffset={5}>
+              Nova Matrícula
+            </TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                className="bg-app-red-500 hover:bg-app-red-600 shadow text-background gap-2 p-2"
+                size={'icon'}
+                disabled={table.getSelectedRowModel().rows.length === 0}
+              >
+                <ArrowRightLeft className="size-5" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom" sideOffset={5}>
+              Transferir aluno de turma
+            </TooltipContent>
+          </Tooltip>
         </div>
       </div>
       <div className="rounded-md border shadow-md">
@@ -106,7 +150,7 @@ export function TabelaAlunos({ data }: TabelaAlunosProps) {
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={colunasTabelaNotificacaoAlunosTurma.length}
+                  colSpan={colunasTabelaAlunosTurma.length}
                   className="h-16 text-center text-padrao-gray-200 text-sm font-medium mt-5 md:text-base lg:text-lg"
                 >
                   Nenhum aluno encontrado!

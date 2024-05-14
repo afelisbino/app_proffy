@@ -1,5 +1,7 @@
-import { Separator } from '@/components/ui/separator'
 import { format } from 'date-fns'
+
+import { Separator } from '@/components/ui/separator'
+
 import { MensagemAlunoType } from '../../schemas/SchemaMensagemAlunos'
 
 interface VisualizacaoMensagemProps {

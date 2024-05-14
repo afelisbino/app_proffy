@@ -1,9 +1,13 @@
 'use client'
 
+import { Label } from '@radix-ui/react-label'
+import { Bug, MessageCircleWarning } from 'lucide-react'
+
 import {
   DropdownMenu,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+
 import { Button } from '../ui/button'
 import {
   Dialog,
@@ -14,10 +18,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '../ui/dialog'
-import { Textarea } from '../ui/textarea'
-import { Bug, MessageCircleWarning } from 'lucide-react'
-import { Label } from '@radix-ui/react-label'
 import { Input } from '../ui/input'
+import { Textarea } from '../ui/textarea'
 
 export function ReportNav() {
   return (

@@ -1,9 +1,10 @@
 import {
   DialogContent,
-  DialogHeader,
   DialogDescription,
+  DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+
 import { TabelaAlunosAusentes } from '../tables/ConfirmacaoChamada/tabela-alunos-ausentes'
 
 export function DialogFinalizacaoChamadaAluno() {

@@ -1,7 +1,8 @@
 import { ApexOptions } from 'apexcharts'
 import { Loader2 } from 'lucide-react'
-import { useTheme } from 'next-themes'
 import dynamic from 'next/dynamic'
+import { useTheme } from 'next-themes'
+
 import { ChartDonutProps } from './ChartInterface'
 
 export default function NotificacoesTurmasChart({

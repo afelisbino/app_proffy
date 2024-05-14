@@ -1,9 +1,11 @@
 'use client'
 
+import { MessageSquareWarning, Percent, Users } from 'lucide-react'
+
 import FrequenciaAlunosChart from '@/app/components/charts/FrequenciaAlunos'
 import NotificacoesTurmasChart from '@/app/components/charts/NotificacaoTurmas'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Users, Percent, MessageSquareWarning } from 'lucide-react'
+
 import ListagemAlunosAusentes from '../components/lists/ListagemAlunosAusentes'
 export default function Dashboard() {
   return (

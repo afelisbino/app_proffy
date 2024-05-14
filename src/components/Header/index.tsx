@@ -1,6 +1,7 @@
 import { SeletorTema } from '@/components/theme/seletor-tema'
-import { UserNav } from './UserNav'
+
 import { ReportNav } from './ReportNav'
+import { UserNav } from './UserNav'
 
 export default function Header() {
   return (
