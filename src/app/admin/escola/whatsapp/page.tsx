@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
-export const schemaFormularioApiWhatsApp = z.object({
+const schemaFormularioApiWhatsApp = z.object({
   login: z
     .string({
       required_error: 'Necessario informar o login da API',
