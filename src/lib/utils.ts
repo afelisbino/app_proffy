@@ -130,3 +130,24 @@ export function validarDocumento(documento: string) {
 
   return documento.length === 11 ? validarCPF(documento) : validaCNPJ(documento)
 }
+
+export function capturarIniciaisNome(nomeUsuario: string) {
+  const parts = nomeUsuario.split(' ')
+  const initials = parts.map((part: string) =>
+    part.substring(0, 1).toUpperCase(),
+  )
+  return initials.join('')
+}
+
+export function encodeFileToBase64(file: File | string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    if (typeof file === 'string') {
+      resolve(btoa(file))
+    } else {
+      const reader = new FileReader()
+      reader.onload = () => resolve(reader.result as string)
+      reader.onerror = (error) => reject(error)
+      reader.readAsDataURL(file)
+    }
+  })
+}

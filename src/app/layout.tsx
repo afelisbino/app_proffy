@@ -1,8 +1,12 @@
 import { Inter as FontSans } from 'next/font/google'
 
 import '@/styles/globals.css'
+import { Toaster } from 'sonner'
+
 import { ThemeProvider } from '@/components/theme/theme-provider'
 import { cn } from '@/lib/utils'
+
+import Providers from './provider'
 
 export const fontSans = FontSans({
   subsets: ['latin'],
@@ -15,7 +19,7 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="pt-br">
+    <html lang="pt-BR">
       <body
         className={cn(
           'min-h-screen bg-background font-sans antialiased',
@@ -28,8 +32,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <Providers>
+            <main>{children}</main>
+          </Providers>
         </ThemeProvider>
+        <Toaster richColors />
       </body>
     </html>
   )

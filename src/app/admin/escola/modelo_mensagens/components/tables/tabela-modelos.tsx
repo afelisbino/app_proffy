@@ -13,6 +13,7 @@ import { ModeloMensagensType } from '@/app/admin/schemas/SchemaMensagemAlunos'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
+import { Skeleton } from '@/components/ui/skeleton'
 import {
   Table,
   TableBody,
@@ -27,16 +28,19 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 
-import { colunasTabelaUsuario } from '../../../usuarios/components/tabela/lista-usuarios/colunas-tabela-usuarios'
 import { DialogNovoModelo } from '../dialogs/NovoModeloDialog'
 
 import { colunasTabelaModeloMensagem } from './colunas-tabela-modelos'
 
 interface DataTableModelosProps {
   data: Array<ModeloMensagensType>
+  isLoading: boolean
 }
 
-export function DataTableModeloMensagens({ data }: DataTableModelosProps) {
+export function DataTableModeloMensagens({
+  data,
+  isLoading,
+}: DataTableModelosProps) {
   const table = useReactTable({
     data,
     columns: colunasTabelaModeloMensagem,
@@ -100,7 +104,25 @@ export function DataTableModeloMensagens({ data }: DataTableModelosProps) {
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length > 0 ? (
+            {isLoading ? (
+              <>
+                <TableRow>
+                  <TableCell colSpan={colunasTabelaModeloMensagem.length}>
+                    <Skeleton className="h-[20px] rounded" />
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell colSpan={colunasTabelaModeloMensagem.length}>
+                    <Skeleton className="h-[20px] rounded" />
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell colSpan={colunasTabelaModeloMensagem.length}>
+                    <Skeleton className="h-[20px] rounded" />
+                  </TableCell>
+                </TableRow>
+              </>
+            ) : table.getRowModel().rows?.length > 0 ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -119,7 +141,7 @@ export function DataTableModeloMensagens({ data }: DataTableModelosProps) {
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={colunasTabelaUsuario.length}
+                  colSpan={colunasTabelaModeloMensagem.length}
                   className="h-16 text-center text-padrao-gray-200 text-sm font-medium mt-5 md:text-base lg:text-lg"
                 >
                   Nenhum modelo encontrado!

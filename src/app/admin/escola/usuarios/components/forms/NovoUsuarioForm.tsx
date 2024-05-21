@@ -1,9 +1,12 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
+import { inserirNovoUsuario } from '@/app/admin/api/escola'
 import {
   FormularioNovoUsuarioType,
   schemaFormularioNovoUsuario,
@@ -21,6 +24,7 @@ import {
 import { Input } from '@/components/ui/input'
 
 export function NovoUsuarioForm() {
+  const queryClient = useQueryClient()
   const formNovoUsuario = useForm<FormularioNovoUsuarioType>({
     resolver: zodResolver(schemaFormularioNovoUsuario),
     defaultValues: {
@@ -31,15 +35,41 @@ export function NovoUsuarioForm() {
     mode: 'onChange',
   })
 
-  async function salvarDadosUsuario() {
-    formNovoUsuario.reset()
-  }
+  const { mutateAsync: salvarNovoUsuario, isPending } = useMutation({
+    mutationFn: ({ nome, email, senha }: FormularioNovoUsuarioType) =>
+      inserirNovoUsuario({ nome, email, senha }),
+    onError: () => {
+      toast.error('Houve um problema ao salvar o usuário, tente novamente!')
+    },
+    onSuccess: (data) => {
+      const listaUsuarios:
+        | Array<{
+            id: string
+            nome: string
+            email: string
+            status: boolean
+          }>
+        | undefined = queryClient.getQueryData(['usuariosEscola'])
+
+      queryClient.setQueryData(
+        ['usuariosEscola'],
+        [...(listaUsuarios ?? []), data],
+      )
+
+      formNovoUsuario.reset()
+      toast.success('Usuário criado com sucesso!')
+    },
+  })
 
   return (
     <Form {...formNovoUsuario}>
       <form
         className="space-y-4"
-        onSubmit={formNovoUsuario.handleSubmit(salvarDadosUsuario)}
+        onSubmit={formNovoUsuario.handleSubmit(
+          async (dados: FormularioNovoUsuarioType) => {
+            await salvarNovoUsuario(dados)
+          },
+        )}
       >
         <div className="grid grid-cols-1 gap-2">
           <FormField
@@ -105,7 +135,7 @@ export function NovoUsuarioForm() {
               Cancelar
             </Button>
           </DialogClose>
-          {formNovoUsuario.formState.isSubmitting ? (
+          {isPending ? (
             <Button
               className="shadow-md text-sm leading-none rounded bg-app-green-500 hover:bg-app-green-600"
               disabled

@@ -4,7 +4,7 @@ export const schemaUsuario = z.object({
   id: z.string(),
   nome: z.string().trim(),
   email: z.string(),
-  status: z.enum(['ativo', 'desativado']),
+  status: z.boolean(),
 })
 
 export type UsuarioType = z.infer<typeof schemaUsuario>
@@ -28,6 +28,11 @@ export const schemaFormularioNovoUsuario = z.object({
     })
     .min(8, {
       message: 'A senha precisa ter no mínimo 8 caractéres',
+    })
+    .regex(/[a-zA-Z]/, { message: 'Conter pelo menos uma letra.' })
+    .regex(/[0-9]/, { message: 'Conter pelo menos um número.' })
+    .regex(/[^a-zA-Z0-9]/, {
+      message: 'Conter pelo menos um caractere especial.',
     }),
 })
 

@@ -3,7 +3,6 @@ import { MoreVertical } from 'lucide-react'
 import { UsuarioType } from '@/app/admin/schemas/SchemaUsuariosEscola'
 import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,7 +11,6 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 import { ConfirmaAlteracaoStatusUsuarioDialog } from '../../dialogs/ConfirmaAlteraStatusDialog'
-import { DialogEdicaoUsuario } from '../../dialogs/EdicaoUsuarioDialog'
 
 interface MenuTabelaUsuarioProps {
   row: UsuarioType
@@ -31,18 +29,6 @@ export function MenuTabelaUsuario({ row }: MenuTabelaUsuarioProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <Dialog>
-          <DialogTrigger asChild>
-            <DropdownMenuItem
-              onSelect={(e) => {
-                e.preventDefault()
-              }}
-            >
-              Editar usuário
-            </DropdownMenuItem>
-          </DialogTrigger>
-          <DialogEdicaoUsuario dadosUsuario={row} />
-        </Dialog>
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <DropdownMenuItem
@@ -50,14 +36,12 @@ export function MenuTabelaUsuario({ row }: MenuTabelaUsuarioProps) {
                 e.preventDefault()
               }}
             >
-              {row.status === 'desativado'
-                ? 'Ativar usuário'
-                : 'Desativar usuário'}
+              {row.status ? 'Desativar usuário' : 'Ativar usuário'}
             </DropdownMenuItem>
           </AlertDialogTrigger>
           <ConfirmaAlteracaoStatusUsuarioDialog
             idUsuario={row.id}
-            statusUsuario={row.status === 'desativado'}
+            statusUsuario={row.status}
           />
         </AlertDialog>
       </DropdownMenuContent>

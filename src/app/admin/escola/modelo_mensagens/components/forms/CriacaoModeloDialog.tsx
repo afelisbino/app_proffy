@@ -1,10 +1,13 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
+import { adicionarModeloMensagem } from '@/app/admin/api/message'
 import { schemaFormModeloMensagens } from '@/app/admin/schemas/SchemaMensagemAlunos'
 import { Button } from '@/components/ui/button'
 import { DialogClose } from '@/components/ui/dialog'
@@ -20,6 +23,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 
 export function NovoModeloForm() {
+  const queryClient = useQueryClient()
   const formModelo = useForm<z.infer<typeof schemaFormModeloMensagens>>({
     resolver: zodResolver(schemaFormModeloMensagens),
     defaultValues: {
@@ -29,15 +33,43 @@ export function NovoModeloForm() {
     mode: 'onChange',
   })
 
-  async function salvarDadosModelo() {
-    formModelo.reset()
-  }
+  const { mutateAsync: salvarDadosModelo } = useMutation({
+    mutationFn: adicionarModeloMensagem,
+    onError: () => {
+      toast.error('Houve um problema ao salvar o modelo, tente novamente!')
+    },
+    onSuccess: (data) => {
+      const listaModelos:
+        | Array<{
+            id: string
+            assunto: string
+            modelo: string
+          }>
+        | undefined = queryClient.getQueryData(['modelosMensagensEscola'])
+
+      queryClient.setQueryData(
+        ['modelosMensagensEscola'],
+        [
+          ...(listaModelos ?? []),
+          {
+            id: data.id,
+            assunto: data.assunto,
+            modelo: data.modelo,
+          },
+        ],
+      )
+
+      formModelo.reset()
+    },
+  })
 
   return (
     <Form {...formModelo}>
       <form
         className="space-y-4"
-        onSubmit={formModelo.handleSubmit(salvarDadosModelo)}
+        onSubmit={formModelo.handleSubmit(async (data) => {
+          await salvarDadosModelo(data)
+        })}
       >
         <div className="grid grid-cols-1 gap-2">
           <FormField

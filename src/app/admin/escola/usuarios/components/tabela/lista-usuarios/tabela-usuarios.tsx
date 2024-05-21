@@ -15,6 +15,7 @@ import { UsuarioType } from '@/app/admin/schemas/SchemaUsuariosEscola'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
+import { Skeleton } from '@/components/ui/skeleton'
 import {
   Table,
   TableBody,
@@ -39,9 +40,10 @@ import { DataTableFacetedFilter } from './filtro-status-usuario'
 
 interface DataTableUsuarioProps {
   data: Array<UsuarioType>
+  isLoading: boolean
 }
 
-export function DataTableUsuarios({ data }: DataTableUsuarioProps) {
+export function DataTableUsuarios({ data, isLoading }: DataTableUsuarioProps) {
   const table = useReactTable({
     data,
     columns: colunasTabelaUsuario,
@@ -100,9 +102,9 @@ export function DataTableUsuarios({ data }: DataTableUsuarioProps) {
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
                     </TableHead>
                   )
                 })}
@@ -110,7 +112,26 @@ export function DataTableUsuarios({ data }: DataTableUsuarioProps) {
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length > 0 ? (
+
+            {isLoading ? (
+              <>
+                <TableRow>
+                  <TableCell colSpan={colunasTabelaUsuario.length}>
+                    <Skeleton className="h-[20px] rounded" />
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell colSpan={colunasTabelaUsuario.length}>
+                    <Skeleton className="h-[20px] rounded" />
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell colSpan={colunasTabelaUsuario.length}>
+                    <Skeleton className="h-[20px] rounded" />
+                  </TableCell>
+                </TableRow>
+              </>
+            ) : table.getRowModel().rows?.length > 0 ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}

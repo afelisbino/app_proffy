@@ -3,7 +3,6 @@ import { MoreVertical } from 'lucide-react'
 import { ModeloMensagensType } from '@/app/admin/schemas/SchemaMensagemAlunos'
 import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,11 +10,12 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
+import { ConfirmacaoExcluirModeloDialog } from '../dialogs/ExcluirModeloDialog'
+
 interface MenuTabelaModeloProps {
   row: ModeloMensagensType
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function MenuTabelaModelo({ row }: MenuTabelaModeloProps) {
   return (
     <DropdownMenu>
@@ -29,17 +29,6 @@ export function MenuTabelaModelo({ row }: MenuTabelaModeloProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <Dialog>
-          <DialogTrigger asChild>
-            <DropdownMenuItem
-              onSelect={(e) => {
-                e.preventDefault()
-              }}
-            >
-              Editar modelo
-            </DropdownMenuItem>
-          </DialogTrigger>
-        </Dialog>
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <DropdownMenuItem
@@ -50,6 +39,7 @@ export function MenuTabelaModelo({ row }: MenuTabelaModeloProps) {
               Excluir modelo
             </DropdownMenuItem>
           </AlertDialogTrigger>
+          <ConfirmacaoExcluirModeloDialog id={row.id} assunto={row.assunto} />
         </AlertDialog>
       </DropdownMenuContent>
     </DropdownMenu>

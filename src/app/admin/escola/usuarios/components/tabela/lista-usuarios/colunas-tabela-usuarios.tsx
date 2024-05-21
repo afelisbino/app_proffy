@@ -7,11 +7,11 @@ import { MenuTabelaUsuario } from './menu-tabela-usuarios'
 export const optionsStatusUsuario = [
   {
     label: 'Ativo',
-    value: 'ativo',
+    value: true,
   },
   {
     label: 'Desativado',
-    value: 'desativado',
+    value: false,
   },
 ]
 
