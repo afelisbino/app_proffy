@@ -8,7 +8,6 @@ import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
 } from '@/components/ui/command'
 import {
@@ -21,10 +20,15 @@ import { cn } from '@/lib/utils'
 
 import { turmaType } from '../../api/turma'
 
-export default function ListagemTurmasEscola() {
+interface ListagemTurmasProps {
+  listaTurmas: turmaType[]
+}
+
+export default function ListagemTurmasEscola({
+  listaTurmas,
+}: ListagemTurmasProps) {
   const [turmaSelecionada, selecionarTurma] = useTurmaEscola()
   const [open, setOpen] = React.useState(false)
-  const listaTurmas: turmaType = []
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -45,9 +49,8 @@ export default function ListagemTurmasEscola() {
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0">
+      <PopoverContent className="p-0 w-[500px]">
         <Command>
-          <CommandInput placeholder="Filtrar pelo nome da turma..." />
           <CommandEmpty>Turma não encontrada</CommandEmpty>
           <CommandGroup>
             {listaTurmas.map((turma) => (

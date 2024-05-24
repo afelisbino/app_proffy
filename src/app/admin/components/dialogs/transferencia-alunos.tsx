@@ -1,15 +1,20 @@
-import { ArrowRightLeft } from 'lucide-react'
-
-import { Button } from '@/components/ui/button'
 import {
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
 
-export function DialogTransferenciaAluno() {
+import {
+  FormularioTransferenciaAluno,
+  FormularioTransferenciaAlunoProps,
+} from '../forms/Turma/FormularioTransferenciaAluno'
+
+export function DialogTransferenciaAluno({
+  turmaAntiga,
+  idAluno,
+  idsAlunos,
+}: FormularioTransferenciaAlunoProps) {
   return (
     <DialogContent>
       <DialogHeader>
@@ -19,18 +24,11 @@ export function DialogTransferenciaAluno() {
           uma turma e deseja mudar para outra turma.
         </DialogDescription>
       </DialogHeader>
-      <DialogFooter>
-        <Button variant={'destructive'} type="button">
-          Cancelar
-        </Button>
-        <Button
-          className="bg-app-green-500 hover:bg-app-green-600 shadow "
-          type="button"
-        >
-          <ArrowRightLeft />
-          Transferir
-        </Button>
-      </DialogFooter>
+      <FormularioTransferenciaAluno
+        turmaAntiga={turmaAntiga}
+        idAluno={idAluno}
+        idsAlunos={idsAlunos}
+      />
     </DialogContent>
   )
 }

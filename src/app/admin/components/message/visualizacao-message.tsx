@@ -1,4 +1,5 @@
 import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 
 import { Separator } from '@/components/ui/separator'
 
@@ -10,27 +11,23 @@ interface VisualizacaoMensagemProps {
 
 export function VisualizacaoMensagem({ mensagem }: VisualizacaoMensagemProps) {
   return mensagem ? (
-    <div className="flex flex-1 flex-col">
-      <div className="flex items-start py-4">
-        <div className="flex items-start text-sm">
-          <div className="grid gap-1">
-            <div className="line-clamp-1 text-xs">{mensagem.assunto}</div>
-          </div>
-        </div>
-        {mensagem.dataEnvio && (
+    <div className="flex flex-1 flex-col border rounded">
+      <div className="flex items-start py-2 px-4">
+        {mensagem.enviadoEm && (
           <div className="ml-auto text-xs text-muted-foreground">
-            {format(new Date(mensagem.dataEnvio), 'PPpp')}
+            {format(new Date(mensagem.enviadoEm), 'PPpp', {
+              locale: ptBR,
+            })}
           </div>
         )}
       </div>
       <Separator />
-      <div className="flex-1 whitespace-pre-wrap py-4 text-sm">
+      <div className="flex-1 whitespace-pre-wrap p-4 text-sm">
         {mensagem.mensagem}
       </div>
-      <Separator className="mt-auto" />
     </div>
   ) : (
-    <div className="p-8 text-center text-muted-foreground">
+    <div className="p-4 text-center text-muted-foreground">
       Nenhuma mensagem selecionada
     </div>
   )

@@ -28,17 +28,12 @@ export const queryClient = new QueryClient({
             toast.error('Acesso não autorizado!')
             return false
           } else {
-            toast.error(error.message)
+            toast.error('Erro ao tentar processar uma informação')
             return false
           }
         }
 
         return true
-      },
-      throwOnError(error) {
-        toast.error(error.name)
-
-        return false
       },
     },
     mutations: {

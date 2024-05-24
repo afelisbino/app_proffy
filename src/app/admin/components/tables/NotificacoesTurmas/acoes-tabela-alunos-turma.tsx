@@ -18,7 +18,6 @@ interface MenuTabelaNotificacaoAlunosTurmaProps {
 }
 
 export function MenuTabelaNotificacaoAlunosTurma({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   dadosAluno,
 }: MenuTabelaNotificacaoAlunosTurmaProps) {
   return (
@@ -45,7 +44,7 @@ export function MenuTabelaNotificacaoAlunosTurma({
               Mensagens enviadas
             </DropdownMenuItem>
           </DialogTrigger>
-          <NotificacoesAluno />
+          <NotificacoesAluno idAluno={dadosAluno.id} />
         </Dialog>
         <Dialog>
           <DialogTrigger asChild>
@@ -59,7 +58,7 @@ export function MenuTabelaNotificacaoAlunosTurma({
               Enviar uma mensagem
             </DropdownMenuItem>
           </DialogTrigger>
-          <NotificarResponsavelAluno />
+          <NotificarResponsavelAluno aluno={dadosAluno} />
         </Dialog>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -1,31 +1,59 @@
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogTrigger } from '@/components/ui/dialog'
-import { Separator } from '@/components/ui/separator'
+'use client'
 
-import CalendarioChamada from '../components/calendars/CalendarioChamada'
-import { DialogFinalizacaoChamadaAluno } from '../components/dialogs/finalizacao-chamada-turma'
+import { useQuery } from '@tanstack/react-query'
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
+import { Skeleton } from '@/components/ui/skeleton'
+import { useTurmaEscola } from '@/lib/use-case'
+
+import { buscarAlunosTurma, buscarTurmas } from '../api/turma'
+import ListagemChamadaAlunos from '../components/lists/ListagemChamadaAlunos'
 import ListagemTurmasEscola from '../components/lists/ListagemTurmasEscola'
-import ListagemChamadaAlunos from '../components/tables/ListagemChamadaAlunos'
 
 export default function ChamadaAlunos() {
+  const [turmaSelecionada] = useTurmaEscola()
+
+  const { data: listaTurmas, isLoading: carregandoTurmas } = useQuery({
+    queryKey: ['turmasEscolaChamada'],
+    queryFn: buscarTurmas,
+    staleTime: Infinity,
+  })
+
+  const { data: alunosTurma, isLoading: carregandoAlunos } = useQuery({
+    queryKey: ['listaAlunosTurmaNotificacao', turmaSelecionada.selected],
+    queryFn: () => buscarAlunosTurma(turmaSelecionada.selected),
+    enabled: !!turmaSelecionada.selected,
+  })
+
   return (
-    <div className="space-y-4">
-      <section className="flex flex-col md:flex-row md:justify-between gap-2">
-        <ListagemTurmasEscola />
-        <CalendarioChamada />
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button variant={'default'} className="w-full shadow">
-              Finalizar chamada
-            </Button>
-          </DialogTrigger>
-          <DialogFinalizacaoChamadaAluno />
-        </Dialog>
-      </section>
-      <Separator />
-      <section>
-        <ListagemChamadaAlunos />
-      </section>
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>Chamada diária</CardTitle>
+        <CardDescription>
+          Área para realizar chamada do dia de cada turma
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <section className="grid space-y-4">
+          {carregandoTurmas ? (
+            <Skeleton className="h-4 w-full rounded" />
+          ) : (
+            <ListagemTurmasEscola listaTurmas={listaTurmas ?? []} />
+          )}
+          <Separator />
+          <ListagemChamadaAlunos
+            listaAlunosTurma={alunosTurma ?? []}
+            carregandoAlunos={carregandoAlunos}
+          />
+        </section>
+      </CardContent>
+    </Card>
   )
 }

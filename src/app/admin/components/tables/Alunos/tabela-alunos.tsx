@@ -14,6 +14,7 @@ import { AlunosTurmaType } from '@/app/admin/schemas/SchemaAlunosTurma'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
+import { Skeleton } from '@/components/ui/skeleton'
 import {
   Table,
   TableBody,
@@ -29,14 +30,17 @@ import {
 } from '@/components/ui/tooltip'
 
 import { MatriculaAlunoDialog } from '../../dialogs/matricula-aluno'
+import { DialogTransferenciaAluno } from '../../dialogs/transferencia-alunos'
 
 import { colunasTabelaAlunosTurma } from './coluna-tabela-alunos'
 
 interface TabelaAlunosProps {
   data: Array<AlunosTurmaType>
+  isLoading: boolean
+  idTurma: string | null
 }
 
-export function TabelaAlunos({ data }: TabelaAlunosProps) {
+export function TabelaAlunos({ data, isLoading, idTurma }: TabelaAlunosProps) {
   const [rowSelection, setRowSelection] = React.useState({})
   const table = useReactTable({
     data,
@@ -74,20 +78,22 @@ export function TabelaAlunos({ data }: TabelaAlunosProps) {
           />
         </div>
 
-        <div className="flex flex-col md:flex-row gap-2">
+        <div className="flex flex-row gap-2">
           <Tooltip>
             <Dialog>
               <DialogTrigger asChild>
                 <TooltipTrigger asChild>
                   <Button
                     size={'icon'}
-                    className="bg-app-orange-500 hover:bg-app-orange-600 shadow text-background gap-2 p-2"
+                    className="bg-app-orange-500 hover:bg-app-orange-600 shadow text-background gap-2 p-2 w-full"
+                    disabled={!idTurma}
                   >
-                    <Plus className="size-5" />
+                    <Plus className="size-5 hidden md:flex" />
+                    <span className="flex md:hidden">Nova matrícula</span>
                   </Button>
                 </TooltipTrigger>
               </DialogTrigger>
-              <MatriculaAlunoDialog idTurma={''} />
+              <MatriculaAlunoDialog idTurma={idTurma ?? ''} />
             </Dialog>
             <TooltipContent side="bottom" sideOffset={5}>
               Nova Matrícula
@@ -95,15 +101,31 @@ export function TabelaAlunos({ data }: TabelaAlunosProps) {
           </Tooltip>
 
           <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                className="bg-app-red-500 hover:bg-app-red-600 shadow text-background gap-2 p-2"
-                size={'icon'}
-                disabled={table.getSelectedRowModel().rows.length === 0}
-              >
-                <ArrowRightLeft className="size-5" />
-              </Button>
-            </TooltipTrigger>
+            <Dialog>
+              <DialogTrigger asChild>
+                <TooltipTrigger asChild>
+                  <Button
+                    className="bg-app-red-500 hover:bg-app-red-600 shadow text-background gap-2 p-2 w-full"
+                    size={'icon'}
+                    disabled={table.getSelectedRowModel().rows.length === 0}
+                  >
+                    <ArrowRightLeft className="size-5 hidden md:flex" />
+                    <span className="flex md:hidden">Transferir aluno</span>
+                  </Button>
+                </TooltipTrigger>
+              </DialogTrigger>
+              <DialogTransferenciaAluno
+                turmaAntiga={idTurma ?? ''}
+                idsAlunos={table
+                  .getSelectedRowModel()
+                  .rows.map((alunoSelecionado) => {
+                    return {
+                      id: alunoSelecionado.original.id,
+                    }
+                  })}
+              />
+            </Dialog>
+
             <TooltipContent side="bottom" sideOffset={5}>
               Transferir aluno de turma
             </TooltipContent>
@@ -131,7 +153,25 @@ export function TabelaAlunos({ data }: TabelaAlunosProps) {
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length > 0 ? (
+            {isLoading ? (
+              <>
+                <TableRow>
+                  <TableCell colSpan={colunasTabelaAlunosTurma.length}>
+                    <Skeleton className="h-4 w-full rounded" />
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell colSpan={colunasTabelaAlunosTurma.length}>
+                    <Skeleton className="h-4 w-full rounded" />
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell colSpan={colunasTabelaAlunosTurma.length}>
+                    <Skeleton className="h-4 w-full rounded" />
+                  </TableCell>
+                </TableRow>
+              </>
+            ) : table.getRowModel().rows?.length > 0 ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}

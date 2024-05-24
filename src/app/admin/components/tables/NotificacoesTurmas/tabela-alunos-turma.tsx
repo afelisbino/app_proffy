@@ -13,6 +13,7 @@ import React from 'react'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
+import { Skeleton } from '@/components/ui/skeleton'
 import {
   Table,
   TableBody,
@@ -29,10 +30,12 @@ import { colunasTabelaNotificacaoAlunosTurma } from './colunas-tabela-alunos-tur
 
 interface DataTableNotificacaoAlunosTurmaProps {
   data: Array<AlunosTurmaType>
+  isLoading: boolean
 }
 
 export function TabelaNotificacaoAlunosTurma({
   data,
+  isLoading,
 }: DataTableNotificacaoAlunosTurmaProps) {
   const [rowSelection, setRowSelection] = React.useState({})
   const table = useReactTable({
@@ -70,7 +73,11 @@ export function TabelaNotificacaoAlunosTurma({
               Enviar mensagem
             </Button>
           </DialogTrigger>
-          <NotificarResponsavelAluno />
+          <NotificarResponsavelAluno
+            alunos={table
+              .getSelectedRowModel()
+              .rows.map((selecionado) => selecionado.original)}
+          />
         </Dialog>
       </div>
       <div className="rounded-md border shadow-md">
@@ -94,7 +101,31 @@ export function TabelaNotificacaoAlunosTurma({
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length > 0 ? (
+            {isLoading ? (
+              <>
+                <TableRow>
+                  <TableCell
+                    colSpan={colunasTabelaNotificacaoAlunosTurma.length}
+                  >
+                    <Skeleton className="h-4 w-full rounded" />
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell
+                    colSpan={colunasTabelaNotificacaoAlunosTurma.length}
+                  >
+                    <Skeleton className="h-4 w-full rounded" />
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell
+                    colSpan={colunasTabelaNotificacaoAlunosTurma.length}
+                  >
+                    <Skeleton className="h-4 w-full rounded" />
+                  </TableCell>
+                </TableRow>
+              </>
+            ) : table.getRowModel().rows?.length > 0 ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}

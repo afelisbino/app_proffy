@@ -1,6 +1,12 @@
 import React from 'react'
 
-import { Separator } from '@/components/ui/separator'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 
 import { SidebarNav } from './components/Sidebar/Sidebar'
 
@@ -27,22 +33,24 @@ export default function ConfigEscolaLayout({
   children,
 }: ConfigEscolaLayoutProps) {
   return (
-    <>
-      <div className="space-y-0.5">
-        <h2 className="text-2xl font-bold tracking-tight">
-          Configurações da escola
-        </h2>
-        <p className="text-muted-foreground">
-          Configurações necessárias da escola e notificações ao responsável
-        </p>
-      </div>
-      <Separator className="my-6" />
-      <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
-        <aside className="-mx-4 lg:w-1/5">
-          <SidebarNav items={sidebarNavItems} />
-        </aside>
-        <div className="flex-1 md:max-w-full xl:max-w-4xl">{children}</div>
-      </div>
-    </>
+    <Card>
+      <CardHeader>
+        <CardTitle>Configurações da escola</CardTitle>
+        <CardDescription>
+          Configurações necessárias da escola e modelos de notificações ao
+          responsável
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <section>
+          <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
+            <aside className="-mx-4 lg:w-1/5 md:mt-4">
+              <SidebarNav items={sidebarNavItems} />
+            </aside>
+            <div className="flex-1 md:max-w-full xl:max-w-4xl">{children}</div>
+          </div>
+        </section>
+      </CardContent>
+    </Card>
   )
 }

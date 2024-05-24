@@ -55,7 +55,7 @@ export default function FormularioLogin() {
         })
 
       if (responseAuth.status) {
-        router.push('/admin/painel')
+        router.push('/admin/chamada')
       }
     } catch (error) {
       toast.warning('Usuario ou senha incorreto ou desativado!')

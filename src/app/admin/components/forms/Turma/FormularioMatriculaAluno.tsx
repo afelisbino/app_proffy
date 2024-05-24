@@ -1,14 +1,20 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { CalendarIcon, ChevronLeft, Save, Trash } from 'lucide-react'
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { schemaFormularioMatriculaAluno } from '@/app/admin/schemas/SchemaAlunosTurma'
+import { matricularAluno } from '@/app/admin/api/turma'
+import {
+  AlunosTurmaType,
+  schemaFormularioMatriculaAluno,
+} from '@/app/admin/schemas/SchemaAlunosTurma'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { DialogClose } from '@/components/ui/dialog'
@@ -28,7 +34,7 @@ import {
 } from '@/components/ui/popover'
 import { Separator } from '@/components/ui/separator'
 import { Switch } from '@/components/ui/switch'
-import { cn } from '@/lib/utils'
+import { cn, formatarDocumento } from '@/lib/utils'
 
 export interface FormularioMatriculaAlunoProps {
   idTurma: string
@@ -37,6 +43,7 @@ export interface FormularioMatriculaAlunoProps {
 export function FormularioMatriculaAluno({
   idTurma,
 }: FormularioMatriculaAlunoProps) {
+  const queryClient = useQueryClient()
   const formMatriculaAluno = useForm<
     z.infer<typeof schemaFormularioMatriculaAluno>
   >({
@@ -51,7 +58,6 @@ export function FormularioMatriculaAluno({
       nomeResponsavel: '',
       cpfResponsavel: '',
       telefones: [],
-      emails: [],
     },
     mode: 'onChange',
   })
@@ -65,37 +71,97 @@ export function FormularioMatriculaAluno({
     name: 'telefones',
   })
 
-  const {
-    fields: emailFields,
-    append: appendEmail,
-    remove: removeEmail,
-  } = useFieldArray({
-    control: formMatriculaAluno.control,
-    name: 'emails',
+  const { mutateAsync: matricular } = useMutation({
+    mutationFn: ({
+      idTurma,
+      nome,
+      cpf,
+      rg,
+      ra,
+      dataNascimento,
+      nomeResponsavel,
+      cpfResponsavel,
+      telefones,
+    }: z.infer<typeof schemaFormularioMatriculaAluno>) =>
+      matricularAluno({
+        idTurma,
+        nome,
+        cpf,
+        rg,
+        ra,
+        dataNascimento,
+        nomeResponsavel,
+        cpfResponsavel,
+        telefones,
+      }),
+    onError: (erro) => {
+      toast.error('Houve um problema ao matricular o aluno, tente novamente!', {
+        description: erro.message,
+      })
+    },
+    onSuccess: (data) => {
+      const alunosTurma: Array<AlunosTurmaType> | undefined =
+        queryClient.getQueryData(['listaAlunosTurma', idTurma])
+
+      queryClient.setQueryData(
+        ['listaAlunosTurma', idTurma],
+        [...(alunosTurma ?? []), data],
+      )
+
+      formMatriculaAluno.reset()
+    },
+  })
+
+  const salvar = async (
+    dados: z.infer<typeof schemaFormularioMatriculaAluno>,
+  ) => {
+    if (dados.cpf === dados.cpfResponsavel) {
+      toast.warning('O CPF do responsável não pode ser igual ao do aluno!')
+    } else {
+      await matricular(dados)
+    }
+  }
+
+  useLayoutEffect(() => {
+    const telefones = formMatriculaAluno.getValues().telefones
+    if (telefones.length === 0) {
+      appendPhone({
+        ddd: '',
+        telefone: '',
+        whatsapp: false,
+      })
+    }
   })
 
   return (
     <Form {...formMatriculaAluno}>
       <form
-        onSubmit={formMatriculaAluno.handleSubmit(() => {})}
+        onSubmit={formMatriculaAluno.handleSubmit(salvar)}
         className="space-y-8"
       >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-          <div>
-            <FormField
-              control={formMatriculaAluno.control}
-              name="cpf"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>CPF do aluno</FormLabel>
-                  <FormControl>
-                    <Input placeholder="000.000.000-00" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+          <FormField
+            control={formMatriculaAluno.control}
+            name="cpf"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>CPF do aluno</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="000.000.000-00"
+                    onChange={(event) => {
+                      formMatriculaAluno.setValue(
+                        'cpf',
+                        formatarDocumento(event.target.value),
+                      )
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <div className="md:col-span-2">
             <FormField
               control={formMatriculaAluno.control}
@@ -194,7 +260,16 @@ export function FormularioMatriculaAluno({
                 <FormItem>
                   <FormLabel>CPF do Responsável</FormLabel>
                   <FormControl>
-                    <Input placeholder="000.000.000-00" {...field} />
+                    <Input
+                      {...field}
+                      placeholder="000.000.000-00"
+                      onChange={(event) => {
+                        formMatriculaAluno.setValue(
+                          'cpfResponsavel',
+                          formatarDocumento(event.target.value),
+                        )
+                      }}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -217,48 +292,21 @@ export function FormularioMatriculaAluno({
             />
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-          <div className="flex flex-col gap-2">
-            <Button type="button" onClick={() => appendEmail({ email: '' })}>
-              Novo email
-            </Button>
-            {emailFields.map((email, index) => (
-              <div key={index} className="flex justify-between gap-2">
-                <FormField
-                  key={email.id}
-                  control={formMatriculaAluno.control}
-                  name={`emails.${index}.email`}
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormControl>
-                        <Input {...field} placeholder="E-mail" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button
-                  className="shadow"
-                  variant={'destructive'}
-                  type="button"
-                  onClick={() => removeEmail(index)}
-                >
-                  <Trash />
-                </Button>
-              </div>
-            ))}
-          </div>
+        <div className="grid">
           <div className="flex flex-col gap-2">
             <Button
               type="button"
               onClick={() =>
-                appendPhone({ ddd: '', numero: '', whatsapp: false })
+                appendPhone({ ddd: '', telefone: '', whatsapp: false })
               }
             >
               Novo Telefone
             </Button>
             {phoneFields.map((telefone, index) => (
-              <div key={index} className="flex justify-between gap-2">
+              <div
+                key={index}
+                className="flex justify-between items-center gap-2"
+              >
                 <FormField
                   key={telefone.id}
                   control={formMatriculaAluno.control}
@@ -275,7 +323,7 @@ export function FormularioMatriculaAluno({
                 <FormField
                   key={index}
                   control={formMatriculaAluno.control}
-                  name={`telefones.${index}.numero`}
+                  name={`telefones.${index}.telefone`}
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormControl>
@@ -318,7 +366,7 @@ export function FormularioMatriculaAluno({
         <div className="flex items-center space-x-2">
           <DialogClose>
             <Button className="bg-app-red-500 hover:bg-app-red-600 gap-2 shadow">
-              <ChevronLeft />
+              <ChevronLeft className="size-5" />
               Voltar
             </Button>
           </DialogClose>
@@ -326,7 +374,7 @@ export function FormularioMatriculaAluno({
             type="submit"
             className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow"
           >
-            <Save />
+            <Save className="size-5" />
             Salvar
           </Button>
         </div>

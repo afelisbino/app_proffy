@@ -17,6 +17,7 @@ import {
 import { Button } from '../ui/button'
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -35,26 +36,11 @@ import {
 import { Input } from '../ui/input'
 import { Textarea } from '../ui/textarea'
 
-const MAX_FILE_SIZE = 1024 * 1024 * 10
-const ACCEPTED_IMAGE_MIME_TYPES = [
-  'image/jpeg',
-  'image/jpg',
-  'image/png',
-  'image/webp',
-]
 const formSchema = z.object({
   mensagem: z.string({
     required_error: 'Necessário informar uma descrição do problema.',
   }),
-  anexo: z
-    .any()
-    .refine((files) => {
-      return files?.[0]?.size <= MAX_FILE_SIZE
-    }, `Tamanho maximo de 10MB`)
-    .refine(
-      (files) => ACCEPTED_IMAGE_MIME_TYPES.includes(files?.[0]?.type),
-      'Somente formatos .jpg, .jpeg, .png and .webp são suportados!',
-    ),
+  anexo: z.any().optional(),
 })
 
 export type ReportFormData = z.infer<typeof formSchema>
@@ -74,9 +60,8 @@ export function ReportNav() {
       queryKey: ['reportarProblema', dadosProblema],
       queryFn: () =>
         dispararMensagemAnexoWhatsApp({
-          numeroWhatsapp: '16991131890',
-          mensagem: dadosProblema.mensagem,
-          anexo: dadosProblema.anexo[0],
+          problema: dadosProblema.mensagem,
+          imagem: dadosProblema.anexo[0],
         }),
     })
 
@@ -112,7 +97,7 @@ export function ReportNav() {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(reportarProblema)}
-              className="space-y-2"
+              className="space-y-4"
             >
               <FormField
                 control={form.control}
@@ -158,18 +143,20 @@ export function ReportNav() {
                 />
               </div>
               <DialogFooter>
-                <Button
-                  type="button"
-                  variant={'destructive'}
-                  onClick={() => {
-                    form.reset()
-                    queryClient.cancelQueries({
-                      queryKey: ['reportarProblema'],
-                    })
-                  }}
-                >
-                  Cancelar
-                </Button>
+                <DialogClose asChild>
+                  <Button
+                    type="button"
+                    variant={'destructive'}
+                    onClick={() => {
+                      form.reset()
+                      queryClient.cancelQueries({
+                        queryKey: ['reportarProblema'],
+                      })
+                    }}
+                  >
+                    Cancelar
+                  </Button>
+                </DialogClose>
                 {form.formState.isSubmitting ? (
                   <Button
                     className="ml-auto shadow bg-app-green-500 hover:bg-app-green-600 gap-2"

@@ -16,25 +16,22 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
+import { useModelosNotificacao } from '@/lib/use-case'
 import { cn } from '@/lib/utils'
 
-import { TemplateMensagemType } from '../../schemas/SchemaMensagemAlunos'
+interface ListagemTemplatesAssuntoProps {
+  listaAssuntos: Array<{
+    id: string
+    assunto: string
+    modelo: string
+  }>
+}
 
-export default function ListagemTemplatesAssunto() {
-  const [assuntoSelecionado, setAssuntoSelecionado] = React.useState<string>('')
+export default function ListagemTemplatesAssunto({
+  listaAssuntos,
+}: ListagemTemplatesAssuntoProps) {
+  const [modelosSelecionado, selecionarModelo] = useModelosNotificacao()
   const [open, setOpen] = React.useState(false)
-  const listaAssuntos: Array<TemplateMensagemType> = [
-    {
-      id: '855',
-      assunto: 'Assunto 0',
-      template: '',
-    },
-    {
-      id: '855885',
-      assunto: 'Assunto 1',
-      template: '',
-    },
-  ]
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -45,9 +42,10 @@ export default function ListagemTemplatesAssunto() {
           aria-expanded={open}
           className="w-full justify-between"
         >
-          {assuntoSelecionado
-            ? listaAssuntos.find((turma) => turma.id === assuntoSelecionado)
-                ?.assunto
+          {modelosSelecionado.selected
+            ? listaAssuntos?.find(
+                (turma) => turma.id === modelosSelecionado.selected,
+              )?.assunto
             : 'Selecione um assunto...'}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -57,21 +55,24 @@ export default function ListagemTemplatesAssunto() {
           <CommandInput placeholder="Filtrar pelo assunto..." />
           <CommandEmpty>Assunto não encontrado</CommandEmpty>
           <CommandGroup>
-            {listaAssuntos.map((assunto) => (
+            {listaAssuntos?.map((assunto) => (
               <CommandItem
                 key={assunto.id}
                 value={assunto.id}
                 onSelect={(currentValue) => {
-                  setAssuntoSelecionado(
-                    currentValue === assuntoSelecionado ? '' : currentValue,
-                  )
+                  selecionarModelo({
+                    selected:
+                      currentValue === modelosSelecionado.selected
+                        ? listaAssuntos[0].id ?? null
+                        : currentValue,
+                  })
                   setOpen(false)
                 }}
               >
                 <Check
                   className={cn(
                     'mr-2 h-4 w-4',
-                    assuntoSelecionado === assunto.id
+                    modelosSelecionado.selected === assunto.id
                       ? 'opacity-100'
                       : 'opacity-0',
                   )}

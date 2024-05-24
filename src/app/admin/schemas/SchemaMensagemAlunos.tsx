@@ -2,8 +2,7 @@ import { z } from 'zod'
 
 const schemaMensagensAluno = z.object({
   id: z.string().uuid(),
-  assunto: z.string().trim(),
-  dataEnvio: z.date(),
+  enviadoEm: z.date(),
   mensagem: z.string(),
 })
 

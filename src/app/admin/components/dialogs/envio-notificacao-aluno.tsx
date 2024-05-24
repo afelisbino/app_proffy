@@ -5,9 +5,15 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 
-import { EnviarMensagemAluno } from '../message/enviar-mensagem'
+import {
+  EnviarMensagemAluno,
+  EnviarMensagemAlunoProps,
+} from '../message/enviar-mensagem'
 
-export function NotificarResponsavelAluno() {
+export function NotificarResponsavelAluno({
+  alunos,
+  aluno,
+}: EnviarMensagemAlunoProps) {
   return (
     <DialogContent>
       <DialogHeader>
@@ -16,7 +22,7 @@ export function NotificarResponsavelAluno() {
           Notifique o responsável sobre algum assunto escolar
         </DialogDescription>
       </DialogHeader>
-      <EnviarMensagemAluno aluno={[]} />
+      <EnviarMensagemAluno aluno={aluno} alunos={alunos} />
     </DialogContent>
   )
 }

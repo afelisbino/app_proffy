@@ -4,6 +4,7 @@ import { validarCPF } from '@/lib/utils'
 
 export const schemaAlunosTurma = z.object({
   id: z.string().uuid(),
+  idTurma: z.string().uuid(),
   nome: z.string().trim(),
   cpf: z
     .string({
@@ -83,10 +84,14 @@ export const schemaFormularioMatriculaAluno = z.object({
     }),
   telefones: z.array(
     z.object({
-      ddd: z.string({
-        required_error: 'O DDD do telefone é obrigatório',
-      }),
-      numero: z
+      ddd: z
+        .string({
+          required_error: 'O DDD do telefone é obrigatório',
+        })
+        .min(1, {
+          message: 'DDD inválido',
+        }),
+      telefone: z
         .string({
           required_error: 'O número do telefone é obrigatório',
         })
@@ -96,21 +101,7 @@ export const schemaFormularioMatriculaAluno = z.object({
       whatsapp: z.boolean().default(false),
     }),
     {
-      required_error: 'O telefone é obrigatório',
-    },
-  ),
-  emails: z.array(
-    z.object({
-      email: z
-        .string({
-          required_error: 'O email do responsável é obrigatório',
-        })
-        .email({
-          message: 'O email do responsável é inválido',
-        }),
-    }),
-    {
-      required_error: 'O email do responsável é obrigatório',
+      required_error: 'Obrigatório informar ao menos um telefone',
     },
   ),
 })
@@ -118,10 +109,6 @@ export const schemaFormularioMatriculaAluno = z.object({
 export type TelefonesResponsavelType = z.infer<
   typeof schemaFormularioMatriculaAluno
 >['telefones'][number]
-
-export type EmailResponsavelType = z.infer<
-  typeof schemaFormularioMatriculaAluno
->['emails'][number]
 
 export const schemaFormularioEdicaoMatriculaAluno = z.object({
   idAluno: z.string().uuid(),

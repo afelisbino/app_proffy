@@ -1,6 +1,6 @@
 'use client'
 
-import { Home, Inbox, SlidersHorizontal, Speech, Users } from 'lucide-react'
+import { Inbox, SlidersHorizontal, Speech, Users } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -28,7 +28,7 @@ export function Sidebar() {
         />
       </div>
       <nav className="grid gap-2 p-2">
-        <Tooltip>
+        {/* <Tooltip>
           <TooltipTrigger asChild>
             <Button
               size="icon"
@@ -54,7 +54,7 @@ export function Sidebar() {
           <TooltipContent side="right" sideOffset={5}>
             Painel
           </TooltipContent>
-        </Tooltip>
+        </Tooltip> */}
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
