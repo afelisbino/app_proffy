@@ -102,9 +102,9 @@ export function DataTableUsuarios({ data, isLoading }: DataTableUsuarioProps) {
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )}
                     </TableHead>
                   )
                 })}
@@ -112,7 +112,6 @@ export function DataTableUsuarios({ data, isLoading }: DataTableUsuarioProps) {
             ))}
           </TableHeader>
           <TableBody>
-
             {isLoading ? (
               <>
                 <TableRow>

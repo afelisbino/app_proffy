@@ -1,6 +1,5 @@
-import { Inter as FontSans } from 'next/font/google'
-
 import '@/styles/globals.css'
+import { Inter as FontSans } from 'next/font/google'
 import { Toaster } from 'sonner'
 
 import { ThemeProvider } from '@/components/theme/theme-provider'
