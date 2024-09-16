@@ -7,7 +7,8 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { ArrowRightLeft, Plus } from 'lucide-react'
+import { ArrowRightLeft, NotebookPen, Plus } from 'lucide-react'
+import Link from 'next/link'
 import React from 'react'
 
 import { AlunosTurmaType } from '@/app/admin/schemas/SchemaAlunosTurma'
@@ -130,9 +131,27 @@ export function TabelaAlunos({ data, isLoading, idTurma }: TabelaAlunosProps) {
               Transferir aluno de turma
             </TooltipContent>
           </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                size={'icon'}
+                className="shadow gap-2 p-2 w-full"
+                disabled={!idTurma}
+                asChild
+              >
+                <Link href={`turmas/diario?turma=${idTurma}`}>
+                  <NotebookPen className="size-5 hidden md:flex" />
+                  <span className="flex md:hidden">Diário</span>
+                </Link>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom" sideOffset={5}>
+              Díario de classe
+            </TooltipContent>
+          </Tooltip>
         </div>
       </div>
-      <div className="rounded-md border shadow-md">
+      <div className="rounded-md border shadow-md overflow-auto">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -200,7 +219,7 @@ export function TabelaAlunos({ data, isLoading, idTurma }: TabelaAlunosProps) {
           </TableBody>
         </Table>
       </div>
-      <div className="grid grid-cols-2 gap-2 md:w-64 md:float-right">
+      <div className="flex justify-end gap-2">
         <Button
           className="enabled:shadow-md"
           variant="outline"

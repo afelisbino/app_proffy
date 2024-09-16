@@ -1,4 +1,4 @@
-import { axiosInstance } from '@/services/AxiosClient'
+import { axiosInstance } from '@/lib/AxiosClient'
 
 import { UsuarioType } from '../schemas/SchemaUsuariosEscola'
 
