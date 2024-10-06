@@ -35,6 +35,7 @@ export default function TurmasEscola() {
     queryKey: ['listaAlunosTurma', turmaSelecionada.selected],
     queryFn: () => buscarAlunosTurma(turmaSelecionada.selected),
     enabled: !!turmaSelecionada.selected,
+    staleTime: Infinity,
   })
 
   return (

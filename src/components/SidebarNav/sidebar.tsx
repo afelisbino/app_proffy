@@ -1,6 +1,12 @@
 'use client'
 
-import { Home, Inbox, SlidersHorizontal, Speech, Users } from 'lucide-react'
+import {
+  ChartNoAxesCombined,
+  Inbox,
+  SlidersHorizontal,
+  Speech,
+  Users,
+} from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -32,33 +38,6 @@ export function Sidebar() {
           <TooltipTrigger asChild>
             <Button
               size="icon"
-              aria-label="Home"
-              asChild
-              variant={'ghost'}
-              className={cn(
-                'rounded-full shadow',
-                pathname === '/admin/painel' &&
-                  'bg-app-red-600 hover:bg-app-red-700',
-              )}
-            >
-              <Link href={'/admin/painel'}>
-                <Home
-                  className={cn(
-                    'size-5',
-                    pathname === '/admin/painel' && 'text-white',
-                  )}
-                />
-              </Link>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent side="right" sideOffset={5}>
-            Painel
-          </TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              size="icon"
               aria-label="Chamada"
               asChild
               variant={'ghost'}
@@ -80,6 +59,33 @@ export function Sidebar() {
           </TooltipTrigger>
           <TooltipContent side="right" sideOffset={5}>
             Chamada do dia
+          </TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              size="icon"
+              aria-label="Turmas"
+              asChild
+              variant={'ghost'}
+              className={cn(
+                'rounded-full shadow',
+                pathname.includes('/admin/turmas') &&
+                  'bg-app-red-600 hover:bg-app-red-700',
+              )}
+            >
+              <Link href={'/admin/turmas'}>
+                <Users
+                  className={cn(
+                    'size-5',
+                    pathname.includes('/admin/turmas') && 'text-white',
+                  )}
+                />
+              </Link>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="right" sideOffset={5}>
+            Turmas
           </TooltipContent>
         </Tooltip>
         <Tooltip>
@@ -113,27 +119,27 @@ export function Sidebar() {
           <TooltipTrigger asChild>
             <Button
               size="icon"
-              aria-label="Turmas"
+              aria-label="Home"
               asChild
               variant={'ghost'}
               className={cn(
                 'rounded-full shadow',
-                pathname === '/admin/turmas' &&
+                pathname === '/admin/painel' &&
                   'bg-app-red-600 hover:bg-app-red-700',
               )}
             >
-              <Link href={'/admin/turmas'}>
-                <Users
+              <Link href={'/admin/painel'}>
+                <ChartNoAxesCombined
                   className={cn(
                     'size-5',
-                    pathname === '/admin/turmas' && 'text-white',
+                    pathname === '/admin/painel' && 'text-white',
                   )}
                 />
               </Link>
             </Button>
           </TooltipTrigger>
           <TooltipContent side="right" sideOffset={5}>
-            Turmas
+            Métricas
           </TooltipContent>
         </Tooltip>
         <Tooltip>

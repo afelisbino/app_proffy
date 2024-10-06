@@ -133,12 +133,7 @@ export function TabelaAlunos({ data, isLoading, idTurma }: TabelaAlunosProps) {
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button
-                size={'icon'}
-                className="shadow gap-2 p-2 w-full"
-                disabled={!idTurma}
-                asChild
-              >
+              <Button size={'icon'} className="shadow gap-2 p-2 w-full" asChild>
                 <Link href={`turmas/diario?turma=${idTurma}`}>
                   <NotebookPen className="size-5 hidden md:flex" />
                   <span className="flex md:hidden">Diário</span>

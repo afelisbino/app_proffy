@@ -1,5 +1,10 @@
 import { axiosInstance } from '@/lib/AxiosClient'
 
+import { FormNovaDisciplinaType } from '../escola/disciplinas/components/forms/NovaDisciplina'
+import {
+  DisciplinaEscolaType,
+  ExcluirDisciplinaProps,
+} from '../escola/disciplinas/schemas/disciplina'
 import { UsuarioType } from '../schemas/SchemaUsuariosEscola'
 
 export interface AlterarStatusUsuarioProps {
@@ -43,6 +48,32 @@ export async function inserirNovoUsuario({
     email,
     senha,
   })
+
+  return response.data
+}
+
+export async function inserirNovaDisciplina({ nome }: FormNovaDisciplinaType) {
+  const response = await axiosInstance.post<DisciplinaEscolaType>(
+    'escola/disciplina',
+    {
+      nome,
+    },
+  )
+
+  return response.data
+}
+
+export async function excluirDisciplina({ id }: ExcluirDisciplinaProps) {
+  const response = await axiosInstance.delete<DisciplinaEscolaType>(
+    `escola/disciplina/${id}`,
+  )
+
+  return response.data
+}
+
+export async function buscarListaDisciplinas() {
+  const response =
+    await axiosInstance.get<Array<DisciplinaEscolaType>>(`escola/disciplina`)
 
   return response.data
 }

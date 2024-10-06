@@ -1,13 +1,35 @@
 'use client'
 
+import { useQuery } from '@tanstack/react-query'
 import { MessageSquareWarning, Percent, Users } from 'lucide-react'
 
-import FrequenciaAlunosChart from '@/app/components/charts/FrequenciaAlunos'
-import NotificacoesTurmasChart from '@/app/components/charts/NotificacaoTurmas'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
 
-import ListagemAlunosAusentes from '../components/lists/ListagemAlunosAusentes'
+import { buscaEstatisticasEscola } from '../api/relatorios'
+import { buscarTurmas } from '../api/turma'
+import { ChartAvalicoesTurma } from '../components/charts/avaliativa/NotasTurma'
+import { ChartFrequenciaTurma } from '../components/charts/frequencia/FrequenciaPorTurma'
+
 export default function Dashboard() {
+  const { data: listaTurmas, isLoading: carregandoTurmas } = useQuery({
+    queryKey: ['listaTurmas'],
+    queryFn: buscarTurmas,
+    staleTime: Infinity,
+  })
+
+  const estatisticasEscola = useQuery({
+    queryKey: ['estatisticasEscola'],
+    queryFn: buscaEstatisticasEscola,
+    staleTime: Infinity,
+  })
+
   return (
     <div className="space-y-3">
       <div className="grid grid-cols-1 md:grid-cols-3 space-y-3 space-x-0 md:space-y-0 md:space-x-3">
@@ -18,11 +40,21 @@ export default function Dashboard() {
               <Users />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">5</div>
-              <p className="text-xs text-muted-foreground">
-                A escola possui tem 10 turmas
-              </p>
+              {estatisticasEscola.isLoading ? (
+                <Skeleton className="w-4 h-6" />
+              ) : (
+                <span className="text-2xl">
+                  {estatisticasEscola.data?.qtdTurmasEscola ?? 0}
+                </span>
+              )}
             </CardContent>
+            <CardFooter>
+              {estatisticasEscola.isLoading ? (
+                <Skeleton className="w-full" />
+              ) : (
+                <p>{`Você possui ${estatisticasEscola.data?.totalAlunos ?? 0} aluno(s) matriculado`}</p>
+              )}
+            </CardFooter>
           </Card>
         </div>
         <div>
@@ -32,11 +64,24 @@ export default function Dashboard() {
               <Percent />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">68%</div>
-              <p className="text-xs text-muted-foreground">
-                A média da escola é de 50%
-              </p>
+              {estatisticasEscola.isLoading ? (
+                <Skeleton className="w-4 h-6" />
+              ) : (
+                <div className="flex flex-row gap-1 items-baseline">
+                  <span className="text-2xl">
+                    {estatisticasEscola.data?.frequenciaAtual ?? 0}
+                  </span>
+                  <span className="text-sm">%</span>
+                </div>
+              )}
             </CardContent>
+            <CardFooter>
+              {estatisticasEscola.isLoading ? (
+                <Skeleton className="w-full" />
+              ) : (
+                <p>{`Foram registrados ${estatisticasEscola.data?.totalFaltasAnoAtual} faltas`}</p>
+              )}
+            </CardFooter>
           </Card>
         </div>
         <div>
@@ -48,67 +93,37 @@ export default function Dashboard() {
               <MessageSquareWarning />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">50</div>
-              <p className="text-xs text-muted-foreground">
-                A média da escola é de 120
-              </p>
+              {estatisticasEscola.isLoading ? (
+                <Skeleton className="w-4 h-6" />
+              ) : (
+                <span className="text-2xl">
+                  {estatisticasEscola.data?.totalNotificacoesEnviadaMesAtual ??
+                    0}
+                </span>
+              )}
             </CardContent>
+            <CardFooter>
+              {estatisticasEscola.isLoading ? (
+                <Skeleton className="w-full" />
+              ) : (
+                <p>{`Foram enviadas ${estatisticasEscola.data?.totalNotificacoesEnviadaMesPassado ?? 0} no mês passado.`}</p>
+              )}
+            </CardFooter>
           </Card>
         </div>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-7 space-y-3 space-x-0 lg:space-x-3 lg:space-y-0">
-        <div className="lg:col-span-2">
-          <Card className="shadow lg:mb-2 md:min-h-full">
-            <CardHeader>
-              <CardTitle>Alunos com mais faltas</CardTitle>
-            </CardHeader>
-            <CardContent className="p-0">
-              <ListagemAlunosAusentes />
-            </CardContent>
-          </Card>
+      <div className="grid grid-cols-1 lg:grid-cols-12 space-y-3 space-x-0 lg:space-x-3 lg:space-y-0">
+        <div className="lg:col-span-6">
+          <ChartAvalicoesTurma
+            buscandoTurmas={carregandoTurmas}
+            listaTurmas={listaTurmas ?? []}
+          />
         </div>
-        <div className="lg:col-span-2">
-          <Card className="shadow lg:mb-2 md:min-h-full">
-            <CardHeader>
-              <CardTitle>Estatísticas de notificações</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <NotificacoesTurmasChart
-                series={[22, 32, 52, 15, 19]}
-                labels={[
-                  'catgoria a',
-                  'categoria b',
-                  'categoria c',
-                  'categoria d',
-                  'categoria e',
-                ]}
-              />
-            </CardContent>
-          </Card>
-        </div>
-        <div className="lg:col-span-3">
-          <Card className="shadow lg:mb-2 md:min-h-full">
-            <CardHeader>
-              <CardTitle>Estatísticas de frequência</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <FrequenciaAlunosChart
-                categories={['02/2024', '03/2024']}
-                series={[
-                  {
-                    data: [15, 22],
-                    color: '#027313',
-                    name: 'Presença',
-                  },
-                  {
-                    data: [12, 32],
-                    color: '#BF0A0A',
-                    name: 'Ausentes',
-                  },
-                ]}
-              />
-            </CardContent>
-          </Card>
+        <div className="lg:col-span-6">
+          <ChartFrequenciaTurma
+            listaTurmas={listaTurmas ?? []}
+            buscandoTurmas={carregandoTurmas}
+          />
         </div>
       </div>
     </div>

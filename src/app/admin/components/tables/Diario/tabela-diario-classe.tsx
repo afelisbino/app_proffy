@@ -7,13 +7,27 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { Plus } from 'lucide-react'
+import { Check, ChevronsUpDown, Plus } from 'lucide-react'
 import React from 'react'
 
-import { registroNotasTurma } from '@/app/admin/schemas/SchemaDiarioClasse'
+import { DisciplinaEscolaType } from '@/app/admin/escola/disciplinas/schemas/disciplina'
+import { registroNotasTurmaType } from '@/app/admin/schemas/SchemaDiarioClasse'
 import { Button } from '@/components/ui/button'
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
   Table,
@@ -28,22 +42,28 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { cn } from '@/lib/utils'
 
 import { DiarioTurmaDialog } from '../../dialogs/diario-turma'
 
 import { colunasTabelaDiarioClasse } from './colunas-tabela-diario-classe'
 
 interface TabelaDiarioClasseProps {
-  data: Array<registroNotasTurma>
+  listaDisciplinas: Array<DisciplinaEscolaType>
+  data: Array<registroNotasTurmaType>
   isLoading: boolean
-  idTurma: string | null
+  idTurma: string
 }
 
 export function TabelaDiarioClasse({
+  listaDisciplinas,
   data,
   isLoading,
   idTurma,
 }: TabelaDiarioClasseProps) {
+  const [open, setOpen] = React.useState(false)
+  const [disciplinaSelecionada, setDisciplinaSelecionada] = React.useState('')
+
   const table = useReactTable({
     data,
     columns: colunasTabelaDiarioClasse,
@@ -60,11 +80,70 @@ export function TabelaDiarioClasse({
             placeholder="Filtrar pelo nome do aluno..."
             className="w-full md:w-64"
             disabled={data?.length === 0}
-            value={(table.getColumn('nome')?.getFilterValue() as string) ?? ''}
+            value={(table.getColumn('aluno')?.getFilterValue() as string) ?? ''}
             onChange={(event) =>
-              table.getColumn('nome')?.setFilterValue(event.target.value)
+              table.getColumn('aluno')?.setFilterValue(event.target.value)
             }
           />
+          <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                role="combobox"
+                aria-expanded={open}
+                className="w-[200px] justify-between"
+              >
+                {disciplinaSelecionada
+                  ? listaDisciplinas.find(
+                      (disciplina) => disciplina.id === disciplinaSelecionada,
+                    )?.nome
+                  : 'Filtrar disciplina...'}
+                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-[200px] p-0">
+              <Command>
+                <CommandInput placeholder="Procurar disciplina..." />
+                <CommandList>
+                  <CommandEmpty>Nenhuma disciplina encontrada</CommandEmpty>
+                  <CommandGroup>
+                    {listaDisciplinas.map((disciplina) => (
+                      <CommandItem
+                        className="capitalize"
+                        key={disciplina.id}
+                        value={disciplina.id}
+                        onSelect={(currentValue) => {
+                          setDisciplinaSelecionada(
+                            currentValue === disciplinaSelecionada
+                              ? ''
+                              : currentValue,
+                          )
+                          table
+                            .getColumn('disciplina')
+                            ?.setFilterValue(
+                              listaDisciplinas.find(
+                                (disciplina) => disciplina.id === currentValue,
+                              )?.nome,
+                            )
+                          setOpen(false)
+                        }}
+                      >
+                        <Check
+                          className={cn(
+                            'mr-2 h-4 w-4',
+                            disciplinaSelecionada === disciplina.id
+                              ? 'opacity-100'
+                              : 'opacity-0',
+                          )}
+                        />
+                        {disciplina.nome}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
         </div>
         <div className="flex flex-row gap-2">
           <Tooltip>
@@ -80,7 +159,7 @@ export function TabelaDiarioClasse({
                   </Button>
                 </TooltipTrigger>
               </DialogTrigger>
-              <DiarioTurmaDialog />
+              <DiarioTurmaDialog turmaId={idTurma} />
             </Dialog>
             <TooltipContent side="bottom" sideOffset={5}>
               Registrar notas da disciplina no diario

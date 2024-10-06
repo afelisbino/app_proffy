@@ -1,4 +1,4 @@
-export type registroNotasTurma = {
+export type registroNotasTurmaType = {
   id: string
   nota: number
   periodo: string
@@ -6,4 +6,6 @@ export type registroNotasTurma = {
   tipoPeriodo: 'mensal' | 'bimestral' | 'trimestral' | 'semestral'
   aluno: string
   disciplina: string
+  lancamento: Date
+  descricao: string
 }

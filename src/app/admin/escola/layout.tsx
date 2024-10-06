@@ -27,6 +27,10 @@ const sidebarNavItems = [
     title: 'Whatsapp',
     href: '/admin/escola/whatsapp',
   },
+  {
+    title: 'Disciplinas',
+    href: '/admin/escola/disciplinas',
+  },
 ]
 
 export default function ConfigEscolaLayout({
@@ -47,7 +51,7 @@ export default function ConfigEscolaLayout({
             <aside className="-mx-4 lg:w-1/5 md:mt-4">
               <SidebarNav items={sidebarNavItems} />
             </aside>
-            <div className="flex-1 md:max-w-full xl:max-w-4xl">{children}</div>
+            <div className="flex-1 md:max-w-full">{children}</div>
           </div>
         </section>
       </CardContent>
