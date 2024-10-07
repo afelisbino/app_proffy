@@ -33,14 +33,12 @@ import {
   FormLabel,
   FormMessage,
 } from '../ui/form'
-import { Input } from '../ui/input'
 import { Textarea } from '../ui/textarea'
 
 const formSchema = z.object({
   mensagem: z.string({
     required_error: 'Necessário informar uma descrição do problema.',
   }),
-  anexo: z.any().optional(),
 })
 
 export type ReportFormData = z.infer<typeof formSchema>
@@ -51,7 +49,6 @@ export function ReportNav() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       mensagem: '',
-      anexo: [],
     },
   })
 
@@ -61,7 +58,6 @@ export function ReportNav() {
       queryFn: () =>
         dispararMensagemAnexoWhatsApp({
           problema: dadosProblema.mensagem,
-          imagem: dadosProblema.anexo[0],
         }),
     })
 
@@ -116,32 +112,6 @@ export function ReportNav() {
                   </FormItem>
                 )}
               />
-              <div className="grid w-full items-center gap-1.5">
-                <FormField
-                  control={form.control}
-                  name="anexo"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Anexo</FormLabel>
-                      <FormControl>
-                        <div className="grid w-full  items-center gap-1.5">
-                          <Input
-                            type="file"
-                            accept="image/*"
-                            onBlur={field.onBlur}
-                            name={field.name}
-                            onChange={(e) => {
-                              field.onChange(e.target.files)
-                            }}
-                            ref={field.ref}
-                          />
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
               <DialogFooter>
                 <DialogClose asChild>
                   <Button

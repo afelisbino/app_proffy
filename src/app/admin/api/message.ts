@@ -1,8 +1,6 @@
 import { z } from 'zod'
 
 import { axiosInstance } from '@/lib/AxiosClient'
-import { encodeFileToBase64 } from '@/lib/utils'
-import { uploadFileStorageExternal } from '@/services/FileUploadsService'
 
 import { envioMensagemResponsavelType } from '../components/message/enviar-mensagem'
 import {
@@ -16,34 +14,11 @@ export interface EnvioMensagemWhatsappProps {
 
 export interface EnvioMensagemAnexoWhatsappProps {
   problema: string
-  imagem?: File | string
 }
 
 export async function dispararMensagemAnexoWhatsApp({
   problema,
-  imagem,
 }: EnvioMensagemAnexoWhatsappProps) {
-  imagem = imagem ? await encodeFileToBase64(imagem) : undefined
-  console.log("🚀 ~ imagem:", imagem)
-
-  if (imagem) {
-    const uploadImagem = await uploadFileStorageExternal(imagem)
-    console.log("🚀 ~ uploadImagem:", uploadImagem)
-
-    return null
-    if (uploadImagem.status) {
-    
-      const response = await axiosInstance.post('reportar', {
-        problema,
-        imagem: uploadImagem.url,
-      })
-
-      return response.data
-    }
-  }
-
-  return null
-
   const response = await axiosInstance.post('reportar', {
     problema,
   })
