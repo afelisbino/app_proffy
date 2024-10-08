@@ -39,7 +39,13 @@ interface FormularioDiarioClasseProps {
 }
 const schemaNotaTurma = z.object({
   tipoPeriodo: z.enum(['mensal', 'bimestral', 'trimestral', 'semestral']),
-  periodo: z.string(),
+  periodo: z.coerce
+    .number({
+      required_error: 'O período é obrigatório',
+    })
+    .min(1, {
+      message: 'O período não pode ser menor que 1',
+    }),
   ano: z.string(),
   disciplinaId: z.string().uuid(),
   descricao: z.string({
@@ -75,7 +81,7 @@ export function FormularioDiarioClasse({
     resolver: zodResolver(schemaNotaTurma),
     defaultValues: {
       disciplinaId: '',
-      periodo: '',
+      periodo: 1,
       ano: String(new Date().getFullYear()),
       tipoPeriodo: 'bimestral',
       descricao: '',
@@ -172,6 +178,7 @@ export function FormularioDiarioClasse({
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -212,6 +219,7 @@ export function FormularioDiarioClasse({
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />

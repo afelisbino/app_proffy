@@ -8,7 +8,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import { ArrowRightLeft, NotebookPen, Plus } from 'lucide-react'
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 import { AlunosTurmaType } from '@/app/admin/schemas/SchemaAlunosTurma'
@@ -42,6 +42,7 @@ interface TabelaAlunosProps {
 }
 
 export function TabelaAlunos({ data, isLoading, idTurma }: TabelaAlunosProps) {
+  const router = useRouter()
   const [rowSelection, setRowSelection] = React.useState({})
   const table = useReactTable({
     data,
@@ -54,6 +55,10 @@ export function TabelaAlunos({ data, isLoading, idTurma }: TabelaAlunosProps) {
       rowSelection,
     },
   })
+
+  const redirecionarDiarioTurma = () => {
+    router.push(`turmas/diario?turma=${idTurma}`)
+  }
 
   return (
     <div className="space-y-2 w-full">
@@ -100,7 +105,6 @@ export function TabelaAlunos({ data, isLoading, idTurma }: TabelaAlunosProps) {
               Nova Matrícula
             </TooltipContent>
           </Tooltip>
-
           <Tooltip>
             <Dialog>
               <DialogTrigger asChild>
@@ -126,18 +130,20 @@ export function TabelaAlunos({ data, isLoading, idTurma }: TabelaAlunosProps) {
                   })}
               />
             </Dialog>
-
             <TooltipContent side="bottom" sideOffset={5}>
               Transferir aluno de turma
             </TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button size={'icon'} className="shadow gap-2 p-2 w-full" asChild>
-                <Link href={`turmas/diario?turma=${idTurma}`}>
-                  <NotebookPen className="size-5 hidden md:flex" />
-                  <span className="flex md:hidden">Diário</span>
-                </Link>
+              <Button
+                size={'icon'}
+                className="shadow gap-2 p-2 w-full"
+                onClick={redirecionarDiarioTurma}
+                disabled={data.length === 0}
+              >
+                <NotebookPen className="size-5 hidden md:flex" />
+                <span className="flex md:hidden">Diário</span>
               </Button>
             </TooltipTrigger>
             <TooltipContent side="bottom" sideOffset={5}>
