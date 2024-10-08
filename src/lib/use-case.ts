@@ -1,6 +1,5 @@
 import { atom, useAtom } from 'jotai'
 
-import { TurmaType } from '@/app/admin/schemas/SchemaAlunosTurma'
 import {
   MensagemAlunoType,
   ModeloMensagensType,
@@ -16,18 +15,6 @@ const ConfigAtomMensagensAluno = atom<ConfigMensagensAlunoType>({
 
 export function useMensagemAluno() {
   return useAtom(ConfigAtomMensagensAluno)
-}
-
-type ConfigTurmaEscolaType = {
-  selected: TurmaType['id'] | null
-}
-
-const ConfigAtomTurma = atom<ConfigTurmaEscolaType>({
-  selected: null,
-})
-
-export function useTurmaEscola() {
-  return useAtom(ConfigAtomTurma)
 }
 
 type ConfigModelosNotificacaoType = {

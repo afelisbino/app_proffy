@@ -11,11 +11,12 @@ import {
 } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
-import { useTurmaEscola } from '@/lib/use-case'
 
 import { buscarModelosMensagens } from '../api/message'
 import { buscarAlunosTurma, buscarTurmas } from '../api/turma'
-import ListagemTurmasEscola from '../components/lists/ListagemTurmasEscola'
+import ListagemTurmasEscola, {
+  useTurmaEscola,
+} from '../components/lists/ListagemTurmasEscola'
 import { TabelaNotificacaoAlunosTurma } from '../components/tables/NotificacoesTurmas/tabela-alunos-turma'
 
 export default function Notificacoes() {

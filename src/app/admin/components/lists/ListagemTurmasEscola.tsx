@@ -1,5 +1,6 @@
 'use client'
 
+import { atom, useAtom } from 'jotai'
 import { Check, ChevronsUpDown } from 'lucide-react'
 import React from 'react'
 
@@ -15,13 +16,25 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { useTurmaEscola } from '@/lib/use-case'
 import { cn } from '@/lib/utils'
 
 import { turmaType } from '../../api/turma'
+import { TurmaType } from '../../schemas/SchemaAlunosTurma'
 
 interface ListagemTurmasProps {
   listaTurmas: turmaType[]
+}
+
+type ConfigTurmaEscolaType = {
+  selected: TurmaType['id'] | null
+}
+
+const ConfigAtomTurma = atom<ConfigTurmaEscolaType>({
+  selected: null,
+})
+
+export function useTurmaEscola() {
+  return useAtom(ConfigAtomTurma)
 }
 
 export default function ListagemTurmasEscola({

@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { axiosInstance } from '@/lib/AxiosClient'
 import { limparFormatacaoDocumento } from '@/lib/utils'
 
-import { chamadaTurmaType } from '../components/lists/ListagemChamadaAlunos'
+import { chamadaTurmaType } from '../components/forms/Turma/FormChamadaTurma'
 import {
   AlunosTurmaType,
   schemaFormularioMatriculaAluno,

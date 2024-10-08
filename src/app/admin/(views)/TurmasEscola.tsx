@@ -14,12 +14,13 @@ import {
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
-import { useTurmaEscola } from '@/lib/use-case'
 
 import { buscarAlunosTurma, buscarTurmas } from '../api/turma'
 import { CadastroTurma } from '../components/dialogs/cadastro-turma'
 import { EditarTurma } from '../components/dialogs/edicao-turma'
-import ListagemTurmasEscola from '../components/lists/ListagemTurmasEscola'
+import ListagemTurmasEscola, {
+  useTurmaEscola,
+} from '../components/lists/ListagemTurmasEscola'
 import { TabelaAlunos } from '../components/tables/Alunos/tabela-alunos'
 
 export default function TurmasEscola() {
