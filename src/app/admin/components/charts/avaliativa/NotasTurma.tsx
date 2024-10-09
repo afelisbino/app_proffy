@@ -73,7 +73,9 @@ export function ChartAvalicoesTurma({
   const [dadosGrafico, setDadosGrafico] = React.useState<
     Array<{
       aluno: string
-      media: number
+      nota: number
+      categoria: 'acima' | 'abaixo' | 'media'
+      fill: string
     }>
   >([])
 
@@ -83,9 +85,20 @@ export function ChartAvalicoesTurma({
   })
 
   const chartConfig = {
-    media: {
+    nota: {
+      label: 'Nota',
+    },
+    abaixo: {
       label: 'Média',
       color: '#e03322',
+    },
+    media: {
+      label: 'Média',
+      color: '#f28705',
+    },
+    acima: {
+      label: 'Média',
+      color: '#28a745',
     },
   } satisfies ChartConfig
 
@@ -104,11 +117,33 @@ export function ChartAvalicoesTurma({
       tipoPeriodo: tipoPeriodoSelecionado,
     })
 
+    const getCategoriaNota = (nota: number) => {
+      if (nota > 6) {
+        return 'acima'
+      } else if (nota === 6) {
+        return 'media'
+      } else {
+        return 'abaixo'
+      }
+    }
+
+    const getCorCategoria = (nota: number) => {
+      if (nota > 6) {
+        return '#28a745'
+      } else if (nota === 6) {
+        return '#f28705'
+      } else {
+        return '#e03322'
+      }
+    }
+
     setDadosGrafico(
       relatorioAvaliacao.map((aluno) => {
         return {
           aluno: aluno.Aluno,
-          media: aluno.Media,
+          nota: aluno.Media,
+          categoria: getCategoriaNota(aluno.Media),
+          fill: getCorCategoria(aluno.Media),
         }
       }),
     )
@@ -223,7 +258,7 @@ export function ChartAvalicoesTurma({
                   id="date"
                   variant={'outline'}
                   className={cn(
-                    'w-[250px] justify-start text-left font-normal',
+                    'w-auto justify-start text-left font-normal',
                     !date && 'text-muted-foreground',
                   )}
                 >
@@ -292,7 +327,7 @@ export function ChartAvalicoesTurma({
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey="media" fill="var(--color-media)" radius={8}>
+            <Bar dataKey="nota" radius={8}>
               <LabelList
                 position="top"
                 offset={12}
