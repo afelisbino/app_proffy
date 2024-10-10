@@ -25,6 +25,7 @@ export async function LancarNotasTurma({
   ano,
   alunos,
   disciplinaId,
+  realizadoEm,
   descricao,
 }: FormDiarioTurmaType) {
   return await axiosInstance
@@ -34,9 +35,10 @@ export async function LancarNotasTurma({
         return {
           idAluno: aluno.alunoId,
           idDisciplina: disciplinaId,
-          periodo,
+          periodo: String(periodo),
           ano,
           tipoPeriodo,
+          realizadoEm,
           descricao,
           nota: aluno.nota,
         }

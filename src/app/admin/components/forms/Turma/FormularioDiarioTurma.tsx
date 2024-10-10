@@ -2,7 +2,9 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { QueryClient, useMutation } from '@tanstack/react-query'
-import { Loader2, Save } from 'lucide-react'
+import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+import { CalendarIcon, Loader2, Save } from 'lucide-react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -11,6 +13,7 @@ import { LancarNotasTurma } from '@/app/admin/api/diario_turma'
 import { DisciplinaEscolaType } from '@/app/admin/escola/disciplinas/schemas/disciplina'
 import { AlunosTurmaType } from '@/app/admin/schemas/SchemaAlunosTurma'
 import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
 import { DialogClose, DialogFooter } from '@/components/ui/dialog'
 import {
   Form,
@@ -21,6 +24,11 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import {
   Select,
@@ -39,6 +47,7 @@ interface FormularioDiarioClasseProps {
 }
 const schemaNotaTurma = z.object({
   tipoPeriodo: z.enum(['mensal', 'bimestral', 'trimestral', 'semestral']),
+  realizadoEm: z.coerce.date(),
   periodo: z.coerce
     .number({
       required_error: 'O período é obrigatório',
@@ -82,6 +91,7 @@ export function FormularioDiarioClasse({
     defaultValues: {
       disciplinaId: '',
       periodo: 1,
+      realizadoEm: new Date(),
       ano: String(new Date().getFullYear()),
       tipoPeriodo: 'bimestral',
       descricao: '',
@@ -127,6 +137,7 @@ export function FormularioDiarioClasse({
     await salvarLancamentos({
       tipoPeriodo: data.tipoPeriodo,
       periodo: data.periodo,
+      realizadoEm: data.realizadoEm,
       ano: data.ano,
       disciplinaId: data.disciplinaId,
       descricao: data.descricao,
@@ -183,7 +194,49 @@ export function FormularioDiarioClasse({
               )}
             />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <FormField
+              control={formDiario.control}
+              name="realizadoEm"
+              render={({ field }) => (
+                <FormItem className="">
+                  <FormLabel>Realizado em</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant={'outline'}
+                          className={cn(
+                            'w-[240px] text-left font-normal',
+                            !field.value && 'text-muted-foreground',
+                          )}
+                        >
+                          {field.value ? (
+                            format(field.value, 'PPP', {
+                              locale: ptBR,
+                            })
+                          ) : (
+                            <span>Selecione a data</span>
+                          )}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) =>
+                          date > new Date() || date < new Date('1900-01-01')
+                        }
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={formDiario.control}
               name={`tipoPeriodo`}
