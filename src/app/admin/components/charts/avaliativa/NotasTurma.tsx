@@ -1,9 +1,8 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
-import { CalendarIcon } from 'lucide-react'
+import { Filter } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { DateRange } from 'react-day-picker'
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from 'recharts'
@@ -41,7 +40,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { cn } from '@/lib/utils'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 
 interface RelatorioFrequenciaEscolarProps {
   listaTurmas: Array<turmaType>
@@ -175,117 +178,112 @@ export function ChartAvalicoesTurma({
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Relatório de avaliações</CardTitle>
-        <CardDescription>Estatísticas avaliativas da turma</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-2">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-          <div>
-            <Select
-              onOpenChange={setOpenFilterPeriodo}
-              onValueChange={setTipoPeriodo}
-              value={tipoPeriodoSelecionado}
-              open={openFilterPeriodo}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Selecione o tipo" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="mensal">Mensal</SelectItem>
-                <SelectItem value="bimestral">Bimestral</SelectItem>
-                <SelectItem value="trimestral">Trimestral</SelectItem>
-                <SelectItem value="semestral">Semestral</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div>
-            <Select
-              onOpenChange={setOpenFilterTurma}
-              onValueChange={setTurma}
-              value={turmaSelecionada}
-              open={openFilterTurma}
-              disabled={buscandoTurmas}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Selecione uma turma" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Turmas</SelectLabel>
-                  {listaTurmas.map((turma) => {
-                    return (
-                      <SelectItem key={turma.id} value={turma.id}>
-                        {turma.nome}
-                      </SelectItem>
-                    )
-                  })}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-          <div>
-            <Select
-              onOpenChange={setOpenFilterDisciplina}
-              onValueChange={setDisciplina}
-              value={disciplinaSelecionada}
-              open={openFilterDisciplina}
-              disabled={listaDisciplina.isLoading}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Selecione uma disciplina" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Disciplinas</SelectLabel>
-                  {listaDisciplina.data?.map((disciplina) => {
-                    return (
-                      <SelectItem key={disciplina.id} value={disciplina.id}>
-                        {disciplina.nome}
-                      </SelectItem>
-                    )
-                  })}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
+      <CardHeader className="flex flex-row justify-between">
+        <div>
+          <CardTitle>Relatório de avaliações</CardTitle>
+          <CardDescription>Estatísticas avaliativas da turma</CardDescription>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-          <div>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  id="date"
-                  variant={'outline'}
-                  className={cn(
-                    'w-auto justify-start text-left font-normal',
-                    !date && 'text-muted-foreground',
-                  )}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {date?.from ? (
-                    date.to ? (
-                      <>
-                        {format(date.from, 'LLL dd, y', {
-                          locale: ptBR,
-                        })}{' '}
-                        -{' '}
-                        {format(date.to, 'LLL dd, y', {
-                          locale: ptBR,
+        <div>
+          <Popover>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <PopoverTrigger asChild>
+                  <Button
+                    size={'icon'}
+                    variant={'ghost'}
+                    className="rounded-full shadow"
+                  >
+                    <Filter className="size-5" />
+                  </Button>
+                </PopoverTrigger>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Filtro de avaliações</p>
+              </TooltipContent>
+            </Tooltip>
+            <PopoverContent className="w-full">
+              <div className="grid gap-2">
+                <div>
+                  <Select
+                    onOpenChange={setOpenFilterPeriodo}
+                    onValueChange={setTipoPeriodo}
+                    value={tipoPeriodoSelecionado}
+                    open={openFilterPeriodo}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecione o tipo" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="mensal">Mensal</SelectItem>
+                      <SelectItem value="bimestral">Bimestral</SelectItem>
+                      <SelectItem value="trimestral">Trimestral</SelectItem>
+                      <SelectItem value="semestral">Semestral</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Input
+                    type="number"
+                    placeholder="Periodo"
+                    value={periodo}
+                    onChange={(e) => setPeriodo(e.target.valueAsNumber)}
+                  />
+                </div>
+                <div>
+                  <Select
+                    onOpenChange={setOpenFilterTurma}
+                    onValueChange={setTurma}
+                    value={turmaSelecionada}
+                    open={openFilterTurma}
+                    disabled={buscandoTurmas}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecione uma turma" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Turmas</SelectLabel>
+                        {listaTurmas.map((turma) => {
+                          return (
+                            <SelectItem key={turma.id} value={turma.id}>
+                              {turma.nome}
+                            </SelectItem>
+                          )
                         })}
-                      </>
-                    ) : (
-                      format(date.from, 'LLL dd, y', {
-                        locale: ptBR,
-                      })
-                    )
-                  ) : (
-                    <span>Selecione a data</span>
-                  )}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Select
+                    onOpenChange={setOpenFilterDisciplina}
+                    onValueChange={setDisciplina}
+                    value={disciplinaSelecionada}
+                    open={openFilterDisciplina}
+                    disabled={listaDisciplina.isLoading}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecione uma disciplina" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Disciplinas</SelectLabel>
+                        {listaDisciplina.data?.map((disciplina) => {
+                          return (
+                            <SelectItem
+                              key={disciplina.id}
+                              value={disciplina.id}
+                            >
+                              {disciplina.nome}
+                            </SelectItem>
+                          )
+                        })}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
                 <Calendar
+                  className="border rounded-sm"
                   initialFocus
                   mode="range"
                   defaultMonth={date?.from}
@@ -294,20 +292,12 @@ export function ChartAvalicoesTurma({
                   numberOfMonths={2}
                   locale={ptBR}
                 />
-              </PopoverContent>
-            </Popover>
-          </div>
-
-          <div>
-            <Input
-              type="number"
-              placeholder="Periodo"
-              value={periodo}
-              onChange={(e) => setPeriodo(e.target.valueAsNumber)}
-            />
-          </div>
+              </div>
+            </PopoverContent>
+          </Popover>
         </div>
-
+      </CardHeader>
+      <CardContent className="space-y-2">
         <ChartContainer config={chartConfig}>
           <BarChart
             accessibilityLayer

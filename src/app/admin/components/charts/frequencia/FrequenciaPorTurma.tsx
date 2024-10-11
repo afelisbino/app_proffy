@@ -1,8 +1,7 @@
 'use client'
 
-import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
-import { CalendarIcon } from 'lucide-react'
+import { Filter } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { DateRange } from 'react-day-picker'
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from 'recharts'
@@ -38,7 +37,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { cn } from '@/lib/utils'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 
 interface RelatorioFrequenciaEscolarProps {
   listaTurmas: Array<turmaType>
@@ -97,84 +100,70 @@ export function ChartFrequenciaTurma({
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Relatório de frequência</CardTitle>
-        <CardDescription>Estatísticas de frequência escolar</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="flex flex-row gap-2">
-          <div>
-            <Popover>
+      <CardHeader className="flex flex-row justify-between">
+        <div>
+          <CardTitle>Relatório de frequência</CardTitle>
+          <CardDescription>Estatísticas de frequência escolar</CardDescription>
+        </div>
+        <Popover>
+          <Tooltip>
+            <TooltipTrigger asChild>
               <PopoverTrigger asChild>
                 <Button
-                  id="date"
-                  variant={'outline'}
-                  className={cn(
-                    'w-[250px] justify-start text-left font-normal',
-                    !date && 'text-muted-foreground',
-                  )}
+                  size={'icon'}
+                  variant={'ghost'}
+                  className="rounded-full shadow"
                 >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {date?.from ? (
-                    date.to ? (
-                      <>
-                        {format(date.from, 'LLL dd, y', {
-                          locale: ptBR,
-                        })}{' '}
-                        -{' '}
-                        {format(date.to, 'LLL dd, y', {
-                          locale: ptBR,
-                        })}
-                      </>
-                    ) : (
-                      format(date.from, 'LLL dd, y', {
-                        locale: ptBR,
-                      })
-                    )
-                  ) : (
-                    <span>Selecione a data</span>
-                  )}
+                  <Filter className="size-5" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
-                  initialFocus
-                  mode="range"
-                  defaultMonth={date?.from}
-                  selected={date}
-                  onSelect={setDate}
-                  numberOfMonths={2}
-                  locale={ptBR}
-                />
-              </PopoverContent>
-            </Popover>
-          </div>
-          <div>
-            <Select
-              onOpenChange={setOpen}
-              onValueChange={setTurma}
-              value={turmaSelecionada}
-              open={open}
-              disabled={buscandoTurmas}
-            >
-              <SelectTrigger className="w-[200px]">
-                <SelectValue placeholder="Selecione uma turma" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Turmas</SelectLabel>
-                  {listaTurmas.map((turma) => {
-                    return (
-                      <SelectItem key={turma.id} value={turma.id}>
-                        {turma.nome}
-                      </SelectItem>
-                    )
-                  })}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Filtro de frequencia da turma</p>
+            </TooltipContent>
+          </Tooltip>
+          <PopoverContent className="w-full">
+            <div className="grid gap-2">
+              <div>
+                <Select
+                  onOpenChange={setOpen}
+                  onValueChange={setTurma}
+                  value={turmaSelecionada}
+                  open={open}
+                  disabled={buscandoTurmas}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecione uma turma" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Turmas</SelectLabel>
+                      {listaTurmas.map((turma) => {
+                        return (
+                          <SelectItem key={turma.id} value={turma.id}>
+                            {turma.nome}
+                          </SelectItem>
+                        )
+                      })}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+              <Calendar
+                className="border rounded-sm"
+                initialFocus
+                mode="range"
+                defaultMonth={date?.from}
+                selected={date}
+                onSelect={setDate}
+                numberOfMonths={2}
+                locale={ptBR}
+              />
+            </div>
+          </PopoverContent>
+        </Popover>
+      </CardHeader>
+      <CardContent>
         <ChartContainer config={chartConfig}>
           <BarChart
             accessibilityLayer
