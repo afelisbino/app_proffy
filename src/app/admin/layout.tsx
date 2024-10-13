@@ -15,12 +15,12 @@ export const metadata: Metadata = {
 export default function AdminLayout({ children }: AdminLayoutProps) {
   return (
     <TooltipProvider>
-      <div className="grid h-screen w-full pl-[56px]">
-        <Sidebar />
-        <div className="flex flex-col">
-          <Header />
-          <main className="flex-1 gap-4 overflow-auto p-4">{children}</main>
-        </div>
+      <Sidebar />
+      <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
+        <Header />
+        <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+          {children}
+        </main>
       </div>
     </TooltipProvider>
   )

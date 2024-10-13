@@ -21,7 +21,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="pt-BR">
       <body
         className={cn(
-          'min-h-screen bg-background font-sans antialiased',
+          'flex min-h-screen w-full flex-col bg-background font-sans antialiased',
           fontSans.variable,
         )}
       >
@@ -31,9 +31,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           enableSystem
           disableTransitionOnChange
         >
-          <Providers>
-            <main>{children}</main>
-          </Providers>
+          <Providers>{children}</Providers>
         </ThemeProvider>
         <Toaster richColors />
       </body>

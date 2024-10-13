@@ -23,8 +23,8 @@ export function Sidebar() {
   const pathname = usePathname()
 
   return (
-    <aside className="inset-y fixed left-0 z-20 flex h-full flex-col bg-background">
-      <div className=" p-2 flex justify-center h-[57px]">
+    <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
+      <div className="p-2 flex justify-center h-[57px]">
         <Image
           className="rounded"
           src="/logo-sp.png"
@@ -33,7 +33,7 @@ export function Sidebar() {
           height={42}
         />
       </div>
-      <nav className="grid gap-2 p-2">
+      <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
