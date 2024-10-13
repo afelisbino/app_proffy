@@ -8,6 +8,7 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -49,9 +50,10 @@ export function ConfirmacaoExcluirAlunoDialog({
   return (
     <AlertDialogContent>
       <AlertDialogHeader>
-        <AlertDialogTitle>
+        <AlertDialogTitle>Confirme esta ação?</AlertDialogTitle>
+        <AlertDialogDescription>
           {`Deseja realmente desmatricular o ${listaAlunosTurma?.find((aluno) => aluno.id === idAluno)?.nome}?`}
-        </AlertDialogTitle>
+        </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
         <AlertDialogCancel className="bg-app-red-300 text-app-red-700 hover:bg-app-red-400 shadow">
