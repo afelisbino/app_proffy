@@ -27,6 +27,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { mascararNome } from '@/lib/utils'
 
 interface ListaAlunosChamadaProps {
   listaAlunosTurma: Array<AlunosTurmaType>
@@ -59,7 +60,7 @@ export function FormChamadaAlunos({
               return {
                 idAluno: aluno.id,
                 presente: false,
-                nomeAluno: aluno.nome,
+                nomeAluno: mascararNome(aluno.nome),
               }
             })
           : [],
@@ -107,10 +108,6 @@ export function FormChamadaAlunos({
     const alunosAusentes = formChamadaTurma
       .getValues('alunos')
       .filter((aluno) => aluno.presente === false)
-    console.log(
-      '🚀 ~ handleSelecionarTodosPresente ~ alunosAusentes:',
-      alunosAusentes,
-    )
 
     if (alunosAusentes.length === 0) {
       selecionarTodosPresente(true)

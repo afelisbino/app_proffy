@@ -1,6 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table'
 
 import { Checkbox } from '@/components/ui/checkbox'
+import { mascararNome } from '@/lib/utils'
 
 import { AlunosTurmaType } from '../../../schemas/SchemaAlunosTurma'
 
@@ -35,7 +36,9 @@ export const colunasTabelaNotificacaoAlunosTurma: ColumnDef<AlunosTurmaType>[] =
       header: 'Nome do aluno',
       enableSorting: false,
       enableHiding: false,
-      cell: ({ row }) => <div className="md:w-96">{row.getValue('nome')}</div>,
+      cell: ({ row }) => (
+        <div className="md:w-96">{mascararNome(row.getValue('nome'))}</div>
+      ),
     },
     {
       id: 'acoes',

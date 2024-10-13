@@ -93,6 +93,12 @@ export function capturarIniciaisNome(nomeUsuario: string) {
   return initials.join('')
 }
 
+export function mascararNome(nome: string) {
+  const parts = nome.split(' ')
+
+  return `${parts[0]} ${parts[1]}`
+}
+
 export function encodeFileToBase64(file: File | string): Promise<string> {
   return new Promise((resolve, reject) => {
     if (typeof file === 'string') {

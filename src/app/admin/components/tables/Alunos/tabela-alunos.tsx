@@ -57,16 +57,16 @@ export function TabelaAlunos({ data, isLoading, idTurma }: TabelaAlunosProps) {
   })
 
   const redirecionarDiarioTurma = () => {
-    router.push(`turmas/diario?turma=${idTurma}`)
+    router.push(`turmas/diario/${idTurma}`)
   }
 
   return (
-    <div className="space-y-2 w-full">
+    <div className="space-y-2">
       <div className="flex flex-col md:flex-row gap-2 md:justify-between">
-        <div className="flex gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
           <Input
             placeholder="Filtrar pelo CPF..."
-            className="w-full md:w-48"
+            className="w-full"
             disabled={data?.length === 0}
             value={(table.getColumn('cpf')?.getFilterValue() as string) ?? ''}
             onChange={(event) =>
@@ -75,7 +75,7 @@ export function TabelaAlunos({ data, isLoading, idTurma }: TabelaAlunosProps) {
           />
           <Input
             placeholder="Filtrar pelo nome do aluno..."
-            className="w-full md:w-64"
+            className="w-full"
             disabled={data?.length === 0}
             value={(table.getColumn('nome')?.getFilterValue() as string) ?? ''}
             onChange={(event) =>

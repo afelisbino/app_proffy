@@ -80,7 +80,7 @@ export function TabelaNotificacaoAlunosTurma({
           />
         </Dialog>
       </div>
-      <div className="rounded-md border shadow-md">
+      <div className="rounded-md border overflow-auto">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
