@@ -6,6 +6,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { mascararNome } from '@/lib/utils'
 
 export const colunasTabelaDiarioClasse: ColumnDef<registroNotasTurmaType>[] = [
   {
@@ -13,7 +14,7 @@ export const colunasTabelaDiarioClasse: ColumnDef<registroNotasTurmaType>[] = [
     header: 'Aluno',
     enableSorting: false,
     enableHiding: false,
-    cell: ({ row }) => <div>{row.getValue('aluno')}</div>,
+    cell: ({ row }) => <div>{mascararNome(row.getValue('aluno'))}</div>,
   },
   {
     accessorKey: 'ano',
