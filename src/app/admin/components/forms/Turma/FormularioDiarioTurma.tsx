@@ -38,7 +38,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
-import { cn } from '@/lib/utils'
+import { cn, mascararNome } from '@/lib/utils'
 
 interface FormularioDiarioClasseProps {
   idTurma: string
@@ -98,7 +98,7 @@ export function FormularioDiarioClasse({
       alunos: alunosTurma.map((aluno) => {
         return {
           alunoId: aluno.id,
-          nomeAluno: aluno.nome,
+          nomeAluno: mascararNome(aluno.nome),
           nota: 0,
         }
       }),
