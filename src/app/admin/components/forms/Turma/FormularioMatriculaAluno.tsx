@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
-import { CalendarIcon, ChevronLeft, Save, Trash } from 'lucide-react'
+import { CalendarIcon, ChevronLeft, Loader2, Save, Trash } from 'lucide-react'
 import React, { useLayoutEffect } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -21,6 +21,7 @@ import { DialogClose } from '@/components/ui/dialog'
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -303,16 +304,21 @@ export function FormularioMatriculaAluno({
               Novo Telefone
             </Button>
             {phoneFields.map((telefone, index) => (
-              <div
-                key={index}
-                className="flex justify-between items-center gap-2"
-              >
+              <div key={index} className="flex flex-row items-center gap-2">
+                <Button
+                  className="shadow"
+                  variant={'destructive'}
+                  type="button"
+                  onClick={() => removePhone(index)}
+                >
+                  <Trash />
+                </Button>
                 <FormField
                   key={telefone.id}
                   control={formMatriculaAluno.control}
                   name={`telefones.${index}.ddd`}
                   render={({ field }) => (
-                    <FormItem className="w-28">
+                    <FormItem className="w-36">
                       <FormControl>
                         <Input {...field} placeholder="DDD" />
                       </FormControl>
@@ -325,7 +331,7 @@ export function FormularioMatriculaAluno({
                   control={formMatriculaAluno.control}
                   name={`telefones.${index}.telefone`}
                   render={({ field }) => (
-                    <FormItem className="w-full">
+                    <FormItem className="w-auto md:w-full">
                       <FormControl>
                         <Input {...field} placeholder="N° Telefone" />
                       </FormControl>
@@ -338,27 +344,23 @@ export function FormularioMatriculaAluno({
                   control={formMatriculaAluno.control}
                   name={`telefones.${index}.whatsapp`}
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg px-2 gap-2">
+                    <FormItem className="flex flex-row items-center justify-between rounded-lg px-2 gap-4 w-full">
                       <FormControl>
                         <Switch
                           checked={field.value}
                           onCheckedChange={field.onChange}
                         />
                       </FormControl>
-                      <div className="pb-2">
-                        <FormLabel className="text-base">Whatsapp</FormLabel>
+                      <div className="space-y-0.5">
+                        <FormLabel className="text-base">Notificar</FormLabel>
+                        <FormDescription>
+                          Ao marcar, este contato receberá notificações da
+                          escola referente do aluno
+                        </FormDescription>
                       </div>
                     </FormItem>
                   )}
                 />
-                <Button
-                  className="shadow"
-                  variant={'destructive'}
-                  type="button"
-                  onClick={() => removePhone(index)}
-                >
-                  <Trash />
-                </Button>
               </div>
             ))}
           </div>
@@ -370,13 +372,23 @@ export function FormularioMatriculaAluno({
               Voltar
             </Button>
           </DialogClose>
-          <Button
-            type="submit"
-            className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow"
-          >
-            <Save className="size-5" />
-            Salvar
-          </Button>
+          {formMatriculaAluno.formState.isSubmitting ? (
+            <Button
+              disabled
+              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow"
+            >
+              <Loader2 className="size-4 animate-spin" />
+              Salvando...
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow"
+            >
+              <Save />
+              Salvar
+            </Button>
+          )}
         </div>
       </form>
     </Form>
