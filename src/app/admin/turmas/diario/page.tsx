@@ -15,6 +15,8 @@ import { ListarLancamentoNotasTurma } from '../../api/diario_turma'
 import { buscarListaDisciplinas } from '../../api/escola'
 import { TabelaDiarioClasse } from '../../components/tables/Diario/tabela-diario-classe'
 
+const anoAtualLancamento = new Date().getFullYear()
+
 export default function DiarioClasse() {
   const searchParams = useSearchParams()
   const idTurma = searchParams.get('turma')
@@ -22,12 +24,16 @@ export default function DiarioClasse() {
   const disciplinas = useQuery({
     queryKey: ['disciplinasEscola'],
     queryFn: buscarListaDisciplinas,
+    enabled: !!idTurma,
   })
 
   const lancamentos = useQuery({
     queryKey: ['lancamentosNotaTurma', idTurma ?? ''],
     queryFn: () =>
-      ListarLancamentoNotasTurma({ idTurma: idTurma ?? '', ano: '2024' }),
+      ListarLancamentoNotasTurma({
+        idTurma: idTurma ?? '',
+        ano: String(anoAtualLancamento),
+      }),
     enabled: !!idTurma,
   })
 
@@ -40,12 +46,21 @@ export default function DiarioClasse() {
         disciplina`}</CardDescription>
       </CardHeader>
       <CardContent>
-        <TabelaDiarioClasse
-          listaDisciplinas={disciplinas.data ?? []}
-          data={lancamentos?.data?.dados ?? []}
-          idTurma={idTurma ?? ''}
-          isLoading={lancamentos.isLoading}
-        />
+        {idTurma || idTurma !== '' ? (
+          <TabelaDiarioClasse
+            listaDisciplinas={disciplinas.data ?? []}
+            data={lancamentos?.data?.dados ?? []}
+            idTurma={idTurma ?? ''}
+            isLoading={lancamentos.isLoading}
+          />
+        ) : (
+          <div className="flex-1 justify-center items-center">
+            <p className="leading-none text-lg">
+              Necessário selecionar um turma para visualizar ou realizar
+              lançamentos de notas
+            </p>
+          </div>
+        )}
       </CardContent>
     </Card>
   )
