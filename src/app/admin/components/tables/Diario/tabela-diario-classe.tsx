@@ -73,9 +73,28 @@ export function TabelaDiarioClasse({
   })
 
   return (
-    <div className="space-y-2 w-full h-full">
-      <div className="flex flex-col md:flex-row gap-2 md:justify-between">
-        <div className="flex gap-2">
+    <div className="space-y-2">
+      <div className="flex flex-col items-center gap-2 py-4 md:flex-row-reverse md:justify-between">
+        <Tooltip>
+          <Dialog>
+            <DialogTrigger asChild>
+              <TooltipTrigger asChild>
+                <Button
+                  className="bg-app-red-500 hover:bg-app-red-600 shadow text-background gap-2 p-2 w-full md:w-auto"
+                  size={'icon'}
+                >
+                  <Plus className="size-5 hidden md:flex" />
+                  <span className="flex md:hidden">Registrar diario</span>
+                </Button>
+              </TooltipTrigger>
+            </DialogTrigger>
+            <DiarioTurmaDialog turmaId={idTurma} />
+          </Dialog>
+          <TooltipContent side="bottom" sideOffset={5}>
+            Registrar notas da disciplina no diario
+          </TooltipContent>
+        </Tooltip>
+        <div className="flex flex-row gap-2">
           <Input
             placeholder="Filtrar pelo nome do aluno..."
             className="w-full md:w-64"
@@ -91,7 +110,7 @@ export function TabelaDiarioClasse({
                 variant="outline"
                 role="combobox"
                 aria-expanded={open}
-                className="w-[200px] justify-between"
+                className="justify-between w-full"
               >
                 {disciplinaSelecionada
                   ? listaDisciplinas.find(
@@ -101,7 +120,7 @@ export function TabelaDiarioClasse({
                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0">
+            <PopoverContent className="md:w-[200px] p-0">
               <Command>
                 <CommandInput placeholder="Procurar disciplina..." />
                 <CommandList>
@@ -145,29 +164,8 @@ export function TabelaDiarioClasse({
             </PopoverContent>
           </Popover>
         </div>
-        <div className="flex flex-row gap-2">
-          <Tooltip>
-            <Dialog>
-              <DialogTrigger asChild>
-                <TooltipTrigger asChild>
-                  <Button
-                    className="bg-app-red-500 hover:bg-app-red-600 shadow text-background gap-2 p-2 w-full"
-                    size={'icon'}
-                  >
-                    <Plus className="size-5 hidden md:flex" />
-                    <span className="flex md:hidden">Registrar diario</span>
-                  </Button>
-                </TooltipTrigger>
-              </DialogTrigger>
-              <DiarioTurmaDialog turmaId={idTurma} />
-            </Dialog>
-            <TooltipContent side="bottom" sideOffset={5}>
-              Registrar notas da disciplina no diario
-            </TooltipContent>
-          </Tooltip>
-        </div>
       </div>
-      <div className="rounded-md border shadow-md">
+      <div className="rounded-md border shadow overflow-auto">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -235,9 +233,9 @@ export function TabelaDiarioClasse({
           </TableBody>
         </Table>
       </div>
-      <div className="flex justify-end gap-2">
+      <div className="flex flex-row gap-2 justify-end">
         <Button
-          className="enabled:shadow-md"
+          className="enabled:shadow-md w-full md:w-auto"
           variant="outline"
           size="sm"
           onClick={() => table.previousPage()}
@@ -246,7 +244,7 @@ export function TabelaDiarioClasse({
           Voltar
         </Button>
         <Button
-          className="enabled:shadow-md"
+          className="enabled:shadow-md w-full md:w-auto"
           variant="outline"
           size="sm"
           onClick={() => table.nextPage()}

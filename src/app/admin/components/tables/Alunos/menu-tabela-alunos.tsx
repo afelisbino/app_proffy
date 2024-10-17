@@ -1,4 +1,14 @@
-import { ArrowRightLeft, MoreVertical, Trash } from 'lucide-react'
+'use client'
+
+import {
+  ArrowRightLeft,
+  BookUser,
+  Megaphone,
+  MegaphoneOff,
+  MoreVertical,
+  Trash,
+} from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
@@ -11,6 +21,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 import { AlunosTurmaType } from '../../../schemas/SchemaAlunosTurma'
+import { AlteracaoStatusNotificacaoAlunoDialog } from '../../dialogs/alteracao-status-notificacao'
 import { ConfirmacaoExcluirAlunoDialog } from '../../dialogs/remover-aluno'
 import { DialogTransferenciaAluno } from '../../dialogs/transferencia-alunos'
 
@@ -19,6 +30,8 @@ interface MenuTabelaAlunoProps {
 }
 
 export function MenuTabelaAluno({ dadosAluno }: MenuTabelaAlunoProps) {
+  const router = useRouter()
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -30,16 +43,25 @@ export function MenuTabelaAluno({ dadosAluno }: MenuTabelaAlunoProps) {
           <span className="sr-only">Abrir menu</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[160px]">
+      <DropdownMenuContent align="end" className="w-[250px]">
+        <DropdownMenuItem
+          onClick={() => {
+            router.push(`turmas/aluno/${dadosAluno.id}`)
+          }}
+          className="gap-2"
+        >
+          <BookUser className="size-5" />
+          Visualizar matrícula
+        </DropdownMenuItem>
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <DropdownMenuItem
               onSelect={(e) => {
                 e.preventDefault()
               }}
-              className="flex-1 justify-between gap-2"
+              className="gap-2"
             >
-              <Trash />
+              <Trash className="size-5" />
               Excluir matrícula
             </DropdownMenuItem>
           </AlertDialogTrigger>
@@ -54,9 +76,9 @@ export function MenuTabelaAluno({ dadosAluno }: MenuTabelaAlunoProps) {
               onSelect={(e) => {
                 e.preventDefault()
               }}
-              className="flex-1 justify-between gap-2"
+              className=" gap-2"
             >
-              <ArrowRightLeft />
+              <ArrowRightLeft className="size-5" />
               Transferir aluno de turma
             </DropdownMenuItem>
           </DialogTrigger>
@@ -65,6 +87,32 @@ export function MenuTabelaAluno({ dadosAluno }: MenuTabelaAlunoProps) {
             idAluno={dadosAluno.id}
           />
         </Dialog>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <DropdownMenuItem
+              onSelect={(e) => {
+                e.preventDefault()
+              }}
+              className=" gap-2"
+            >
+              {dadosAluno.notificacaoBloqueado ? (
+                <MegaphoneOff className="size-5" />
+              ) : (
+                <Megaphone className="size-5" />
+              )}
+              {dadosAluno.notificacaoBloqueado
+                ? 'Desbloquear notificação'
+                : 'Bloquear notificação'}
+            </DropdownMenuItem>
+          </AlertDialogTrigger>
+          <AlteracaoStatusNotificacaoAlunoDialog
+            idTurma={dadosAluno.idTurma}
+            descricacaoAlerta={`Deseja realmente ${dadosAluno.notificacaoBloqueado ? 'desbloquear notificações' : 'bloquear notificações'} deste aluno?`}
+            idAluno={dadosAluno.id}
+            statusNotificacaoAtual={dadosAluno.notificacaoBloqueado}
+            tituloAlerta={'Confirma está ação?'}
+          />
+        </AlertDialog>
       </DropdownMenuContent>
     </DropdownMenu>
   )

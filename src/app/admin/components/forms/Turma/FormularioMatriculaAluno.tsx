@@ -5,7 +5,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { CalendarIcon, ChevronLeft, Loader2, Save, Trash } from 'lucide-react'
-import React, { useLayoutEffect } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -17,7 +16,7 @@ import {
 } from '@/app/admin/schemas/SchemaAlunosTurma'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
-import { DialogClose } from '@/components/ui/dialog'
+import { DialogClose, DialogFooter } from '@/components/ui/dialog'
 import {
   Form,
   FormControl,
@@ -58,7 +57,13 @@ export function FormularioMatriculaAluno({
       dataNascimento: new Date(),
       nomeResponsavel: '',
       cpfResponsavel: '',
-      telefones: [],
+      telefones: [
+        {
+          ddd: '',
+          telefone: '',
+          whatsapp: false,
+        },
+      ],
     },
     mode: 'onChange',
   })
@@ -122,17 +127,6 @@ export function FormularioMatriculaAluno({
       await matricular(dados)
     }
   }
-
-  useLayoutEffect(() => {
-    const telefones = formMatriculaAluno.getValues().telefones
-    if (telefones.length === 0) {
-      appendPhone({
-        ddd: '',
-        telefone: '',
-        whatsapp: false,
-      })
-    }
-  })
 
   return (
     <Form {...formMatriculaAluno}>
@@ -304,7 +298,10 @@ export function FormularioMatriculaAluno({
               Novo Telefone
             </Button>
             {phoneFields.map((telefone, index) => (
-              <div key={index} className="flex flex-row items-center gap-2">
+              <div
+                key={index}
+                className="flex flex-row items-center gap-2 p-4 border rounded"
+              >
                 <Button
                   className="shadow"
                   variant={'destructive'}
@@ -352,10 +349,12 @@ export function FormularioMatriculaAluno({
                         />
                       </FormControl>
                       <div className="space-y-0.5">
-                        <FormLabel className="text-base">Notificar</FormLabel>
+                        <FormLabel className="text-base">
+                          Notificações
+                        </FormLabel>
                         <FormDescription>
                           Ao marcar, este contato receberá notificações da
-                          escola referente do aluno
+                          escola referente ao aluno
                         </FormDescription>
                       </div>
                     </FormItem>
@@ -365,7 +364,7 @@ export function FormularioMatriculaAluno({
             ))}
           </div>
         </div>
-        <div className="flex items-center space-x-2">
+        <DialogFooter className="flex items-center space-x-2">
           <DialogClose>
             <Button className="bg-app-red-500 hover:bg-app-red-600 gap-2 shadow">
               <ChevronLeft className="size-5" />
@@ -389,7 +388,7 @@ export function FormularioMatriculaAluno({
               Salvar
             </Button>
           )}
-        </div>
+        </DialogFooter>
       </form>
     </Form>
   )

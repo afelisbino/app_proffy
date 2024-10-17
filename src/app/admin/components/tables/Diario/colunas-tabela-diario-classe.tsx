@@ -14,21 +14,25 @@ export const colunasTabelaDiarioClasse: ColumnDef<registroNotasTurmaType>[] = [
     header: 'Aluno',
     enableSorting: false,
     enableHiding: false,
-    cell: ({ row }) => <div>{mascararNome(row.getValue('aluno'))}</div>,
+    cell: ({ row }) => (
+      <span className="w-auto">{mascararNome(row.getValue('aluno'))}</span>
+    ),
   },
   {
     accessorKey: 'ano',
     header: 'Ano',
     enableSorting: false,
     enableHiding: false,
-    cell: ({ row }) => <div>{row.getValue('ano')}</div>,
+    cell: ({ row }) => <span className="w-auto">{row.getValue('ano')}</span>,
   },
   {
     accessorKey: 'periodo',
     header: 'Período',
     enableSorting: false,
     enableHiding: false,
-    cell: ({ row }) => <div>{row.getValue('periodo')}</div>,
+    cell: ({ row }) => (
+      <span className="w-auto">{row.getValue('periodo')}</span>
+    ),
   },
   {
     accessorKey: 'tipoPeriodo',
@@ -36,7 +40,7 @@ export const colunasTabelaDiarioClasse: ColumnDef<registroNotasTurmaType>[] = [
     enableSorting: false,
     enableHiding: false,
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue('tipoPeriodo')}</div>
+      <span className="capitalize w-auto">{row.getValue('tipoPeriodo')}</span>
     ),
   },
   {
@@ -44,7 +48,9 @@ export const colunasTabelaDiarioClasse: ColumnDef<registroNotasTurmaType>[] = [
     header: 'Disciplina',
     enableSorting: false,
     enableHiding: false,
-    cell: ({ row }) => <div>{row.getValue('disciplina')}</div>,
+    cell: ({ row }) => (
+      <span className="w-auto">{row.getValue('disciplina')}</span>
+    ),
   },
   {
     accessorKey: 'descricao',
@@ -52,12 +58,16 @@ export const colunasTabelaDiarioClasse: ColumnDef<registroNotasTurmaType>[] = [
     enableSorting: false,
     enableHiding: false,
     cell: ({ row }) => (
-      <Tooltip>
-        <TooltipTrigger>
-          <div className="line-clamp-1">{row.getValue('descricao')}</div>
-        </TooltipTrigger>
-        <TooltipContent>{row.getValue('descricao')}</TooltipContent>
-      </Tooltip>
+      <div>
+        <Tooltip>
+          <TooltipTrigger>
+            <span className="line-clamp-1 w-auto">
+              {row.getValue('descricao')}
+            </span>
+          </TooltipTrigger>
+          <TooltipContent>{row.getValue('descricao')}</TooltipContent>
+        </Tooltip>
+      </div>
     ),
   },
   {
@@ -65,6 +75,6 @@ export const colunasTabelaDiarioClasse: ColumnDef<registroNotasTurmaType>[] = [
     header: 'Nota',
     enableSorting: false,
     enableHiding: false,
-    cell: ({ row }) => <div>{row.getValue('nota')}</div>,
+    cell: ({ row }) => <span className="w-auto">{row.getValue('nota')}</span>,
   },
 ]

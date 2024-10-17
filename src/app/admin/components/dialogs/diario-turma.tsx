@@ -32,7 +32,7 @@ export function DiarioTurmaDialog({ turmaId }: DiarioTurmaDialogProps) {
     queryClient.getQueryData(['disciplinasEscola'])
 
   return (
-    <DialogContent className="w-full max-h-full md:min-w-[800px]">
+    <DialogContent className="md:max-w-6xl overflow-auto">
       <DialogHeader>
         <DialogTitle>Lançamento de nota</DialogTitle>
         <DialogDescription>

@@ -35,8 +35,7 @@ export default function TurmasEscola() {
   const { data: alunosTurma, isLoading: carregandoAlunos } = useQuery({
     queryKey: ['listaAlunosTurma', turmaSelecionada.selected],
     queryFn: () => buscarAlunosTurma(turmaSelecionada.selected),
-    enabled: !!turmaSelecionada.selected,
-    staleTime: Infinity,
+    refetchOnWindowFocus: true,
   })
 
   return (
@@ -93,13 +92,11 @@ export default function TurmasEscola() {
             </Dialog>
           </div>
           <Separator />
-          <div className="flex-1 pb-10">
-            <TabelaAlunos
-              data={alunosTurma ?? []}
-              isLoading={carregandoAlunos}
-              idTurma={turmaSelecionada.selected}
-            />
-          </div>
+          <TabelaAlunos
+            data={alunosTurma ?? []}
+            isLoading={carregandoAlunos}
+            idTurma={turmaSelecionada.selected}
+          />
         </section>
       </CardContent>
     </Card>

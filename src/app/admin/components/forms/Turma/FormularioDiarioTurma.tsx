@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { QueryClient, useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { CalendarIcon, Loader2, Save } from 'lucide-react'
@@ -85,7 +85,7 @@ export function FormularioDiarioClasse({
   alunosTurma,
   listaDisciplinas,
 }: FormularioDiarioClasseProps) {
-  const queryClient = new QueryClient()
+  const queryClient = useQueryClient()
   const formDiario = useForm<FormDiarioTurmaType>({
     resolver: zodResolver(schemaNotaTurma),
     defaultValues: {
@@ -207,7 +207,7 @@ export function FormularioDiarioClasse({
                         <Button
                           variant={'outline'}
                           className={cn(
-                            'w-[240px] text-left font-normal',
+                            'w-full text-left font-normal gap-2',
                             !field.value && 'text-muted-foreground',
                           )}
                         >

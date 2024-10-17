@@ -111,3 +111,13 @@ export function encodeFileToBase64(file: File | string): Promise<string> {
     }
   })
 }
+
+export function formatarNumeroTelefone(telefone: string): string {
+  telefone = telefone.replace(/[^\d]+/g, '')
+
+  if (telefone.length < 9) {
+    return telefone.replace(/(\d{4})(\d{4})/, '$1-$2')
+  }
+
+  return telefone.replace(/(\d{1})(\d{4})(\d{4})/, '$1 $2-$3')
+}

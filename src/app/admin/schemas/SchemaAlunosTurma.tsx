@@ -25,9 +25,10 @@ export const schemaAlunosTurma = z.object({
   ra: z.string({
     required_error: 'O RA do aluno é obrigatório',
   }),
-  dataNascimento: z.date({
+  dataNascimento: z.coerce.date({
     required_error: 'A data de nascimento do aluno é obrigatória',
   }),
+  notificacaoBloqueado: z.boolean().default(false),
 })
 
 export type AlunosTurmaType = z.infer<typeof schemaAlunosTurma>
