@@ -10,7 +10,7 @@ import { z } from 'zod'
 import { adicionarModeloMensagem } from '@/app/admin/api/message'
 import { schemaFormModeloMensagens } from '@/app/admin/schemas/SchemaMensagemAlunos'
 import { Button } from '@/components/ui/button'
-import { DialogClose } from '@/components/ui/dialog'
+import { DialogClose, DialogFooter } from '@/components/ui/dialog'
 import {
   Form,
   FormControl,
@@ -103,20 +103,20 @@ export function NovoModeloForm() {
             )}
           />
         </div>
-        <div className="flex flex-row gap-2 float-right">
+        <DialogFooter className="flex flex-col md:flex-row gap-2 md:justify-end">
           <DialogClose asChild>
             <Button
               type="button"
               variant={'destructive'}
               onClick={() => formModelo.reset()}
-              className="shadow-md text-sm leading-none rounded"
+              className="shadow-md text-sm leading-none rounded w-full"
             >
               Cancelar
             </Button>
           </DialogClose>
           {formModelo.formState.isSubmitting ? (
             <Button
-              className="shadow-md text-sm leading-none rounded bg-app-green-500 hover:bg-app-green-600"
+              className="shadow-md text-sm leading-none rounded bg-app-green-500 hover:bg-app-green-600 w-full"
               disabled
             >
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -132,7 +132,7 @@ export function NovoModeloForm() {
               </Button>
             </DialogClose>
           )}
-        </div>
+        </DialogFooter>
       </form>
     </Form>
   )

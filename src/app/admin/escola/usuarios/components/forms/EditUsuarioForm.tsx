@@ -10,7 +10,7 @@ import {
   UsuarioType,
 } from '@/app/admin/schemas/SchemaUsuariosEscola'
 import { Button } from '@/components/ui/button'
-import { DialogClose } from '@/components/ui/dialog'
+import { DialogClose, DialogFooter } from '@/components/ui/dialog'
 import {
   Form,
   FormControl,
@@ -82,7 +82,7 @@ export function EditarUsuarioForm({
             )}
           />
         </div>
-        <div className="flex flex-row gap-2 float-right">
+        <DialogFooter className="flex flex-col md:flex-row gap-2 md:justify-end">
           <DialogClose asChild>
             <Button
               type="button"
@@ -111,7 +111,7 @@ export function EditarUsuarioForm({
               </Button>
             </DialogClose>
           )}
-        </div>
+        </DialogFooter>
       </form>
     </Form>
   )

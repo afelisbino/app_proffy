@@ -132,7 +132,7 @@ export function FormularioMatriculaAluno({
     <Form {...formMatriculaAluno}>
       <form
         onSubmit={formMatriculaAluno.handleSubmit(salvar)}
-        className="space-y-8"
+        className="space-y-2"
       >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
           <FormField
@@ -287,21 +287,19 @@ export function FormularioMatriculaAluno({
             />
           </div>
         </div>
-        <div className="grid">
-          <div className="flex flex-col gap-2">
-            <Button
-              type="button"
-              onClick={() =>
-                appendPhone({ ddd: '', telefone: '', whatsapp: false })
-              }
-            >
-              Novo Telefone
-            </Button>
-            {phoneFields.map((telefone, index) => (
-              <div
-                key={index}
-                className="flex flex-row items-center gap-2 p-4 border rounded"
-              >
+
+        <div className="flex flex-col gap-2">
+          <Button
+            type="button"
+            onClick={() =>
+              appendPhone({ ddd: '', telefone: '', whatsapp: false })
+            }
+          >
+            Novo Telefone
+          </Button>
+          {phoneFields.map((telefone, index) => (
+            <div key={index} className="grid gap-2 p-4 border rounded">
+              <div className="flex flex-row items-center justify-between md:justify-start md:gap-2">
                 <Button
                   className="shadow"
                   variant={'destructive'}
@@ -310,71 +308,70 @@ export function FormularioMatriculaAluno({
                 >
                   <Trash />
                 </Button>
-                <FormField
-                  key={telefone.id}
-                  control={formMatriculaAluno.control}
-                  name={`telefones.${index}.ddd`}
-                  render={({ field }) => (
-                    <FormItem className="w-36">
-                      <FormControl>
-                        <Input {...field} placeholder="DDD" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  key={index}
-                  control={formMatriculaAluno.control}
-                  name={`telefones.${index}.telefone`}
-                  render={({ field }) => (
-                    <FormItem className="w-auto md:w-full">
-                      <FormControl>
-                        <Input {...field} placeholder="N° Telefone" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={formMatriculaAluno.control}
-                  name={`telefones.${index}.whatsapp`}
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg px-2 gap-4 w-full">
-                      <FormControl>
-                        <Switch
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="space-y-0.5">
-                        <FormLabel className="text-base">
-                          Notificações
-                        </FormLabel>
-                        <FormDescription>
-                          Ao marcar, este contato receberá notificações da
-                          escola referente ao aluno
-                        </FormDescription>
-                      </div>
-                    </FormItem>
-                  )}
-                />
+                <div className="flex gap-2">
+                  <FormField
+                    key={telefone.id}
+                    control={formMatriculaAluno.control}
+                    name={`telefones.${index}.ddd`}
+                    render={({ field }) => (
+                      <FormItem className="w-full md:w-36">
+                        <FormControl>
+                          <Input {...field} placeholder="DDD" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    key={index}
+                    control={formMatriculaAluno.control}
+                    name={`telefones.${index}.telefone`}
+                    render={({ field }) => (
+                      <FormItem className="w-auto md:w-full">
+                        <FormControl>
+                          <Input {...field} placeholder="N° Telefone" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
               </div>
-            ))}
-          </div>
+
+              <FormField
+                control={formMatriculaAluno.control}
+                name={`telefones.${index}.whatsapp`}
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center justify-between md:justify-normal rounded-lg gap-4 w-full">
+                    <FormControl>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <div className="space-y-0.5">
+                      <FormLabel className="text-base">Notificações</FormLabel>
+                      <FormDescription>
+                        Ao marcar, este contato receberá notificações da escola
+                        referente ao aluno
+                      </FormDescription>
+                    </div>
+                  </FormItem>
+                )}
+              />
+            </div>
+          ))}
         </div>
-        <DialogFooter className="flex items-center space-x-2">
-          <DialogClose>
-            <Button className="bg-app-red-500 hover:bg-app-red-600 gap-2 shadow">
-              <ChevronLeft className="size-5" />
-              Voltar
+        <DialogFooter className="flex flex-col md:flex-row items-center gap-2">
+          <DialogClose asChild>
+            <Button className="bg-app-red-500 hover:bg-app-red-600 gap-2 shadow w-full md:w-auto">
+              Cancelar
             </Button>
           </DialogClose>
           {formMatriculaAluno.formState.isSubmitting ? (
             <Button
               disabled
-              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow"
+              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow w-full md:w-auto"
             >
               <Loader2 className="size-4 animate-spin" />
               Salvando...
@@ -382,7 +379,7 @@ export function FormularioMatriculaAluno({
           ) : (
             <Button
               type="submit"
-              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow"
+              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow w-full md:w-auto"
             >
               <Save />
               Salvar

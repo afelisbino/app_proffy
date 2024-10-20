@@ -146,206 +146,202 @@ export function FormularioDiarioClasse({
   }
 
   return (
-    <section>
-      <Form {...formDiario}>
-        <form
-          onSubmit={formDiario.handleSubmit(onSubmitLancamentosNotas)}
-          className="grid space-y-2"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-            <FormField
-              control={formDiario.control}
-              name={`disciplinaId`}
-              render={({ field }) => (
-                <FormItem className="col-span-1">
-                  <FormLabel>Disciplina</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+    <Form {...formDiario}>
+      <form
+        onSubmit={formDiario.handleSubmit(onSubmitLancamentosNotas)}
+        className="grid space-y-2"
+      >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+          <FormField
+            control={formDiario.control}
+            name="realizadoEm"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Realizado em</FormLabel>
+                <Popover>
+                  <PopoverTrigger asChild>
                     <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecione a disciplina" />
-                      </SelectTrigger>
+                      <Button
+                        variant={'outline'}
+                        className={cn(
+                          'w-full text-left font-normal gap-2',
+                          !field.value && 'text-muted-foreground',
+                        )}
+                      >
+                        {field.value ? (
+                          format(field.value, 'PPP', {
+                            locale: ptBR,
+                          })
+                        ) : (
+                          <span>Selecione a data</span>
+                        )}
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      </Button>
                     </FormControl>
-                    <SelectContent>
-                      {listaDisciplinas.map((disciplina) => (
-                        <SelectItem key={disciplina.id} value={disciplina.id}>
-                          {disciplina.nome}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={formDiario.control}
-              name={`descricao`}
-              render={({ field }) => (
-                <FormItem className="md:col-span-2">
-                  <FormLabel>Atividade</FormLabel>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      disabled={(date) =>
+                        date > new Date() || date < new Date('1900-01-01')
+                      }
+                    />
+                  </PopoverContent>
+                </Popover>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={formDiario.control}
+            name={`tipoPeriodo`}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Tipo de período</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
                   <FormControl>
-                    <Input {...field} />
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecione o tipo" />
+                    </SelectTrigger>
                   </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-            <FormField
-              control={formDiario.control}
-              name="realizadoEm"
-              render={({ field }) => (
-                <FormItem className="">
-                  <FormLabel>Realizado em</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={'outline'}
-                          className={cn(
-                            'w-full text-left font-normal gap-2',
-                            !field.value && 'text-muted-foreground',
-                          )}
-                        >
-                          {field.value ? (
-                            format(field.value, 'PPP', {
-                              locale: ptBR,
-                            })
-                          ) : (
-                            <span>Selecione a data</span>
-                          )}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
-                        disabled={(date) =>
-                          date > new Date() || date < new Date('1900-01-01')
-                        }
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={formDiario.control}
-              name={`tipoPeriodo`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Tipo de período</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                  <SelectContent>
+                    <SelectItem value="mensal">Mensal</SelectItem>
+                    <SelectItem value="bimestral">Bimestral</SelectItem>
+                    <SelectItem value="trimestral">Trimestral</SelectItem>
+                    <SelectItem value="semestral">Semestral</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={formDiario.control}
+            name={`periodo`}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Período</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+          <FormField
+            control={formDiario.control}
+            name={`disciplinaId`}
+            render={({ field }) => (
+              <FormItem className="col-span-1">
+                <FormLabel>Disciplina</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecione a disciplina" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {listaDisciplinas.map((disciplina) => (
+                      <SelectItem key={disciplina.id} value={disciplina.id}>
+                        {disciplina.nome}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={formDiario.control}
+            name={`descricao`}
+            render={({ field }) => (
+              <FormItem className="md:col-span-2">
+                <FormLabel>Atividade</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <Separator className={cn(alunos.length > 0 ? 'flex' : 'hidden')} />
+        <ScrollArea className="max-h-52 md:max-h-72 overflow-auto">
+          {alunos.map((aluno, index) => (
+            <div
+              key={aluno.id}
+              className="flex flex-col md:flex-row py-4 gap-2"
+            >
+              <FormField
+                control={formDiario.control}
+                name={`alunos.${index}.nomeAluno`}
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Aluno</FormLabel>
                     <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecione o tipo" />
-                      </SelectTrigger>
+                      <Input {...field} disabled />
                     </FormControl>
-                    <SelectContent>
-                      <SelectItem value="mensal">Mensal</SelectItem>
-                      <SelectItem value="bimestral">Bimestral</SelectItem>
-                      <SelectItem value="trimestral">Trimestral</SelectItem>
-                      <SelectItem value="semestral">Semestral</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={formDiario.control}
-              name={`periodo`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Período</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <Separator className={cn(alunos.length > 0 ? 'flex' : 'hidden')} />
-          <ScrollArea className="max-h-52 md:max-h-72 overflow-auto">
-            {alunos.map((aluno, index) => (
-              <div
-                key={aluno.id}
-                className="flex flex-col md:flex-row py-4 gap-2"
-              >
-                <FormField
-                  control={formDiario.control}
-                  name={`alunos.${index}.nomeAluno`}
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel>Aluno</FormLabel>
-                      <FormControl>
-                        <Input {...field} disabled />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
+                  </FormItem>
+                )}
+              />
 
-                <FormField
-                  control={formDiario.control}
-                  name={`alunos.${index}.nota`}
-                  render={({ field }) => (
-                    <FormItem className="md:w-24">
-                      <FormLabel>Nota</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            ))}
-          </ScrollArea>
-          <DialogFooter>
-            <div className="flex items-center gap-2">
-              <DialogClose asChild>
-                <Button
-                  type="button"
-                  variant={'destructive'}
-                  onClick={() => formDiario.reset()}
-                  className="shadow rounded"
-                >
-                  Cancelar
-                </Button>
-              </DialogClose>
-              {formDiario.formState.isSubmitting ? (
-                <Button
-                  className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow"
-                  disabled
-                >
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Salvando...
-                </Button>
-              ) : (
-                <Button
-                  type="submit"
-                  className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow"
-                >
-                  <Save className="size-5" />
-                  Salvar
-                </Button>
-              )}
+              <FormField
+                control={formDiario.control}
+                name={`alunos.${index}.nota`}
+                render={({ field }) => (
+                  <FormItem className="md:w-24">
+                    <FormLabel>Nota</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
-          </DialogFooter>
-        </form>
-      </Form>
-    </section>
+          ))}
+        </ScrollArea>
+        <DialogFooter className="flex flex-col md:flex-row items-center gap-2">
+          <DialogClose asChild>
+            <Button
+              type="button"
+              variant={'destructive'}
+              onClick={() => formDiario.reset()}
+              className="shadow rounded w-full md:w-auto"
+            >
+              Cancelar
+            </Button>
+          </DialogClose>
+          {formDiario.formState.isSubmitting ? (
+            <Button
+              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow w-full md:w-auto"
+              disabled
+            >
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Salvando...
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow w-full md:w-auto"
+            >
+              <Save className="size-5" />
+              Salvar
+            </Button>
+          )}
+        </DialogFooter>
+      </form>
+    </Form>
   )
 }

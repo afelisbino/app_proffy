@@ -85,8 +85,7 @@ export function FormNovaDisciplina() {
               </FormItem>
             )}
           />
-
-          <div className="flex flex-row gap-2 float-right pb-4">
+          <div className="flex flex-col md:flex-row gap-2 md:justify-end">
             <Button
               type="button"
               variant={'destructive'}

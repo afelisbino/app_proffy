@@ -120,7 +120,7 @@ export function TabelaAlunosAusentes({ data }: TabelaAlunosAusentesProps) {
           </TableBody>
         </Table>
       </div>
-      <div className="grid grid-cols-2 gap-2 md:w-64 md:float-right">
+      <div className="flex flex-col md:flex-row md:justify-end gap-2">
         <Button
           className="enabled:shadow-md"
           variant="outline"

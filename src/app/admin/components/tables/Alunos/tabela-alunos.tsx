@@ -220,7 +220,7 @@ export function TabelaAlunos({ data, isLoading, idTurma }: TabelaAlunosProps) {
           </TableBody>
         </Table>
       </div>
-      <div className="flex justify-end gap-2">
+      <div className="flex flex-col md:flex-row md:justify-end gap-2">
         <Button
           className="enabled:shadow-md"
           variant="outline"

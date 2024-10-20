@@ -19,31 +19,6 @@ export const colunasTabelaDiarioClasse: ColumnDef<registroNotasTurmaType>[] = [
     ),
   },
   {
-    accessorKey: 'ano',
-    header: 'Ano',
-    enableSorting: false,
-    enableHiding: false,
-    cell: ({ row }) => <span className="w-auto">{row.getValue('ano')}</span>,
-  },
-  {
-    accessorKey: 'periodo',
-    header: 'Período',
-    enableSorting: false,
-    enableHiding: false,
-    cell: ({ row }) => (
-      <span className="w-auto">{row.getValue('periodo')}</span>
-    ),
-  },
-  {
-    accessorKey: 'tipoPeriodo',
-    header: 'Tipo',
-    enableSorting: false,
-    enableHiding: false,
-    cell: ({ row }) => (
-      <span className="capitalize w-auto">{row.getValue('tipoPeriodo')}</span>
-    ),
-  },
-  {
     accessorKey: 'disciplina',
     header: 'Disciplina',
     enableSorting: false,
@@ -76,5 +51,31 @@ export const colunasTabelaDiarioClasse: ColumnDef<registroNotasTurmaType>[] = [
     enableSorting: false,
     enableHiding: false,
     cell: ({ row }) => <span className="w-auto">{row.getValue('nota')}</span>,
+  },
+
+  {
+    accessorKey: 'periodo',
+    header: 'Período',
+    enableSorting: false,
+    enableHiding: false,
+    cell: ({ row }) => (
+      <span className="w-auto">{row.getValue('periodo')}</span>
+    ),
+  },
+  {
+    accessorKey: 'tipoPeriodo',
+    header: 'Tipo',
+    enableSorting: false,
+    enableHiding: false,
+    cell: ({ row }) => (
+      <span className="capitalize w-auto">{row.getValue('tipoPeriodo')}</span>
+    ),
+  },
+  {
+    accessorKey: 'ano',
+    header: 'Ano',
+    enableSorting: false,
+    enableHiding: false,
+    cell: ({ row }) => <span className="w-auto">{row.getValue('ano')}</span>,
   },
 ]

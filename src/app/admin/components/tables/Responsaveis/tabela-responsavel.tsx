@@ -124,7 +124,7 @@ export function TabelaReponsaveisAluno({
           </TableBody>
         </Table>
       </div>
-      <div className="flex flex-row gap-2 justify-end">
+      <div className="flex flex-col md:flex-row md:justify-end gap-2">
         <Button
           className="enabled:shadow-md w-full md:w-auto"
           variant="outline"

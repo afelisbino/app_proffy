@@ -14,7 +14,7 @@ export function MatriculaAlunoDialog({
   idTurma,
 }: FormularioMatriculaAlunoProps) {
   return (
-    <DialogContent className="md:max-w-6xl overflow-auto">
+    <DialogContent className="h-screen md:h-auto md:max-w-6xl overflow-auto">
       <DialogHeader>
         <DialogTitle>Matricular aluno</DialogTitle>
         <DialogDescription>

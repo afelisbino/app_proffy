@@ -48,7 +48,7 @@ export default function ConfigEscolaLayout({
       <CardContent>
         <section>
           <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
-            <aside className="flex justify-center">
+            <aside className="flex justify-start overflow-auto">
               <SidebarNav
                 className="w-auto md:w-auto"
                 items={sidebarNavItems}

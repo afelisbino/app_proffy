@@ -75,8 +75,8 @@ export function TabelaDiarioClasse({
   return (
     <div className="space-y-2">
       <div className="flex flex-col items-center gap-2 py-4 md:flex-row-reverse md:justify-between">
-        <Tooltip>
-          <Dialog>
+        <Dialog>
+          <Tooltip>
             <DialogTrigger asChild>
               <TooltipTrigger asChild>
                 <Button
@@ -84,33 +84,25 @@ export function TabelaDiarioClasse({
                   size={'icon'}
                 >
                   <Plus className="size-5 hidden md:flex" />
-                  <span className="flex md:hidden">Registrar diario</span>
+                  <span className="flex md:hidden">Registrar diário</span>
                 </Button>
               </TooltipTrigger>
             </DialogTrigger>
-            <DiarioTurmaDialog turmaId={idTurma} />
-          </Dialog>
-          <TooltipContent side="bottom" sideOffset={5}>
-            Registrar notas da disciplina no diario
-          </TooltipContent>
-        </Tooltip>
-        <div className="flex flex-row gap-2">
-          <Input
-            placeholder="Filtrar pelo nome do aluno..."
-            className="w-full md:w-64"
-            disabled={data?.length === 0}
-            value={(table.getColumn('aluno')?.getFilterValue() as string) ?? ''}
-            onChange={(event) =>
-              table.getColumn('aluno')?.setFilterValue(event.target.value)
-            }
-          />
-          <Popover open={open} onOpenChange={setOpen}>
+            <TooltipContent side="bottom" sideOffset={5}>
+              Registrar notas da disciplina no diario
+            </TooltipContent>
+          </Tooltip>
+          <DiarioTurmaDialog turmaId={idTurma} />
+        </Dialog>
+
+        <div className="flex flex-col md:flex-row-reverse md:justify-end gap-2 w-full">
+          <Popover>
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
                 role="combobox"
                 aria-expanded={open}
-                className="justify-between w-full"
+                className="flex justify-between md:justify-start gap-2"
               >
                 {disciplinaSelecionada
                   ? listaDisciplinas.find(
@@ -120,7 +112,7 @@ export function TabelaDiarioClasse({
                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="md:w-[200px] p-0">
+            <PopoverContent className="w-full md:w-[200px] p-0">
               <Command>
                 <CommandInput placeholder="Procurar disciplina..." />
                 <CommandList>
@@ -163,6 +155,15 @@ export function TabelaDiarioClasse({
               </Command>
             </PopoverContent>
           </Popover>
+          <Input
+            placeholder="Filtrar pelo nome do aluno..."
+            className="w-full md:w-64"
+            disabled={data?.length === 0}
+            value={(table.getColumn('aluno')?.getFilterValue() as string) ?? ''}
+            onChange={(event) =>
+              table.getColumn('aluno')?.setFilterValue(event.target.value)
+            }
+          />
         </div>
       </div>
       <div className="rounded-md border shadow overflow-auto">
@@ -233,7 +234,7 @@ export function TabelaDiarioClasse({
           </TableBody>
         </Table>
       </div>
-      <div className="flex flex-row gap-2 justify-end">
+      <div className="flex flex-col md:flex-row md:justify-end gap-2">
         <Button
           className="enabled:shadow-md w-full md:w-auto"
           variant="outline"

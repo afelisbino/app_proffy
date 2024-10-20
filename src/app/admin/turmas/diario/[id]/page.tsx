@@ -35,7 +35,7 @@ export default function DiarioClasse() {
   })
 
   return (
-    <div className="space-y-2">
+    <section className="space-y-2">
       <BotaoVoltar descricao="Retornar para a listagem de turmas" />
       <Card>
         <CardHeader>
@@ -53,6 +53,6 @@ export default function DiarioClasse() {
           />
         </CardContent>
       </Card>
-    </div>
+    </section>
   )
 }
