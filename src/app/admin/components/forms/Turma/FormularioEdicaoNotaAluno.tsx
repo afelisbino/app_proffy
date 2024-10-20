@@ -307,14 +307,14 @@ export function FormularioEdicaoDiarioClasse({
               type="button"
               variant={'destructive'}
               onClick={() => formEdicaoNota.reset()}
-              className="shadow"
+              className="shadow w-full md:w-auto"
             >
               Cancelar
             </Button>
           </DialogClose>
           {formEdicaoNota.formState.isSubmitting ? (
             <Button
-              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow"
+              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow w-full md:w-auto"
               disabled
             >
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -323,7 +323,7 @@ export function FormularioEdicaoDiarioClasse({
           ) : (
             <Button
               type="submit"
-              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow"
+              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow w-full md:w-auto"
             >
               <Save className="size-5" />
               Salvar

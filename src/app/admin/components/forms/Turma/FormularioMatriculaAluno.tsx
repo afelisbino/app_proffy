@@ -299,7 +299,7 @@ export function FormularioMatriculaAluno({
           </Button>
           {phoneFields.map((telefone, index) => (
             <div key={index} className="grid gap-2 p-4 border rounded">
-              <div className="flex flex-row items-center justify-between md:justify-start md:gap-2">
+              <div className="flex flex-row items-center justify-between md:justify-start gap-2">
                 <Button
                   className="shadow"
                   variant={'destructive'}
@@ -364,7 +364,7 @@ export function FormularioMatriculaAluno({
         </div>
         <DialogFooter className="flex flex-col md:flex-row items-center gap-2">
           <DialogClose asChild>
-            <Button className="bg-app-red-500 hover:bg-app-red-600 gap-2 shadow w-full md:w-auto">
+            <Button variant={'destructive'} className="shadow w-full md:w-auto">
               Cancelar
             </Button>
           </DialogClose>

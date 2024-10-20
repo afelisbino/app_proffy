@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { ChevronLeft, Loader2, Save, Trash } from 'lucide-react'
+import { Loader2, Save, Trash } from 'lucide-react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -160,50 +160,51 @@ export function FormularioNovosContatosReponsavel({
               Novo Telefone
             </Button>
             {phoneFields.map((telefone, index) => (
-              <div
-                key={index}
-                className="flex flex-row items-center gap-2 p-4 border rounded"
-              >
-                <Button
-                  className="shadow"
-                  variant={'destructive'}
-                  type="button"
-                  onClick={() => removePhone(index)}
-                >
-                  <Trash />
-                </Button>
-                <FormField
-                  key={telefone.id}
-                  control={formDadosContatosResponsavel.control}
-                  name={`telefones.${index}.ddd`}
-                  render={({ field }) => (
-                    <FormItem className="w-36">
-                      <FormControl>
-                        <Input {...field} placeholder="DDD" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  key={index}
-                  control={formDadosContatosResponsavel.control}
-                  name={`telefones.${index}.telefone`}
-                  render={({ field }) => (
-                    <FormItem className="w-auto md:w-full">
-                      <FormControl>
-                        <Input {...field} placeholder="N° Telefone" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+              <div key={index} className="grid gap-2 p-4 border rounded">
+                <div className="flex flex-row items-center justify-between md:justify-start gap-2">
+                  <Button
+                    className="shadow"
+                    variant={'destructive'}
+                    type="button"
+                    onClick={() => removePhone(index)}
+                  >
+                    <Trash />
+                  </Button>
+                  <div className="flex gap-2">
+                    <FormField
+                      key={telefone.id}
+                      control={formDadosContatosResponsavel.control}
+                      name={`telefones.${index}.ddd`}
+                      render={({ field }) => (
+                        <FormItem className="w-full md:w-36">
+                          <FormControl>
+                            <Input {...field} placeholder="DDD" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      key={index}
+                      control={formDadosContatosResponsavel.control}
+                      name={`telefones.${index}.telefone`}
+                      render={({ field }) => (
+                        <FormItem className="w-auto md:w-full">
+                          <FormControl>
+                            <Input {...field} placeholder="N° Telefone" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
 
                 <FormField
                   control={formDadosContatosResponsavel.control}
                   name={`telefones.${index}.whatsapp`}
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg px-2 gap-4 w-full">
+                    <FormItem className="flex flex-row items-center justify-between md:justify-normal rounded-lg gap-4 w-full">
                       <FormControl>
                         <Switch
                           checked={field.value}
@@ -226,20 +227,19 @@ export function FormularioNovosContatosReponsavel({
             ))}
           </div>
         </div>
-        <DialogFooter className="flex items-center space-x-2">
-          <DialogClose>
+        <DialogFooter className="flex flex-col md:flex-row items-center gap-2">
+          <DialogClose asChild>
             <Button
               type="button"
-              className="bg-app-red-500 hover:bg-app-red-600 gap-2 shadow"
+              className="bg-app-red-500 hover:bg-app-red-600 gap-2 shadow md:w-auto w-full"
             >
-              <ChevronLeft className="size-5" />
-              Voltar
+              Cancelar
             </Button>
           </DialogClose>
           {formDadosContatosResponsavel.formState.isSubmitting ? (
             <Button
               disabled
-              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow"
+              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow md:w-auto w-full"
             >
               <Loader2 className="size-4 animate-spin" />
               Salvando...
@@ -247,7 +247,7 @@ export function FormularioNovosContatosReponsavel({
           ) : (
             <Button
               type="submit"
-              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow"
+              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow md:w-auto w-full"
             >
               <Save />
               Salvar

@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { ChevronLeft, Loader2, Save } from 'lucide-react'
+import { Loader2, Save } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -170,20 +170,19 @@ export function FormularioEdicaoReponsavel({
             />
           </div>
         </div>
-        <DialogFooter className="flex items-center space-x-2">
-          <DialogClose>
+        <DialogFooter className="flex flex-col md:flex-row items-center gap-2">
+          <DialogClose asChild>
             <Button
               type="button"
-              className="bg-app-red-500 hover:bg-app-red-600 gap-2 shadow"
+              className="bg-app-red-500 hover:bg-app-red-600 gap-2 shadow w-full md:w-auto"
             >
-              <ChevronLeft className="size-5" />
-              Voltar
+              Cancelar
             </Button>
           </DialogClose>
           {formDadosResponsavel.formState.isSubmitting ? (
             <Button
               disabled
-              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow"
+              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow w-full md:w-auto"
             >
               <Loader2 className="size-4 animate-spin" />
               Salvando...
@@ -191,7 +190,7 @@ export function FormularioEdicaoReponsavel({
           ) : (
             <Button
               type="submit"
-              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow"
+              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow w-full md:w-auto"
             >
               <Save />
               Salvar

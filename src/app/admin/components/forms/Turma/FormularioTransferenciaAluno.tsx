@@ -166,15 +166,19 @@ export function FormularioTransferenciaAluno({
             </FormItem>
           )}
         />
-        <DialogFooter>
-          <DialogClose>
-            <Button variant={'destructive'} type="button" className="shadow">
+        <DialogFooter className="flex flex-col md:flex-row items-center gap-2">
+          <DialogClose asChild>
+            <Button
+              variant={'destructive'}
+              type="button"
+              className="shadow w-full md:w-auto"
+            >
               Cancelar
             </Button>
           </DialogClose>
           {formTransferenciaAluno.formState.isSubmitting ? (
             <Button
-              className="shadow bg-app-green-500 hover:bg-app-green-600 gap-2"
+              className="shadow bg-app-green-500 hover:bg-app-green-600 gap-2 w-full md:w-auto"
               disabled
             >
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -182,7 +186,7 @@ export function FormularioTransferenciaAluno({
             </Button>
           ) : (
             <Button
-              className="bg-app-green-500 hover:bg-app-green-600 shadow gap-2"
+              className="bg-app-green-500 hover:bg-app-green-600 shadow gap-2 w-full md:w-auto"
               type="submit"
             >
               <ArrowRightLeft className="size-5" />

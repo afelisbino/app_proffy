@@ -15,7 +15,7 @@ export function NovosContatosResponsavelDialog({
   idResponsavel,
 }: DadosNovosContatosResponsavelProps) {
   return (
-    <DialogContent className="md:max-w-6xl overflow-auto">
+    <DialogContent className="max-h-screen md:h-auto md:max-w-6xl overflow-auto">
       <DialogHeader>
         <DialogTitle>Novos telefones</DialogTitle>
         <DialogDescription>

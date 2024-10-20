@@ -42,6 +42,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { mascararNome } from '@/lib/utils'
 
 interface RelatorioFrequenciaEscolarProps {
   listaTurmas: Array<turmaType>
@@ -85,7 +86,7 @@ export function ChartFrequenciaTurma({
     setDadosGrafico(
       relatorioFrequencia.map((aluno) => {
         return {
-          aluno: aluno.Aluno,
+          aluno: mascararNome(aluno.Aluno),
           faltas: aluno.TotalFaltas,
         }
       }),
@@ -122,7 +123,7 @@ export function ChartFrequenciaTurma({
               <p>Filtro de frequencia da turma</p>
             </TooltipContent>
           </Tooltip>
-          <PopoverContent className="w-full">
+          <PopoverContent className="w-full overflow-auto h-[300px] md:h-auto">
             <div className="grid gap-2">
               <div>
                 <Select
