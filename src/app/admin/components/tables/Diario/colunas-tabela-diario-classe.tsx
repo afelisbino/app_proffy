@@ -8,7 +8,18 @@ import {
 } from '@/components/ui/tooltip'
 import { mascararNome } from '@/lib/utils'
 
+import { MenuTabelaDiarioAluno } from './menu-tabela-diario-classe'
+
 export const colunasTabelaDiarioClasse: ColumnDef<registroNotasTurmaType>[] = [
+  {
+    id: 'acoes',
+    enableHiding: false,
+    cell: ({ row }) => (
+      <div>
+        <MenuTabelaDiarioAluno dadosNota={row.original} />
+      </div>
+    ),
+  },
   {
     accessorKey: 'aluno',
     header: 'Aluno',

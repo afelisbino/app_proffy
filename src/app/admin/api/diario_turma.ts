@@ -1,6 +1,7 @@
 import { axiosInstance } from '@/lib/AxiosClient'
 
 import { FormDiarioTurmaType } from '../components/forms/Turma/FormularioDiarioTurma'
+import { FormEdicaoDiarioTurmaType } from '../components/forms/Turma/FormularioEdicaoNotaAluno'
 import { registroNotasTurmaType } from '../schemas/SchemaDiarioClasse'
 
 export type ResponseLancamentoDiarioTurmaType = {
@@ -80,6 +81,40 @@ export async function ListarLancamentoNotasTurma({
         status: false,
         msg: 'Ocorreu um erro ao listar os lançamentos de notas: ' + err,
         dados: null,
+      }
+    })
+}
+
+export async function atualizarNotaAluno({
+  tipoPeriodo,
+  periodo,
+  ano,
+  alunoId,
+  id,
+  disciplinaId,
+  realizadoEm,
+  nomeAluno,
+  nota,
+  descricao,
+}: FormEdicaoDiarioTurmaType) {
+  return await axiosInstance
+    .put<ResponseLancamentoDiarioTurmaType>(`diario/lancamento/${id}`, {
+      idAluno: alunoId,
+      idDisciplina: disciplinaId,
+      periodo: String(periodo),
+      ano,
+      tipoPeriodo,
+      realizadoEm,
+      nota,
+      descricao,
+    })
+    .then((resp) => {
+      return resp.data
+    })
+    .catch((err) => {
+      return {
+        status: false,
+        msg: 'Ocorreu um erro ao atualizar a nota: ' + err,
       }
     })
 }

@@ -5,7 +5,10 @@ export type registroNotasTurmaType = {
   ano: string
   tipoPeriodo: 'mensal' | 'bimestral' | 'trimestral' | 'semestral'
   aluno: string
+  alunoId: string
   disciplina: string
+  disciplinaId: string
+  turmaId: string
   lancamento: Date
   descricao: string
 }

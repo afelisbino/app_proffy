@@ -5,13 +5,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { CalendarIcon, Loader2, Save } from 'lucide-react'
-import { useFieldArray, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { LancarNotasTurma } from '@/app/admin/api/diario_turma'
+import { atualizarNotaAluno } from '@/app/admin/api/diario_turma'
 import { DisciplinaEscolaType } from '@/app/admin/escola/disciplinas/schemas/disciplina'
-import { AlunosTurmaType } from '@/app/admin/schemas/SchemaAlunosTurma'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { DialogClose, DialogFooter } from '@/components/ui/dialog'
@@ -29,7 +28,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { ScrollArea } from '@/components/ui/scroll-area'
 import {
   Select,
   SelectContent,
@@ -37,15 +35,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Separator } from '@/components/ui/separator'
 import { cn, mascararNome } from '@/lib/utils'
 
-interface FormularioDiarioClasseProps {
+export interface FormularioEdicaoDiarioClasseProps {
   idTurma: string
-  alunosTurma: Array<AlunosTurmaType>
+  id: string
+  tipoPeriodo: 'mensal' | 'bimestral' | 'trimestral' | 'semestral'
+  realizadoEm: Date
+  periodo: number
+  ano: string
+  disciplinaId: string
+  descricao: string
+  alunoId: string
+  nomeAluno: string
+  nota: number
   listaDisciplinas: Array<DisciplinaEscolaType>
 }
-const schemaNotaTurma = z.object({
+
+const schemaEdicaoNotaTurma = z.object({
+  id: z.string().uuid(),
   tipoPeriodo: z.enum(['mensal', 'bimestral', 'trimestral', 'semestral']),
   realizadoEm: z.coerce.date(),
   periodo: z.coerce
@@ -60,61 +68,58 @@ const schemaNotaTurma = z.object({
   descricao: z.string({
     required_error: 'A descrição da avaliação é obrigatória',
   }),
-  alunos: z.array(
-    z.object({
-      alunoId: z.string().uuid(),
-      nomeAluno: z.string(),
-      nota: z.coerce
-        .number({
-          required_error: 'A nota do aluno é obrigatória',
-        })
-        .min(0, {
-          message: 'A nota não pode ser menor que 0',
-        })
-        .max(10, {
-          message: 'A nota não pode ser maior que 10',
-        }),
+  alunoId: z.string().uuid(),
+  nomeAluno: z.string(),
+  nota: z.coerce
+    .number({
+      required_error: 'A nota do aluno é obrigatória',
+    })
+    .min(0, {
+      message: 'A nota não pode ser menor que 0',
+    })
+    .max(10, {
+      message: 'A nota não pode ser maior que 10',
     }),
-  ),
 })
 
-export type FormDiarioTurmaType = z.infer<typeof schemaNotaTurma>
+export type FormEdicaoDiarioTurmaType = z.infer<typeof schemaEdicaoNotaTurma>
 
-export function FormularioDiarioClasse({
-  idTurma,
-  alunosTurma,
+export function FormularioEdicaoDiarioClasse({
+  id,
+  tipoPeriodo,
+  realizadoEm,
+  periodo,
+  ano,
+  disciplinaId,
+  descricao,
+  alunoId,
+  nomeAluno,
+  nota,
   listaDisciplinas,
-}: FormularioDiarioClasseProps) {
+  idTurma,
+}: FormularioEdicaoDiarioClasseProps) {
   const queryClient = useQueryClient()
-  const formDiario = useForm<FormDiarioTurmaType>({
-    resolver: zodResolver(schemaNotaTurma),
+  const formEdicaoNota = useForm<FormEdicaoDiarioTurmaType>({
+    resolver: zodResolver(schemaEdicaoNotaTurma),
     defaultValues: {
-      disciplinaId: '',
-      periodo: 1,
-      realizadoEm: new Date(),
-      ano: String(new Date().getFullYear()),
-      tipoPeriodo: 'bimestral',
-      descricao: '',
-      alunos: alunosTurma.map((aluno) => {
-        return {
-          alunoId: aluno.id,
-          nomeAluno: mascararNome(aluno.nome),
-          nota: 0,
-        }
-      }),
+      id,
+      disciplinaId,
+      periodo,
+      realizadoEm,
+      ano,
+      tipoPeriodo,
+      descricao,
+      alunoId,
+      nomeAluno: mascararNome(nomeAluno),
+      nota,
     },
     mode: 'onChange',
   })
 
-  const { fields: alunos } = useFieldArray({
-    control: formDiario.control,
-    name: 'alunos',
-  })
-
-  const { mutateAsync: salvarLancamentos } = useMutation({
-    mutationFn: LancarNotasTurma,
+  const { mutateAsync: atualizarDados } = useMutation({
+    mutationFn: atualizarNotaAluno,
     onError: (erro) => {
-      toast.error('Houve um problema ao lançar as notas, tente novamente!', {
+      toast.error('Houve um problema ao atualizar a nota, tente novamente!', {
         description: erro.message,
       })
     },
@@ -126,34 +131,26 @@ export function FormularioDiarioClasse({
           exact: true,
           type: 'active',
         })
-        formDiario.reset()
+        formEdicaoNota.reset()
       } else {
         toast.error(data.msg)
       }
     },
   })
 
-  async function onSubmitLancamentosNotas(data: FormDiarioTurmaType) {
-    await salvarLancamentos({
-      tipoPeriodo: data.tipoPeriodo,
-      periodo: data.periodo,
-      realizadoEm: data.realizadoEm,
-      ano: data.ano,
-      disciplinaId: data.disciplinaId,
-      descricao: data.descricao,
-      alunos: data.alunos,
-    })
+  async function onSubmitAtualizacaoNotas(data: FormEdicaoDiarioTurmaType) {
+    await atualizarDados(data)
   }
 
   return (
-    <Form {...formDiario}>
+    <Form {...formEdicaoNota}>
       <form
-        onSubmit={formDiario.handleSubmit(onSubmitLancamentosNotas)}
+        onSubmit={formEdicaoNota.handleSubmit(onSubmitAtualizacaoNotas)}
         className="grid space-y-2"
       >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
           <FormField
-            control={formDiario.control}
+            control={formEdicaoNota.control}
             name="realizadoEm"
             render={({ field }) => (
               <FormItem>
@@ -195,7 +192,7 @@ export function FormularioDiarioClasse({
             )}
           />
           <FormField
-            control={formDiario.control}
+            control={formEdicaoNota.control}
             name={`tipoPeriodo`}
             render={({ field }) => (
               <FormItem>
@@ -221,7 +218,7 @@ export function FormularioDiarioClasse({
             )}
           />
           <FormField
-            control={formDiario.control}
+            control={formEdicaoNota.control}
             name={`periodo`}
             render={({ field }) => (
               <FormItem>
@@ -236,7 +233,7 @@ export function FormularioDiarioClasse({
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
           <FormField
-            control={formDiario.control}
+            control={formEdicaoNota.control}
             name={`disciplinaId`}
             render={({ field }) => (
               <FormItem className="col-span-1">
@@ -263,7 +260,7 @@ export function FormularioDiarioClasse({
             )}
           />
           <FormField
-            control={formDiario.control}
+            control={formEdicaoNota.control}
             name={`descricao`}
             render={({ field }) => (
               <FormItem className="md:col-span-2">
@@ -276,56 +273,48 @@ export function FormularioDiarioClasse({
             )}
           />
         </div>
-        <Separator className={cn(alunos.length > 0 ? 'flex' : 'hidden')} />
-        <ScrollArea className="max-h-52 md:max-h-72 overflow-auto">
-          {alunos.map((aluno, index) => (
-            <div
-              key={aluno.id}
-              className="flex flex-col md:flex-row py-4 gap-2"
-            >
-              <FormField
-                control={formDiario.control}
-                name={`alunos.${index}.nomeAluno`}
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <FormLabel>Aluno</FormLabel>
-                    <FormControl>
-                      <Input {...field} disabled />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
+        <div className="flex flex-col md:flex-row py-4 gap-2">
+          <FormField
+            control={formEdicaoNota.control}
+            name={`nomeAluno`}
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Aluno</FormLabel>
+                <FormControl>
+                  <Input {...field} disabled />
+                </FormControl>
+              </FormItem>
+            )}
+          />
 
-              <FormField
-                control={formDiario.control}
-                name={`alunos.${index}.nota`}
-                render={({ field }) => (
-                  <FormItem className="md:w-24">
-                    <FormLabel>Nota</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          ))}
-        </ScrollArea>
+          <FormField
+            control={formEdicaoNota.control}
+            name={`nota`}
+            render={({ field }) => (
+              <FormItem className="md:w-24">
+                <FormLabel>Nota</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         <DialogFooter className="flex flex-col md:flex-row items-center gap-2">
           <DialogClose asChild>
             <Button
               type="button"
               variant={'destructive'}
-              onClick={() => formDiario.reset()}
-              className="shadow rounded w-full md:w-auto"
+              onClick={() => formEdicaoNota.reset()}
+              className="shadow"
             >
               Cancelar
             </Button>
           </DialogClose>
-          {formDiario.formState.isSubmitting ? (
+          {formEdicaoNota.formState.isSubmitting ? (
             <Button
-              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow w-full md:w-auto"
+              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow"
               disabled
             >
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -334,7 +323,7 @@ export function FormularioDiarioClasse({
           ) : (
             <Button
               type="submit"
-              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow w-full md:w-auto"
+              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow"
             >
               <Save className="size-5" />
               Salvar
