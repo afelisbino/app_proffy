@@ -21,11 +21,24 @@ import {
 } from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
+import { format } from "date-fns"
+import { CalendarIcon } from "lucide-react"
+ 
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 
 import { buscarAlunosTurma, buscarTurmas } from '../api/turma'
 import { FormChamadaAlunos } from '../components/forms/Turma/FormChamadaTurma'
+import { ptBR } from 'date-fns/locale'
 
 export default function PageChamada() {
+  const [date, setDate] = useState<Date|undefined>(new Date())
   const [openFilterTurma, setOpenFilterTurma] = useState(false)
   const [turmaSelecionada, setTurma] = useState<string>('')
 
@@ -44,11 +57,38 @@ export default function PageChamada() {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Chamada diária</CardTitle>
-        <CardDescription>
-          Área para realizar chamada do dia de cada turma
-        </CardDescription>
+      <CardHeader className='flex flex-row justify-between'>
+        <div>
+          <CardTitle>Chamada diária</CardTitle>
+          <CardDescription>
+            Área para realizar chamada do dia de cada turma
+          </CardDescription>
+        </div>
+        <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          variant={"outline"}
+          className={cn(
+            "w-auto justify-start text-left font-normal gap-2",
+            !date && "text-muted-foreground"
+          )}
+        >
+          <CalendarIcon />
+          {date ? format(date, "PPP", {
+            locale: ptBR
+          }) : <span>Pick a date</span>}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0" align="start">
+        <Calendar
+          mode="single"
+          selected={date}
+          onSelect={setDate}
+          locale={ptBR}
+          initialFocus
+        />
+      </PopoverContent>
+    </Popover>
       </CardHeader>
       <CardContent>
         <section className="grid space-y-4">
@@ -83,6 +123,7 @@ export default function PageChamada() {
             <>
               <Separator />
               <FormChamadaAlunos
+                dataChamada={date ?? new Date()}
                 listaAlunosTurma={alunosTurma}
                 carregandoAlunos={carregandoAlunos}
               />

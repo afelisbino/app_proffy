@@ -69,7 +69,7 @@ export default function Dashboard() {
               ) : (
                 <div className="flex flex-row gap-1 items-baseline">
                   <span className="text-2xl">
-                    {estatisticasEscola.data?.frequenciaAtual.toFixed(2) ?? 0}
+                    {estatisticasEscola.data?.frequenciaAtual?.toFixed(2) ?? 0}
                   </span>
                   <span className="text-sm">%</span>
                 </div>

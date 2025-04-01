@@ -30,6 +30,7 @@ import {
 import { mascararNome } from '@/lib/utils'
 
 interface ListaAlunosChamadaProps {
+  dataChamada: Date
   listaAlunosTurma: Array<AlunosTurmaType>
   carregandoAlunos: boolean
 }
@@ -40,6 +41,7 @@ export const schemaFormChamadaTurma = z.object({
       idAluno: z.string().uuid(),
       presente: z.boolean().default(false),
       nomeAluno: z.string(),
+      dataChamada: z.coerce.date()
     }),
   ),
 })
@@ -49,6 +51,7 @@ export type chamadaTurmaType = z.infer<typeof schemaFormChamadaTurma>
 export function FormChamadaAlunos({
   listaAlunosTurma,
   carregandoAlunos,
+  dataChamada
 }: ListaAlunosChamadaProps) {
   const [todosPresenteSelecionado, selecionarTodosPresente] = useState(false)
   const formChamadaTurma = useForm<chamadaTurmaType>({
@@ -61,6 +64,7 @@ export function FormChamadaAlunos({
                 idAluno: aluno.id,
                 presente: false,
                 nomeAluno: mascararNome(aluno.nome),
+                dataChamada,
               }
             })
           : [],

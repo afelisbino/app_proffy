@@ -110,6 +110,7 @@ export async function realizarChamadaTurma({ alunos }: chamadaTurmaType) {
       return {
         idAluno: chamadaAluno.idAluno,
         presente: chamadaAluno.presente,
+        dataChamada: chamadaAluno.dataChamada
       }
     }),
   })
