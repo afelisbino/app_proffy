@@ -11,7 +11,7 @@ import { Check, ChevronsUpDown, Plus } from 'lucide-react'
 import React from 'react'
 
 import { DisciplinaEscolaType } from '@/app/admin/escola/disciplinas/schemas/disciplina'
-import { registroNotasTurmaType } from '@/app/admin/schemas/SchemaDiarioClasse'
+import { ConteudosAulaTurmaType, registroNotasTurmaType } from '@/app/admin/schemas/SchemaDiarioClasse'
 import { Button } from '@/components/ui/button'
 import {
   Command,
@@ -22,7 +22,6 @@ import {
   CommandList,
 } from '@/components/ui/command'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
 import {
   Popover,
   PopoverContent,
@@ -45,17 +44,19 @@ import {
 import { cn } from '@/lib/utils'
 
 import { DiarioTurmaDialog } from '../../dialogs/diario-turma'
+import { colunasTabelaConteudoAula } from './colunas-tabela-conteudo-aula'
+import { colunasTabelaDiarioClasse } from '../Diario/colunas-tabela-diario-classe'
+import { DiarioConteudoDialog } from '../../dialogs/diario-conteudo-aula'
 
-import { colunasTabelaDiarioClasse } from './colunas-tabela-diario-classe'
 
 interface TabelaDiarioClasseProps {
   listaDisciplinas: Array<DisciplinaEscolaType>
-  data: Array<registroNotasTurmaType>
+  data: Array<ConteudosAulaTurmaType>
   isLoading: boolean
   idTurma: string | null
 }
 
-export function TabelaDiarioClasse({
+export function TabelaConteudoDiarioClasse({
   listaDisciplinas,
   data,
   isLoading,
@@ -66,7 +67,7 @@ export function TabelaDiarioClasse({
 
   const table = useReactTable({
     data,
-    columns: colunasTabelaDiarioClasse,
+    columns: colunasTabelaConteudoAula,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -86,15 +87,15 @@ export function TabelaDiarioClasse({
                       size={'icon'}
                     >
                       <Plus className="size-5 hidden md:flex" />
-                      <span className="flex md:hidden">Registrar diário</span>
+                      <span className="flex md:hidden">Registrar conteúdo</span>
                     </Button>
                   </TooltipTrigger>
                 </DialogTrigger>
                 <TooltipContent side="bottom" sideOffset={5}>
-                  Registrar notas da disciplina no diario
+                  Registrar novo conteudo de aula lecionado na turma
                 </TooltipContent>
               </Tooltip>
-              <DiarioTurmaDialog turmaId={idTurma} />
+              <DiarioConteudoDialog turmaId={idTurma} listaDisciplinas={listaDisciplinas}/>
             </Dialog>
           )
         }
@@ -159,15 +160,6 @@ export function TabelaDiarioClasse({
               </Command>
             </PopoverContent>
           </Popover>
-          <Input
-            placeholder="Filtrar pelo nome do aluno..."
-            className="w-full md:w-64"
-            disabled={data?.length === 0}
-            value={(table.getColumn('aluno')?.getFilterValue() as string) ?? ''}
-            onChange={(event) =>
-              table.getColumn('aluno')?.setFilterValue(event.target.value)
-            }
-          />
         </div>
       </div>
       <div className="rounded-md border shadow overflow-auto">
@@ -228,7 +220,7 @@ export function TabelaDiarioClasse({
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={colunasTabelaDiarioClasse.length}
+                  colSpan={colunasTabelaConteudoAula.length}
                   className="h-16 text-center text-padrao-gray-200 text-sm font-medium mt-5 md:text-base lg:text-lg"
                 >
                   Nenhum registro encontrado!

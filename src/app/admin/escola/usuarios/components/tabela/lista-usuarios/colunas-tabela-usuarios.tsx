@@ -40,6 +40,13 @@ export const colunasTabelaUsuario: ColumnDef<UsuarioType>[] = [
     cell: ({ row }) => <div className="w-auto">{row.getValue('email')}</div>,
   },
   {
+    accessorKey: 'perfil',
+    header: 'Perfil',
+    enableColumnFilter: false,
+    enableHiding: false,
+    cell: ({ row }) => <div className="w-auto capitalize">{row.original.perfil.toLowerCase()}</div>,
+  },
+  {
     accessorKey: 'status',
     header: 'Status',
     enableColumnFilter: false,

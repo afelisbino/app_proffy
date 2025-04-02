@@ -7,7 +7,7 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { ArrowRightLeft, NotebookPen, Plus } from 'lucide-react'
+import { ArrowRightLeft, Plus } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
@@ -55,10 +55,6 @@ export function TabelaAlunos({ data, isLoading, idTurma }: TabelaAlunosProps) {
       rowSelection,
     },
   })
-
-  const redirecionarDiarioTurma = () => {
-    router.push(`turmas/diario/${idTurma}`)
-  }
 
   return (
     <div className="space-y-2">
@@ -132,22 +128,6 @@ export function TabelaAlunos({ data, isLoading, idTurma }: TabelaAlunosProps) {
             </Dialog>
             <TooltipContent side="bottom" sideOffset={5}>
               Transferir aluno de turma
-            </TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                size={'icon'}
-                className="shadow gap-2 p-2 w-full"
-                onClick={redirecionarDiarioTurma}
-                disabled={data.length === 0}
-              >
-                <NotebookPen className="size-5 hidden md:flex" />
-                <span className="flex md:hidden">Diário</span>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side="bottom" sideOffset={5}>
-              Díario de classe
             </TooltipContent>
           </Tooltip>
         </div>

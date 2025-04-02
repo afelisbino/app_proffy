@@ -12,3 +12,12 @@ export type registroNotasTurmaType = {
   lancamento: Date
   descricao: string
 }
+
+export type ConteudosAulaTurmaType = {
+  id: string;
+  idTurma: string;
+  idDisciplina: string;
+  descricao: string;
+  realizadoEm: Date | null;
+  disciplina: string;
+}

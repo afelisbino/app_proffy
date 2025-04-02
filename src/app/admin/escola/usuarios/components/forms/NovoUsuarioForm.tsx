@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Loader2 } from 'lucide-react'
+import { Link, Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
@@ -16,11 +16,19 @@ import { DialogClose, DialogFooter } from '@/components/ui/dialog'
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Input } from '@/components/ui/input'
 
 export function NovoUsuarioForm() {
@@ -31,13 +39,14 @@ export function NovoUsuarioForm() {
       nome: '',
       email: '',
       senha: '',
+      perfil: 'PROFESSOR'
     },
     mode: 'onChange',
   })
 
   const { mutateAsync: salvarNovoUsuario, isPending } = useMutation({
-    mutationFn: ({ nome, email, senha }: FormularioNovoUsuarioType) =>
-      inserirNovoUsuario({ nome, email, senha }),
+    mutationFn: ({ nome, email, senha, perfil }: FormularioNovoUsuarioType) =>
+      inserirNovoUsuario({ nome, email, senha, perfil }),
     onError: () => {
       toast.error('Houve um problema ao salvar o usuário, tente novamente!')
     },
@@ -124,6 +133,27 @@ export function NovoUsuarioForm() {
             )}
           />
         </div>
+        <FormField
+          control={formNovoUsuario.control}
+          name="perfil"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Perfil</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Perfil do usuário" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="PROFESSOR">Professor</SelectItem>
+                  <SelectItem value="ADMIN">Administrador</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <DialogFooter className="flex flex-col md:flex-row gap-2 md:justify-end">
           <DialogClose asChild>
             <Button

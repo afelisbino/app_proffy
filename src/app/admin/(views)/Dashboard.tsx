@@ -1,7 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { MessageSquareWarning, Percent, Users } from 'lucide-react'
+import { Loader2, MessageSquareWarning, Percent, Users } from 'lucide-react'
 
 import {
   Card,
@@ -16,6 +16,16 @@ import { buscaEstatisticasEscola } from '../api/relatorios'
 import { buscarTurmas } from '../api/turma'
 import { ChartAvalicoesTurma } from '../components/charts/avaliativa/NotasTurma'
 import { ChartFrequenciaTurma } from '../components/charts/frequencia/FrequenciaPorTurma'
+import dynamic from 'next/dynamic'
+
+const HistoricoFrequencia = dynamic(() => import('./HistoricoFrequencia'), {
+  loading: () => (
+    <div className="flex justify-center mt-4">
+      <Loader2 className="animate-spin" />
+    </div>
+  ),
+  ssr: false,
+})
 
 export default function Dashboard() {
   const { data: listaTurmas, isLoading: carregandoTurmas } = useQuery({
@@ -31,8 +41,8 @@ export default function Dashboard() {
   })
 
   return (
-    <div className="space-y-3">
-      <div className="grid grid-cols-1 md:grid-cols-3 space-y-3 space-x-0 md:space-y-0 md:space-x-3">
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
         <div>
           <Card className="border-l-4 border-l-app-green-500 shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -112,20 +122,21 @@ export default function Dashboard() {
           </Card>
         </div>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-12 space-y-3 space-x-0 lg:space-x-3 lg:space-y-0">
-        <div className="lg:col-span-6">
-          <ChartAvalicoesTurma
-            buscandoTurmas={carregandoTurmas}
-            listaTurmas={listaTurmas ?? []}
-          />
-        </div>
-        <div className="lg:col-span-6">
-          <ChartFrequenciaTurma
-            listaTurmas={listaTurmas ?? []}
-            buscandoTurmas={carregandoTurmas}
-          />
-        </div>
+      <div className="grid grid-cols-1 gap-2">
+        <HistoricoFrequencia listaTurmas={listaTurmas ?? []}
+          buscandoTurmas={carregandoTurmas} />
       </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
+        <ChartAvalicoesTurma
+          buscandoTurmas={carregandoTurmas}
+          listaTurmas={listaTurmas ?? []}
+        />
+        <ChartFrequenciaTurma
+          listaTurmas={listaTurmas ?? []}
+          buscandoTurmas={carregandoTurmas}
+        />
+      </div>
+      
     </div>
   )
 }

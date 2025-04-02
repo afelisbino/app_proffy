@@ -24,13 +24,14 @@ import {
 import { AlunoAusentesType } from '../../../schemas/SchemaAlunosAusentes'
 
 import { colunasTabelaAlunosAusente } from './colunas-tabela-alunos-ausentes'
+import { Skeleton } from '@/components/ui/skeleton'
 
 interface TabelaAlunosAusentesProps {
   data: AlunoAusentesType[]
+  isLoading: boolean
 }
 
-export function TabelaAlunosAusentes({ data }: TabelaAlunosAusentesProps) {
-  const [rowSelection, setRowSelection] = React.useState({})
+export function TabelaAlunosAusentes({ data, isLoading }: TabelaAlunosAusentesProps) {
 
   const table = useReactTable({
     data,
@@ -38,10 +39,6 @@ export function TabelaAlunosAusentes({ data }: TabelaAlunosAusentesProps) {
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    onRowSelectionChange: setRowSelection,
-    state: {
-      rowSelection,
-    },
   })
 
   return (
@@ -49,26 +46,13 @@ export function TabelaAlunosAusentes({ data }: TabelaAlunosAusentesProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
         <Input
           placeholder="Filtrar pelo nome do aluno..."
-          className="w-full lg:w-48"
+          className="w-96"
           disabled={data?.length === 0}
           value={(table.getColumn('nome')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
             table.getColumn('nome')?.setFilterValue(event.target.value)
           }
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-          <Button className="flex justify-center lg:justify-between gap-2 w-full bg-app-green-500 hover:bg-app-green-600 shadow">
-            <CheckCheck className="flex md:hidden" />
-            Confirmar
-          </Button>
-          <Button
-            disabled={table.getSelectedRowModel().rows.length === 0}
-            className="shadow bg-red-500 hover:bg-red-600 flex justify-center lg:justify-between gap-2 w-full"
-          >
-            <Trash className="flex md:hidden" />
-            {'Remover'}
-          </Button>
-        </div>
       </div>
       <div className="rounded-md border shadow-md">
         <Table>
@@ -81,9 +65,9 @@ export function TabelaAlunosAusentes({ data }: TabelaAlunosAusentesProps) {
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
                     </TableHead>
                   )
                 })}
@@ -91,7 +75,25 @@ export function TabelaAlunosAusentes({ data }: TabelaAlunosAusentesProps) {
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length > 0 ? (
+            {isLoading ? (
+              <>
+                <TableRow>
+                  <TableCell colSpan={colunasTabelaAlunosAusente.length}>
+                    <Skeleton className="h-4 w-full rounded" />
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell colSpan={colunasTabelaAlunosAusente.length}>
+                    <Skeleton className="h-4 w-full rounded" />
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell colSpan={colunasTabelaAlunosAusente.length}>
+                    <Skeleton className="h-4 w-full rounded" />
+                  </TableCell>
+                </TableRow>
+              </>
+            ) : table.getRowModel().rows?.length > 0 ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -111,9 +113,9 @@ export function TabelaAlunosAusentes({ data }: TabelaAlunosAusentesProps) {
               <TableRow>
                 <TableCell
                   colSpan={colunasTabelaAlunosAusente.length}
-                  className="h-16 text-center text-padrao-gray-200 text-sm mt-5 md:text-base lg:text-lg"
+                  className="h-16 text-center text-padrao-gray-200 text-sm mt-5 md:text-base"
                 >
-                  Todos os alunos estão presentes!
+                  Histórico de frequência não encontrado
                 </TableCell>
               </TableRow>
             )}

@@ -8,6 +8,7 @@ interface AutenticacaoUsuarioProps {
 export type UsuarioType = {
   nome: string
   email: string
+  perfil: 'ADMIN'|'PROFESSOR'
 }
 
 export async function autenticarUsuario({

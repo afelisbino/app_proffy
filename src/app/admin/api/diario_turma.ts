@@ -2,7 +2,8 @@ import { axiosInstance } from '@/lib/AxiosClient'
 
 import { FormDiarioTurmaType } from '../components/forms/Turma/FormularioDiarioTurma'
 import { FormEdicaoDiarioTurmaType } from '../components/forms/Turma/FormularioEdicaoNotaAluno'
-import { registroNotasTurmaType } from '../schemas/SchemaDiarioClasse'
+import { ConteudosAulaTurmaType, registroNotasTurmaType } from '../schemas/SchemaDiarioClasse'
+import { FormDiarioConteudoAulaType } from '../components/forms/Turma/FormDiarioConteudoAula'
 
 export type ResponseLancamentoDiarioTurmaType = {
   status: boolean
@@ -13,6 +14,11 @@ export type ResponseListaLancamentoNotasTurmaType = {
   status: boolean
   msg: string
   dados: Array<registroNotasTurmaType> | null
+}
+
+export type ResponseLancamentoConteudoTurmaType = {
+  status: boolean
+  msg: string
 }
 
 interface FiltroConsultaLancamentosProps {
@@ -116,5 +122,58 @@ export async function atualizarNotaAluno({
         status: false,
         msg: 'Ocorreu um erro ao atualizar a nota: ' + err,
       }
+    })
+}
+
+export async function LancarConteudoAulaTurma({
+  idDisciplina,
+  idTurma,
+  realizadoEm,
+  descricao,
+}: FormDiarioConteudoAulaType) {
+  return await axiosInstance
+    .post<ResponseLancamentoConteudoTurmaType>(
+      'diario/conteudo',
+      {
+        idDisciplina,
+        idTurma,
+        realizadoEm,
+        descricao
+      }
+    )
+    .then((data) => {
+      return data.data
+    })
+    .catch((err) => {
+      return {
+        status: false,
+        msg: `Ocorreu um erro ao lançar o conteudo: ${err}`,
+      }
+    })
+}
+
+export async function listaConteudoAulaTurma({ idTurma, periodo }: { idTurma: string, periodo: { inicio: Date, fim: Date } }) {
+  return await axiosInstance
+    .get<Array<ConteudosAulaTurmaType>>(
+      `diario/conteudo/${idTurma}`,
+      {
+        params: {
+          inicio: periodo.inicio,
+          fim: periodo.fim
+        }
+      }
+    )
+    .then((data) => {
+      return data.data
+    })
+}
+
+export async function removerConteudoAula({ idConteudo }: { idConteudo: string }) {
+  return await axiosInstance
+    .delete<ResponseLancamentoConteudoTurmaType>(
+      `diario/conteudo/${idConteudo}`,
+    )
+    .then((data) => {
+      return data.data
     })
 }

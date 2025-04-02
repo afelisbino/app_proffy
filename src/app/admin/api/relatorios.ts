@@ -1,4 +1,5 @@
 import { axiosInstance } from '@/lib/AxiosClient'
+import { AlunoAusentesType } from '../schemas/SchemaAlunosAusentes'
 
 export type EstatisticaEscola = {
   qtdTurmasEscola: number
@@ -83,6 +84,19 @@ export async function buscarRelatorioAvaliacaoAlunos({
         tipoPeriodo,
       },
     },
+  )
+
+  return response.data
+}
+
+export async function buscaListaFrequenciaTurma({ inicio: dataChamada, idTurma }: Pick<EstatisticaAvaliacoesProps, 'inicio' | 'idTurma'>) {
+  const response = await axiosInstance.get<Array<AlunoAusentesType>>(
+    `turma/chamada/${idTurma}`,
+    {
+      params: {
+        dataChamada
+      }
+    }
   )
 
   return response.data

@@ -4,6 +4,7 @@ import {
   ChartNoAxesCombined,
   Inbox,
   Menu,
+  NotebookPen,
   SlidersHorizontal,
   Speech,
   Users,
@@ -20,9 +21,16 @@ import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet'
 
 import { ReportNav } from './ReportNav'
 import { UserNav } from './UserNav'
+import { useQueryClient } from '@tanstack/react-query'
+import { UsuarioType } from '@/app/admin/schemas/SchemaUsuariosEscola'
 
 export default function Header() {
   const pathname = usePathname()
+
+  const queryClient = useQueryClient()
+  const dadosUsuario: UsuarioType | undefined = queryClient.getQueryData([
+    'dadosUsuarioSessao',
+  ])
 
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center px-4 gap-4 border-b bg-background sm:pb-4 sm:static sm:h-auto sm:bg-transparent sm:px-6">
@@ -43,68 +51,114 @@ export default function Header() {
                 width={42}
                 height={42}
               />
-              <span>Sproesser</span>
+              <span>Proffy</span>
             </div>
-            <Link
-              href={'/admin/chamada'}
-              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-            >
-              <Speech
-                className={cn(
-                  'size-5',
-                  pathname === '/admin/chamada' && 'text-white',
-                )}
-              />
-              Chamada
-            </Link>
-            <Link
-              href={'/admin/turmas'}
-              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-            >
-              <Users
-                className={cn(
-                  'size-5',
-                  pathname.includes('/admin/turmas') && 'text-white',
-                )}
-              />
-              Turmas
-            </Link>
-            <Link
-              href={'/admin/notificacao'}
-              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-            >
-              <Inbox
-                className={cn(
-                  'size-5',
-                  pathname === '/admin/notificacao' && 'text-white',
-                )}
-              />
-              Notificações
-            </Link>
-            <Link
-              href={'/admin/painel'}
-              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-            >
-              <ChartNoAxesCombined
-                className={cn(
-                  'size-5',
-                  pathname === '/admin/painel' && 'text-white',
-                )}
-              />
-              Métricas
-            </Link>
-            <Link
-              href={'/admin/escola/usuarios'}
-              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-            >
-              <SlidersHorizontal
-                className={cn(
-                  'size-5',
-                  pathname.includes('/admin/escola/') && 'text-white',
-                )}
-              />
-              Configurações
-            </Link>
+            {
+              dadosUsuario?.perfil === 'ADMIN' ? (
+                <>
+                  <Link
+                    href={'/admin/chamada'}
+                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                  >
+                    <Speech
+                      className={cn(
+                        'size-5',
+                        pathname === '/admin/chamada' && 'text-white',
+                      )}
+                    />
+                    Chamada
+                  </Link>
+                  <Link
+                    href={'/admin/turmas'}
+                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                  >
+                    <Users
+                      className={cn(
+                        'size-5',
+                        pathname.includes('/admin/turmas') && 'text-white',
+                      )}
+                    />
+                    Turmas
+                  </Link>
+                  <Link
+                    href={'/admin/diario'}
+                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                  >
+                    <NotebookPen
+                      className={cn(
+                        'size-5',
+                        pathname.includes('/admin/diario') && 'text-white',
+                      )}
+                    />
+                    Diário turma
+                  </Link>
+                  <Link
+                    href={'/admin/notificacao'}
+                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                  >
+                    <Inbox
+                      className={cn(
+                        'size-5',
+                        pathname === '/admin/notificacao' && 'text-white',
+                      )}
+                    />
+                    Notificações
+                  </Link>
+                  <Link
+                    href={'/admin/painel'}
+                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                  >
+                    <ChartNoAxesCombined
+                      className={cn(
+                        'size-5',
+                        pathname === '/admin/painel' && 'text-white',
+                      )}
+                    />
+                    Métricas
+                  </Link>
+                  <Link
+                    href={'/admin/escola/usuarios'}
+                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                  >
+                    <SlidersHorizontal
+                      className={cn(
+                        'size-5',
+                        pathname.includes('/admin/escola/') && 'text-white',
+                      )}
+                    />
+                    Configurações
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href={'/admin/chamada'}
+                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                  >
+                    <Speech
+                      className={cn(
+                        'size-5',
+                        pathname === '/admin/chamada' && 'text-white',
+                      )}
+                    />
+                    Chamada
+                  </Link>
+                  <Link
+                    href={'/admin/diario'}
+                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                  >
+                    <NotebookPen
+                      className={cn(
+                        'size-5',
+                        pathname.includes('/admin/diario') && 'text-white',
+                      )}
+                    />
+                    Diário turma
+                  </Link>
+                </>
+              )
+            }
+
           </nav>
         </SheetContent>
       </Sheet>

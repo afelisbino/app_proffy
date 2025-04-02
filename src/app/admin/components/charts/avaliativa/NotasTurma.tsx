@@ -180,7 +180,7 @@ export function ChartAvalicoesTurma({
   return (
     <Card>
       <CardHeader className="flex flex-row justify-between">
-        <div>
+        <div className="space-y-2">
           <CardTitle>Relatório de avaliações</CardTitle>
           <CardDescription>Estatísticas avaliativas da turma</CardDescription>
         </div>

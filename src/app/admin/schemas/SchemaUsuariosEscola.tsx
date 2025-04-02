@@ -4,6 +4,7 @@ export const schemaUsuario = z.object({
   id: z.string(),
   nome: z.string().trim(),
   email: z.string(),
+  perfil: z.enum(['ADMIN', 'PROFESSOR']),
   status: z.boolean(),
 })
 
@@ -34,6 +35,9 @@ export const schemaFormularioNovoUsuario = z.object({
     .regex(/[^a-zA-Z0-9]/, {
       message: 'Conter pelo menos um caractere especial.',
     }),
+  perfil: z.enum(['ADMIN', 'PROFESSOR'], {
+    required_error: 'Necessário informar o tipo do usuario',
+  }),
 })
 
 export type FormularioNovoUsuarioType = z.infer<

@@ -1,8 +1,6 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
-
-import { buscarDadosUsuario } from '@/app/components/autenticacao/api/auth'
+import { UsuarioType } from '@/app/components/autenticacao/api/auth'
 import { encerrarSessao } from '@/app/components/autenticacao/api/session'
 import {
   DropdownMenu,
@@ -12,52 +10,40 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { queryClient } from '@/lib/reactQueryClient'
 import { capturarIniciaisNome } from '@/lib/utils'
 
 import { Button } from '../ui/button'
-import { Skeleton } from '../ui/skeleton'
+import { useQueryClient } from '@tanstack/react-query'
 
 export function UserNav() {
-  const { data: dadosUsuario, isLoading } = useQuery({
-    queryKey: ['dadosUsuarioSessao'],
-    queryFn: buscarDadosUsuario,
-    staleTime: Infinity,
-  })
+
+  const queryClient = useQueryClient()
+  const dadosUsuario: UsuarioType | undefined = queryClient.getQueryData([
+    'dadosUsuarioSessao',
+  ])
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        {!isLoading ? (
-          <Button
-            className="border-0 rounded-full"
-            variant="outline"
-            size="icon"
-          >
-            {capturarIniciaisNome(dadosUsuario?.nome ?? '')}
-          </Button>
-        ) : (
-          <Skeleton className="h-10 w-10 rounded-full" />
-        )}
+        <Button
+          className="border-0 rounded-full"
+          variant="outline"
+          size="icon"
+        >
+          {capturarIniciaisNome(dadosUsuario?.nome ?? '')}
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
-        {isLoading ? (
+        <DropdownMenuLabel className="font-normal">
           <div className="grid space-y-1">
-            <Skeleton className="w-full" />
-            <Skeleton className="w-full" />
+            <p className="text-sm font-medium leading-none">
+              {dadosUsuario?.nome}
+            </p>
+            <p className="text-xs leading-none text-muted-foreground">
+              {dadosUsuario?.email}
+            </p>
           </div>
-        ) : (
-          <DropdownMenuLabel className="font-normal">
-            <div className="grid space-y-1">
-              <p className="text-sm font-medium leading-none">
-                {dadosUsuario?.nome}
-              </p>
-              <p className="text-xs leading-none text-muted-foreground">
-                {dadosUsuario?.email}
-              </p>
-            </div>
-          </DropdownMenuLabel>
-        )}
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <Button

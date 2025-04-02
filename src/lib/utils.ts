@@ -96,6 +96,10 @@ export function capturarIniciaisNome(nomeUsuario: string) {
 export function mascararNome(nome: string) {
   const parts = nome.split(' ')
 
+  if(parts[1].toLowerCase() === 'de' || parts[1].toLowerCase() === 'da' || parts[1].toLowerCase() === 'do'){
+    return `${parts[0]} ${parts[2]}`
+  }
+
   return `${parts[0]} ${parts[1]}`
 }
 

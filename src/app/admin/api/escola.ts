@@ -16,6 +16,7 @@ interface NovoUsuarioProps {
   nome: string
   email: string
   senha: string
+  perfil: 'ADMIN' | 'PROFESSOR'
 }
 
 export async function buscarUsuariosEscola() {
@@ -42,11 +43,13 @@ export async function inserirNovoUsuario({
   nome,
   email,
   senha,
+  perfil
 }: NovoUsuarioProps) {
   const response = await axiosInstance.post<UsuarioType>('escola/usuario', {
     nome,
     email,
     senha,
+    perfil
   })
 
   return response.data

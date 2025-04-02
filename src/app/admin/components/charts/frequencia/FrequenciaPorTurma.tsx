@@ -102,7 +102,7 @@ export function ChartFrequenciaTurma({
   return (
     <Card>
       <CardHeader className="flex flex-row justify-between">
-        <div>
+      <div className="space-y-2">
           <CardTitle>Relatório de frequência</CardTitle>
           <CardDescription>Estatísticas de frequência escolar</CardDescription>
         </div>
