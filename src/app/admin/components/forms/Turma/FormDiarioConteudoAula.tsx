@@ -5,13 +5,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { CalendarIcon, Loader2, Save } from 'lucide-react'
-import { useFieldArray, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { LancarConteudoAulaTurma, LancarNotasTurma } from '@/app/admin/api/diario_turma'
+import { lancarConteudoAulaTurma } from '@/app/admin/api/diario_turma'
 import { DisciplinaEscolaType } from '@/app/admin/escola/disciplinas/schemas/disciplina'
-import { AlunosTurmaType } from '@/app/admin/schemas/SchemaAlunosTurma'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { DialogClose, DialogFooter } from '@/components/ui/dialog'
@@ -23,13 +22,11 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { ScrollArea } from '@/components/ui/scroll-area'
 import {
   Select,
   SelectContent,
@@ -37,8 +34,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Separator } from '@/components/ui/separator'
-import { cn, mascararNome } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 import { Textarea } from '@/components/ui/textarea'
 
 interface FormularioConteudoAulaProps {
@@ -72,7 +68,7 @@ export function FormularioConteudoAula({
   })
 
   const { mutateAsync: salvarConteudo } = useMutation({
-    mutationFn: LancarConteudoAulaTurma,
+    mutationFn: lancarConteudoAulaTurma,
     onError: (erro) => {
       toast.error('Houve um problema ao lançar o conteudo, tente novamente!', {
         description: erro.message,

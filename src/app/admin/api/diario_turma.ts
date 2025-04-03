@@ -125,7 +125,7 @@ export async function atualizarNotaAluno({
     })
 }
 
-export async function LancarConteudoAulaTurma({
+export async function lancarConteudoAulaTurma({
   idDisciplina,
   idTurma,
   realizadoEm,
@@ -137,7 +137,7 @@ export async function LancarConteudoAulaTurma({
       {
         idDisciplina,
         idTurma,
-        realizadoEm,
+        realizadoEm: new Date(realizadoEm.getFullYear(), realizadoEm.getMonth(), realizadoEm.getDate()),
         descricao
       }
     )
