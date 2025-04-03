@@ -23,7 +23,7 @@ interface RelatorioHistoricoFrequenciaProps {
 export default function HistoricoFrequencia({ listaTurmas, buscandoTurmas }: RelatorioHistoricoFrequenciaProps) {
 
   const [openFilterTurma, setOpenFilterTurma] = React.useState(false)
-  const [turmaSelecionada, setTurma] = React.useState<string>(listaTurmas[0].id)
+  const [turmaSelecionada, setTurma] = React.useState<string>(listaTurmas[0]?.id)
 
   const [date, setDate] = React.useState<Date | undefined>(new Date(dataAtual.getFullYear(), dataAtual.getMonth(), dataAtual.getDate()))
 
