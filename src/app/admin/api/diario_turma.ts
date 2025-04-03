@@ -45,7 +45,7 @@ export async function LancarNotasTurma({
           periodo: String(periodo),
           ano,
           tipoPeriodo,
-          realizadoEm,
+          realizadoEm: new Date(realizadoEm.getFullYear(), realizadoEm.getMonth(), realizadoEm.getDate()),
           descricao,
           nota: aluno.nota,
         }
