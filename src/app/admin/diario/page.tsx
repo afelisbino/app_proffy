@@ -85,7 +85,7 @@ export default function DiarioTurma() {
           </div>
           <Separator />
           <Tabs defaultValue="atividade" className="w-full">
-            <TabsList className="grid w-[400px] grid-cols-2">
+            <TabsList className="grid w-auto md:w-[400px] grid-cols-2">
               <TabsTrigger value="atividade">Atividades</TabsTrigger>
               <TabsTrigger value="avaliacao">Avaliações</TabsTrigger>
             </TabsList>

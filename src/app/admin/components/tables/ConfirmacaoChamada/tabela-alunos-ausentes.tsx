@@ -46,7 +46,7 @@ export function TabelaAlunosAusentes({ data, isLoading }: TabelaAlunosAusentesPr
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
         <Input
           placeholder="Filtrar pelo nome do aluno..."
-          className="w-96"
+          className="w-auto md:w-96"
           disabled={data?.length === 0}
           value={(table.getColumn('nome')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>

@@ -17,7 +17,7 @@ interface DiarioConteudoDialogProps {
 
 export function DiarioConteudoDialog({ turmaId, listaDisciplinas }: DiarioConteudoDialogProps) {
   return (
-    <DialogContent className="h-screen md:h-auto md:max-w-6xl overflow-auto">
+    <DialogContent>
       <DialogHeader>
         <DialogTitle>Conteúdo de aulas</DialogTitle>
         <DialogDescription>

@@ -26,7 +26,7 @@ export function Sidebar() {
   const pathname = usePathname()
 
   const dadosUsuario = useQuery({
-    queryKey: ['dadosUsuarioSessao'],
+    queryKey: ['dadosUsuarioSessaoSide'],
     queryFn: buscarDadosUsuario,
     refetchOnWindowFocus: true,
     initialData: {

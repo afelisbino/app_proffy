@@ -242,7 +242,7 @@ export function FormChamadaAlunos({
             {formChamadaTurma.formState.isSubmitting ? (
               <Button
                 type="button"
-                className="py-8 shadow w-full text-lg bg-app-red-700 hover:bg-app-red-800 text-app-white-50"
+                className="py-8 shadow w-full text-lg bg-app-red-700 hover:bg-app-red-800 text-app-white-50 gap-4"
                 disabled
               >
                 <Loader2 className="size-5" />

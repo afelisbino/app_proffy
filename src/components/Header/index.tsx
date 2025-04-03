@@ -21,16 +21,22 @@ import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet'
 
 import { ReportNav } from './ReportNav'
 import { UserNav } from './UserNav'
-import { useQueryClient } from '@tanstack/react-query'
-import { UsuarioType } from '@/app/admin/schemas/SchemaUsuariosEscola'
+import { useQuery } from '@tanstack/react-query'
+import { buscarDadosUsuario } from '@/app/components/autenticacao/api/auth'
 
 export default function Header() {
   const pathname = usePathname()
 
-  const queryClient = useQueryClient()
-  const dadosUsuario: UsuarioType | undefined = queryClient.getQueryData([
-    'dadosUsuarioSessao',
-  ])
+  const dadosUsuario = useQuery({
+    queryKey: ['dadosUsuarioSessaoNav'],
+    queryFn: buscarDadosUsuario,
+    refetchOnWindowFocus: true,
+    initialData: {
+      nome: '',
+      email: '',
+      perfil: 'PROFESSOR'
+    },
+  })
 
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center px-4 gap-4 border-b bg-background sm:pb-4 sm:static sm:h-auto sm:bg-transparent sm:px-6">
@@ -54,7 +60,7 @@ export default function Header() {
               <span>Proffy</span>
             </div>
             {
-              dadosUsuario?.perfil === 'ADMIN' ? (
+              dadosUsuario.data.perfil === 'ADMIN' ? (
                 <>
                   <Link
                     href={'/admin/chamada'}
