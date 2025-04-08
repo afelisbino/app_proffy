@@ -9,7 +9,7 @@ import { consultaDadosMatricula } from '@/app/admin/api/matricula'
 import { EdicaoMatriculaAlunoDialog } from '@/app/admin/components/dialogs/edicao-matricula-aluno'
 import { AdicionaResponsavelAlunoDialog } from '@/app/admin/components/dialogs/novo-responsavel'
 import { TabelaReponsaveisAluno } from '@/app/admin/components/tables/Responsaveis/tabela-responsavel'
-import { BotaoVoltar } from '@/components/Header/BotaoVoltar'
+import { BotaoVoltar } from '@/components/header/BotaoVoltar'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import {

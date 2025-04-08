@@ -42,17 +42,17 @@ export default function PageChamada() {
   const [openFilterTurma, setOpenFilterTurma] = useState(false)
   const [turmaSelecionada, setTurma] = useState<string>('')
 
-  const { data: listaTurmas, isLoading: carregandoTurmas } = useQuery({
+  const { data: listaTurmas, isFetching: carregandoTurmas } = useQuery({
     queryKey: ['turmasEscolaChamada'],
     queryFn: buscarTurmas,
-    staleTime: Infinity,
+    initialData: [],
   })
 
-  const { data: alunosTurma, isLoading: carregandoAlunos } = useQuery({
+  const { data: alunosTurma, isFetching: carregandoAlunos } = useQuery({
     queryKey: ['listaAlunosTurmaNotificacao', turmaSelecionada],
     queryFn: () => buscarAlunosTurma(turmaSelecionada),
     enabled: !!turmaSelecionada,
-    staleTime: 0,
+    initialData: [],
   })
 
   return (
