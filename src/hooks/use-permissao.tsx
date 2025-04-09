@@ -1,58 +1,73 @@
-import { ArrowRightLeft, FilePlus, LayoutDashboard, type LucideIcon, Settings, Speech, NotepadText, NotebookPen, Shapes, Mails, Users } from "lucide-react";
+import { LayoutDashboard, type LucideIcon, Speech, Shapes, Users, UserRoundPen, BookCheck, Unplug, MessageSquareText, MessagesSquare } from "lucide-react";
 
 export type MenuSidebar = {
   titulo: string
   href: string
-  icon?:LucideIcon
+  icon?: LucideIcon
 }
 
 export interface GrupoItensSidebarProps {
   titulo: string;
-  icon?: LucideIcon;
   itens: Array<MenuSidebar>;
 }
 
 export type PermissoesUsuarioType = {
-  grupo?: Array<GrupoItensSidebarProps>
-  menu?: Array<MenuSidebar>
+  permissoes: Array<GrupoItensSidebarProps>
 }
 
 export const permissoesAdmin: PermissoesUsuarioType = {
-  menu: [
+  permissoes: [
     {
-      titulo: 'Painel',
-      href: '/admin/painel',
-      icon: LayoutDashboard
+      titulo: 'Gestão da escola',
+      itens: [
+        {
+          titulo: 'Painel',
+          href: '/admin/painel',
+          icon: LayoutDashboard
+        },
+        {
+          titulo: 'Mensagens enviadas',
+          href: '/admin/notificacao',
+          icon: MessagesSquare
+        },
+        {
+          titulo: 'Turmas',
+          href: '/admin/turmas',
+          icon: Users
+        },
+        {
+          titulo: 'Usuários',
+          href: '/admin/usuarios',
+          icon: UserRoundPen
+        },
+        {
+          titulo: 'Disciplinas',
+          href: '/admin/disciplinas',
+          icon: BookCheck
+        },
+        {
+          titulo: 'Modelos de mensagens',
+          href: '/admin/modelo_mensagens',
+          icon: MessageSquareText
+        },
+        {
+          titulo: 'API WhatsApp',
+          href: '/admin/whatsapp',
+          icon: Unplug
+        }
+      ]
     },
     {
-      titulo: 'Mensagens enviadas',
-      href: '/admin/notificacao',
-      icon: Mails
-    },
-    {
-      titulo: 'Turmas',
-      href: '/admin/turmas',
-      icon: Users
-    },
-    {
-      titulo: 'Configurações',
-      href: '/admin/escola/usuarios',
-      icon: Settings
-    }
-  ],
-  grupo: [
-    {
-      titulo: 'Diário de turma',
-      icon: NotebookPen,
+      titulo: 'Diário da turma',
       itens: [
         {
           titulo: 'Chamada',
-          href: '/admin/chamada',
+          href: '/classe/chamada',
           icon: Speech
         },
         {
           titulo: 'Atividades',
-          href: '/admin/diario',
+          href: '/classe/diario',
           icon: Shapes
         }
       ]
@@ -61,10 +76,9 @@ export const permissoesAdmin: PermissoesUsuarioType = {
 }
 
 export const permissionTeacher: PermissoesUsuarioType = {
-  grupo: [
+  permissoes: [
     {
-      titulo: 'Diário de turma',
-      icon: NotebookPen,
+      titulo: 'Diário da turma',
       itens: [
         {
           titulo: 'Chamada',

@@ -4,6 +4,7 @@ const nextConfig = {
     config.resolve.fallback = { fs: false }
     return config
   },
+  skipTrailingSlashRedirect: true,
 }
 
 module.exports = nextConfig

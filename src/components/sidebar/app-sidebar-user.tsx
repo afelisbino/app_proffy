@@ -23,10 +23,10 @@ import {
 	Sun,
 } from "lucide-react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
-import { encerrarSessao } from "@/app/components/autenticacao/api/session";
 import { useQueryClient } from "@tanstack/react-query";
 import { Skeleton } from "../ui/skeleton";
 import { capturarIniciaisNome } from "@/lib/utils";
+import { encerrarSessao } from "@/api/session";
 
 interface SidebarUserMenuProps {
 	nome: string;
@@ -65,25 +65,25 @@ export function SidebarUserMenu({ nome, email, carregando }: SidebarUserMenuProp
 						align="end"
 						sideOffset={4}
 					>
-						<DropdownMenuItem className="flex justify-between">
-							<RectangleEllipsis />
+						{/* <DropdownMenuItem className="gap-3">
+							<RectangleEllipsis className="h-[1.2rem] w-[1.2rem]" />
 							Alterar senha
-						</DropdownMenuItem>
+						</DropdownMenuItem> */}
 						<DropdownMenuItem
-							className="flex justify-between"
+							className="gap-3"
 							onClick={() => setTheme(theme === "light" ? "dark" : "light")}
 						>
 							<Sun className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
 							<Moon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
 							{theme === "light" ? "Modo Escuro" : "Modo Claro"}
 						</DropdownMenuItem>
-						<DropdownMenuItem 
-							className="flex justify-between"
+						<DropdownMenuItem
+							className="gap-3"
 							onClick={async () => {
-							queryClient.clear()
-							await encerrarSessao()
-						}}>
-							<LogOut />
+								queryClient.clear()
+								await encerrarSessao()
+							}}>
+							<LogOut className="h-[1.2rem] w-[1.2rem]" />
 							Sair
 						</DropdownMenuItem>
 					</DropdownMenuContent>

@@ -11,10 +11,10 @@ import {
 import type React from "react";
 import { SidebarUserMenu } from "./app-sidebar-user";
 import { useQuery } from "@tanstack/react-query";
-import { buscarDadosUsuario } from "@/app/components/autenticacao/api/auth";
 import Image from "next/image";
-import { AppSidebarNavAdmin } from "./app-sidebar-nav-admin";
-import { AppSidebarNavTeacher } from "./app-sidebar-nav-teacher";
+import { AppSidebarNav } from "./app-sidebar-nav";
+import { permissionTeacher, permissoesAdmin } from "@/hooks/use-permissao";
+import { buscarDadosUsuario } from "@/api/auth";
 
 export function AppSidebar({
 	...props
@@ -57,7 +57,7 @@ export function AppSidebar({
 				</SidebarMenu>
 			</SidebarHeader>
 			<SidebarContent>
-				{dadosUsuario.data.perfil === 'ADMIN' ? <AppSidebarNavAdmin/> : <AppSidebarNavTeacher/>}
+				<AppSidebarNav permissoes={dadosUsuario.data.perfil === 'ADMIN' ? permissoesAdmin.permissoes : permissionTeacher.permissoes} />
 			</SidebarContent>
 			<SidebarFooter>
 				<SidebarUserMenu nome={dadosUsuario.data.nome} email={dadosUsuario.data.email} carregando={dadosUsuario.isFetching} />

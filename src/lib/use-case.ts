@@ -3,7 +3,7 @@ import { atom, useAtom } from 'jotai'
 import {
   MensagemAlunoType,
   ModeloMensagensType,
-} from '@/app/admin/schemas/SchemaMensagemAlunos'
+} from '@/schemas/SchemaMensagemAlunos'
 
 type ConfigMensagensAlunoType = {
   selected: MensagemAlunoType['id'] | null
