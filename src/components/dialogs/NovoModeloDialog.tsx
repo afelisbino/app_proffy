@@ -4,8 +4,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-
-import { NovoModeloForm } from '../forms/CriacaoModeloDialog'
+import { NovoModeloForm } from '@/components/forms/CriacaoModeloDialog'
 
 export function DialogNovoModelo() {
   return (

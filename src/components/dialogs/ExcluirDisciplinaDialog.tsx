@@ -13,8 +13,7 @@ import {
     AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
-
-import { DisciplinaEscolaType } from '../../schemas/disciplina'
+import { DisciplinaEscolaType } from '@/schemas/disciplina'
 
 interface ExcluirDisciplinaDialogProps {
   id: string

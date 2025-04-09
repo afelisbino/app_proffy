@@ -3,8 +3,8 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { buscarModelosMensagens } from '@/api/message'
+import { DataTableModeloMensagens } from '@/components/tables/ModeloMensagens/tabela-modelos'
 
-import { DataTableModeloMensagens } from './components/tables/tabela-modelos'
 
 export default function PageModeloMensagens() {
   const { data: listaModelosMensagensEscola, isLoading } = useQuery({

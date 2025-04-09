@@ -1,22 +1,22 @@
 import { MoreVertical } from 'lucide-react'
 
-import { ModeloMensagensType } from '@/schemas/SchemaMensagemAlunos'
+import { UsuarioType } from '@/schemas/SchemaUsuariosEscola'
 import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { ConfirmaAlteracaoStatusUsuarioDialog } from '@/components/dialogs/ConfirmaAlteraStatusDialog'
 
-import { ConfirmacaoExcluirModeloDialog } from '../dialogs/ExcluirModeloDialog'
 
-interface MenuTabelaModeloProps {
-  row: ModeloMensagensType
+interface MenuTabelaUsuarioProps {
+  row: UsuarioType
 }
 
-export function MenuTabelaModelo({ row }: MenuTabelaModeloProps) {
+export function MenuTabelaUsuario({ row }: MenuTabelaUsuarioProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -36,10 +36,13 @@ export function MenuTabelaModelo({ row }: MenuTabelaModeloProps) {
                 e.preventDefault()
               }}
             >
-              Excluir modelo
+              {row.status ? 'Desativar usuário' : 'Ativar usuário'}
             </DropdownMenuItem>
           </AlertDialogTrigger>
-          <ConfirmacaoExcluirModeloDialog id={row.id} assunto={row.assunto} />
+          <ConfirmaAlteracaoStatusUsuarioDialog
+            idUsuario={row.id}
+            statusUsuario={row.status}
+          />
         </AlertDialog>
       </DropdownMenuContent>
     </DropdownMenu>

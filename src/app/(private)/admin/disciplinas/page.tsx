@@ -13,9 +13,8 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Skeleton } from '@/components/ui/skeleton'
 
 import { buscarListaDisciplinas } from '@/api/escola'
-
-import { FormNovaDisciplina } from './components/forms/NovaDisciplina'
-import { ItemDisciplina } from './components/list/ItemDisciplina'
+import { FormNovaDisciplina } from '@/components/forms/NovaDisciplina'
+import { ItemDisciplina } from '@/components/lists/ItemDisciplina'
 
 export default function DisciplinasEscolaPage() {
   const disciplinas = useQuery({

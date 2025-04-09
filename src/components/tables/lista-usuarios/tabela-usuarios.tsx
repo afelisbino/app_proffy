@@ -29,14 +29,12 @@ import {
     TooltipContent,
     TooltipTrigger,
 } from '@/components/ui/tooltip'
-
-import { DialogNovoUsuario } from '../../dialogs/NovoUsuarioDialog'
-
 import {
     colunasTabelaUsuario,
     optionsStatusUsuario,
 } from './colunas-tabela-usuarios'
 import { DataTableFacetedFilter } from './filtro-status-usuario'
+import { DialogNovoUsuario } from '@/components/dialogs/NovoUsuarioDialog'
 
 interface DataTableUsuarioProps {
   data: Array<UsuarioType>

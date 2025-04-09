@@ -5,7 +5,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 
-import { NovoUsuarioForm } from '../forms/NovoUsuarioForm'
+import { NovoUsuarioForm } from '@/components/forms/NovoUsuarioForm'
 
 export function DialogNovoUsuario() {
   return (

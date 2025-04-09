@@ -2,8 +2,7 @@ import { Trash } from 'lucide-react'
 
 import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
-
-import { ExcluirDisciplinaDialog } from '../alerts/ExcluirDisciplinaDialog'
+import { ExcluirDisciplinaDialog } from '@/components/dialogs/ExcluirDisciplinaDialog'
 
 interface DisciplinaProps {
   id: string

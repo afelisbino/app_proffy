@@ -18,8 +18,7 @@ import {
     FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-
-import { DisciplinaEscolaType } from '../../schemas/disciplina'
+import { DisciplinaEscolaType } from '@/schemas/disciplina'
 
 const schemaNovaDisciplina = z.object({
   nome: z

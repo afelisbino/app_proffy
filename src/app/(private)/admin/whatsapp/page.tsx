@@ -1,16 +1,23 @@
 'use client'
 
-import { ConfiguracaoWhatsappType } from '@/api/ConfigWhatsapp'
+import { recuperarConfiguracoesExistentes } from '@/api/ConfigWhatsapp'
 import { FormularioConfiguracaoWhatsapp } from '@/components/forms/FormConfiguracaoWhatspp'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { useQueryClient } from '@tanstack/react-query'
-
+import { useQuery } from '@tanstack/react-query'
 
 export default function PageConfigWhatsapp() {
-  const queryClient = useQueryClient()
 
-  const configuracaoWhatsapp: ConfiguracaoWhatsappType | undefined =
-    queryClient.getQueryData(['configuracaoWhatsapp'])
+  const configuracaoWhatsapp =
+    useQuery({
+      queryKey: ['configuracaoWhatsapp'],
+      queryFn: recuperarConfiguracoesExistentes,
+      initialData: {
+        id: '',
+        login_api_whatsapp: '',
+        token_api_whatsapp: '',
+        token_dispositivo_api_whatsapp: '',
+      }
+    })
 
   return (
     <Card>
@@ -24,7 +31,7 @@ export default function PageConfigWhatsapp() {
       </CardHeader>
       <CardContent>
         <FormularioConfiguracaoWhatsapp
-          configuracaoWhatsapp={configuracaoWhatsapp}
+          configuracaoWhatsapp={configuracaoWhatsapp.data}
         />
       </CardContent>
     </Card>

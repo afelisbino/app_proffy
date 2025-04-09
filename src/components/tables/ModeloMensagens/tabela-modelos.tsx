@@ -28,9 +28,8 @@ import {
     TooltipTrigger,
 } from '@/components/ui/tooltip'
 
-import { DialogNovoModelo } from '../dialogs/NovoModeloDialog'
-
 import { colunasTabelaModeloMensagem } from './colunas-tabela-modelos'
+import { DialogNovoModelo } from '@/components/dialogs/NovoModeloDialog'
 
 interface DataTableModelosProps {
   data: Array<ModeloMensagensType>
