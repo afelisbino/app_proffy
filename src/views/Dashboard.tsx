@@ -1,7 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { Loader2, MessageSquareWarning, Percent, Users } from 'lucide-react'
+import { MessageSquareWarning, Percent, Users } from 'lucide-react'
 
 import { Skeleton } from '@/components/ui/skeleton'
 
@@ -14,8 +14,8 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 
 const HistoricoFrequencia = dynamic(() => import('./HistoricoFrequencia'), {
   loading: () => (
-    <div className="flex justify-center mt-4">
-      <Loader2 className="animate-spin" />
+    <div className="flex items-center justify-center mt-4 h-svh">
+      <div className='loader' />
     </div>
   ),
   ssr: false,
@@ -130,7 +130,7 @@ export default function Dashboard() {
           buscandoTurmas={carregandoTurmas}
         />
       </div>
-      
+
     </div>
   )
 }

@@ -10,7 +10,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { lancarConteudoAulaTurma } from '@/api/diario_turma'
-import { DisciplinaEscolaType } from '@/app/admin/escola/disciplinas/schemas/disciplina'
+import { DisciplinaEscolaType } from '@/schemas/disciplina'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { DialogClose, DialogFooter } from '@/components/ui/dialog'

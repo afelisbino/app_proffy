@@ -10,32 +10,32 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { LancarNotasTurma } from '@/api/diario_turma'
-import { DisciplinaEscolaType } from '@/app/admin/escola/disciplinas/schemas/disciplina'
+import { DisciplinaEscolaType } from '@/schemas/disciplina'
 import { AlunosTurmaType } from '@/schemas/SchemaAlunosTurma'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { DialogClose, DialogFooter } from '@/components/ui/dialog'
 import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
 } from '@/components/ui/popover'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
 import { cn, mascararNome } from '@/lib/utils'
