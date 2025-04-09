@@ -1,12 +1,9 @@
 import { z } from 'zod'
 
 import { axiosInstance } from '@/lib/AxiosClient'
+import { MensagemAlunoType, schemaFormModeloMensagens } from '@/schemas/SchemaMensagemAlunos'
+import { envioMensagemResponsavelType } from '@/components/message/enviar-mensagem'
 
-import { envioMensagemResponsavelType } from '../components/message/enviar-mensagem'
-import {
-  MensagemAlunoType,
-  schemaFormModeloMensagens,
-} from '../schemas/SchemaMensagemAlunos'
 
 export interface EnvioMensagemWhatsappProps {
   mensagem: string

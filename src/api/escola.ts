@@ -1,11 +1,7 @@
 import { axiosInstance } from '@/lib/AxiosClient'
-
-import { FormNovaDisciplinaType } from '../escola/disciplinas/components/forms/NovaDisciplina'
-import {
-  DisciplinaEscolaType,
-  ExcluirDisciplinaProps,
-} from '../escola/disciplinas/schemas/disciplina'
-import { UsuarioType } from '../schemas/SchemaUsuariosEscola'
+import { UsuarioType } from '@/schemas/SchemaUsuariosEscola'
+import { FormNovaDisciplinaType } from '@/components/forms/NovaDisciplina'
+import { DisciplinaEscolaType, ExcluirDisciplinaProps } from '@/schemas/disciplina'
 
 export interface AlterarStatusUsuarioProps {
   id: string
