@@ -6,19 +6,19 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import {
-    adicionarNovosContatosResponsavel,
-    ResponseDadosAluno,
+  adicionarNovosContatosResponsavel,
+  ResponseDadosAluno,
 } from '@/api/matricula'
 import { Button } from '@/components/ui/button'
 import { DialogClose, DialogFooter } from '@/components/ui/dialog'
 import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
@@ -46,7 +46,7 @@ const schemaFormularioAdicionarTelefone = z.object({
         .min(9, {
           message: 'Telefone inválido',
         }),
-      whatsapp: z.boolean().default(false),
+      whatsapp: z.coerce.boolean(),
     }),
     {
       required_error: 'Obrigatório informar ao menos um telefone',

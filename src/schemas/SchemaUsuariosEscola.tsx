@@ -5,7 +5,7 @@ export const schemaUsuario = z.object({
   nome: z.string().trim(),
   email: z.string(),
   perfil: z.enum(['ADMIN', 'PROFESSOR']),
-  status: z.boolean(),
+  status: z.coerce.boolean(),
 })
 
 export type UsuarioType = z.infer<typeof schemaUsuario>

@@ -28,7 +28,7 @@ export const schemaAlunosTurma = z.object({
   dataNascimento: z.coerce.date({
     required_error: 'A data de nascimento do aluno é obrigatória',
   }),
-  notificacaoBloqueado: z.boolean().default(false),
+  notificacaoBloqueado: z.coerce.boolean(),
 })
 
 export type AlunosTurmaType = z.infer<typeof schemaAlunosTurma>
@@ -99,7 +99,7 @@ export const schemaFormularioMatriculaAluno = z.object({
         .min(9, {
           message: 'Telefone inválido',
         }),
-      whatsapp: z.boolean().default(false),
+      whatsapp: z.coerce.boolean(),
     }),
     {
       required_error: 'Obrigatório informar ao menos um telefone',

@@ -3,11 +3,11 @@ import { z } from 'zod'
 import { axiosInstance } from '@/lib/AxiosClient'
 import { limparFormatacaoDocumento } from '@/lib/utils'
 
-import { chamadaTurmaType } from '../components/forms/Turma/FormChamadaTurma'
+import { ChamadaTurmaType } from '@/components/forms/Turma/FormChamadaTurma'
 import {
   AlunosTurmaType,
   schemaFormularioMatriculaAluno,
-} from '../schemas/SchemaAlunosTurma'
+} from '@/schemas/SchemaAlunosTurma'
 
 export type turmaType = {
   id: string
@@ -104,7 +104,7 @@ export async function desmatricularAluno(idAluno: string) {
   return response.data
 }
 
-export async function realizarChamadaTurma({ alunos }: chamadaTurmaType) {
+export async function realizarChamadaTurma({ alunos }: ChamadaTurmaType) {
   const response = await axiosInstance.post(`/turma/chamada`, {
     chamada: alunos.map((chamadaAluno) => {
       return {

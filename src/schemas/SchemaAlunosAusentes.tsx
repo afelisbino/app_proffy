@@ -5,7 +5,7 @@ export const schemaAlunosAusentes = z.object({
   nome: z.string().trim(),
   idAluno: z.string().uuid(),
   dataChamada: z.coerce.date(),
-  presenca: z.boolean()
+  presenca: z.coerce.boolean()
 })
 
 export type AlunoAusentesType = z.infer<typeof schemaAlunosAusentes>

@@ -25,9 +25,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { mascararNome } from '@/lib/utils'
 import { AlunosTurmaType } from '@/schemas/SchemaAlunosTurma'
 import { realizarChamadaTurma } from '@/api/turma'
+import { mascararNome } from '@/lib/utils'
 
 interface ListaAlunosChamadaProps {
   dataChamada: Date
@@ -35,18 +35,18 @@ interface ListaAlunosChamadaProps {
   carregandoAlunos: boolean
 }
 
-export const schemaFormChamadaTurma = z.object({
+const schemaFormChamadaTurma = z.object({
   alunos: z.array(
     z.object({
       idAluno: z.string().uuid(),
-      presente: z.boolean().default(false),
+      presente: z.coerce.boolean(),
       nomeAluno: z.string(),
       dataChamada: z.coerce.date()
     }),
   ),
 })
 
-export type chamadaTurmaType = z.infer<typeof schemaFormChamadaTurma>
+export type ChamadaTurmaType = z.infer<typeof schemaFormChamadaTurma>
 
 export function FormChamadaAlunos({
   listaAlunosTurma,
@@ -54,20 +54,19 @@ export function FormChamadaAlunos({
   dataChamada
 }: ListaAlunosChamadaProps) {
   const [todosPresenteSelecionado, selecionarTodosPresente] = useState(false)
-  const formChamadaTurma = useForm<chamadaTurmaType>({
+  const formChamadaTurma = useForm<ChamadaTurmaType>({
     resolver: zodResolver(schemaFormChamadaTurma),
     defaultValues: {
-      alunos:
-        listaAlunosTurma.length > 0
-          ? listaAlunosTurma.map((aluno) => {
-              return {
-                idAluno: aluno.id,
-                presente: false,
-                nomeAluno: mascararNome(aluno.nome),
-                dataChamada,
-              }
-            })
-          : [],
+      alunos: listaAlunosTurma.length > 0
+      ? listaAlunosTurma.map((aluno) => {
+          return {
+            idAluno: aluno.id,
+            presente: false,
+            nomeAluno: mascararNome(aluno.nome),
+            dataChamada,
+          }
+        })
+      : [],
     },
     mode: 'onChange',
   })
@@ -78,7 +77,7 @@ export function FormChamadaAlunos({
   })
 
   const { mutateAsync: encerrarChamadaTurma } = useMutation({
-    mutationFn: ({ alunos }: chamadaTurmaType) =>
+    mutationFn: ({ alunos }: ChamadaTurmaType) =>
       realizarChamadaTurma({ alunos }),
     onError: (erro) => {
       toast.error('Houve um problema ao encerrar a chamada, tente novamente!', {
@@ -92,7 +91,7 @@ export function FormChamadaAlunos({
     },
   })
 
-  const finalizarChamada = async (dadosChamada: chamadaTurmaType) => {
+  const finalizarChamada = async (dadosChamada: ChamadaTurmaType) => {
     await encerrarChamadaTurma(dadosChamada)
   }
 
