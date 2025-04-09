@@ -11,10 +11,6 @@ export default function PageUsuariosEscola() {
     queryKey: ['usuariosEscola'],
     queryFn: buscarUsuariosEscola,
   })
-  useQuery({
-    queryKey: ['configuracaoWhatsapp'],
-    queryFn: recuperarConfiguracoesExistentes,
-  })
 
   return (
     <DataTableUsuarios data={listaUsuariosEscola ?? []} isLoading={isLoading} />
