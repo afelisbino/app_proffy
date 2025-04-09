@@ -9,7 +9,7 @@ export function SiteHeader() {
 	const { toggleSidebar } = useSidebar()
 
 	return (
-		<header className="flex h-16 shrink-0 items-center gap-2">
+		<header className="flex h-16 shrink-0 items-center gap-2 fixed w-full backdrop-blur-sm bg-background/30 rounded-lg">
 			<div className="flex items-center gap-2 px-4">
 				<Button 
 					variant="secondary"

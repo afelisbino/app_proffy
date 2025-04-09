@@ -48,7 +48,7 @@ export default async function AdminLayout({ children }: AdminLayoutProps) {
 							<AppSidebar variant="inset" collapsible="icon" />
 							<SidebarInset>
 								<SiteHeader />
-								<div className="flex flex-1 flex-col gap-4 p-4 pt-0">{children}</div>
+								<div className="flex flex-1 flex-col gap-4 p-4 pt-0 mt-20">{children}</div>
 							</SidebarInset>
 						</SidebarProvider>
 					</Providers>
