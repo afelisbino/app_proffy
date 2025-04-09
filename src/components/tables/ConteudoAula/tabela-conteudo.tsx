@@ -44,8 +44,8 @@ import { cn } from '@/lib/utils'
 
 import { colunasTabelaConteudoAula } from './colunas-tabela-conteudo-aula'
 import { colunasTabelaDiarioClasse } from '../Diario/colunas-tabela-diario-classe'
-import { DiarioConteudoDialog } from '../../dialogs/diario-conteudo-aula'
-import { DisciplinaEscolaType } from '@/app/(private)/admin/disciplinas/schemas/disciplina'
+import { DiarioConteudoDialog } from '@/components/dialogs/diario-conteudo-aula'
+import { DisciplinaEscolaType } from '@/schemas/disciplina'
 
 interface TabelaDiarioClasseProps {
   listaDisciplinas: Array<DisciplinaEscolaType>

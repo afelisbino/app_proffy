@@ -3,20 +3,20 @@ import { Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 
 import {
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 
 import {
-  removerResponsavelAluno,
-  ResponseDadosAluno,
-} from '../../api/matricula'
+    removerResponsavelAluno,
+    ResponseDadosAluno,
+} from '@/api/matricula'
 
 export interface RemocaoVinculoResponsavelProps {
   idResponsavel: string

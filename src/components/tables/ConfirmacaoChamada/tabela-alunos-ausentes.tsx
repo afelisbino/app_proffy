@@ -1,27 +1,25 @@
 'use client'
 
 import {
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  useReactTable,
+    flexRender,
+    getCoreRowModel,
+    getFilteredRowModel,
+    getPaginationRowModel,
+    useReactTable,
 } from '@tanstack/react-table'
-import { CheckCheck, Trash } from 'lucide-react'
-import React from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
 } from '@/components/ui/table'
 
-import { AlunoAusentesType } from '../../../schemas/SchemaAlunosAusentes'
+import { AlunoAusentesType } from '@/schemas/SchemaAlunosAusentes'
 
 import { colunasTabelaAlunosAusente } from './colunas-tabela-alunos-ausentes'
 import { Skeleton } from '@/components/ui/skeleton'

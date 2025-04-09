@@ -1,14 +1,14 @@
 import {
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
 } from '@/components/ui/dialog'
 
 import {
-  FormularioEdicaoMatriculaAluno,
-  FormularioEdicaoMatriculaAlunoProps,
-} from '../forms/Turma/FormularioEdicaoMatriculaAluno'
+    FormularioEdicaoMatriculaAluno,
+    FormularioEdicaoMatriculaAlunoProps,
+} from '@/components/forms/Turma/FormularioEdicaoMatriculaAluno'
 
 export function EdicaoMatriculaAlunoDialog({
   idAluno,

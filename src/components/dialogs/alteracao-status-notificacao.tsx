@@ -13,8 +13,8 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 
-import { modificarBloqueioNoticacoesAluno } from '../../api/matricula'
-import { AlunosTurmaType } from '../../schemas/SchemaAlunosTurma'
+import { modificarBloqueioNoticacoesAluno } from '@/api/matricula'
+import { AlunosTurmaType } from '@/schemas/SchemaAlunosTurma'
 
 interface AlteracaoStatusNotificacaoProps {
   idAluno: string

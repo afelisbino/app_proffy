@@ -6,7 +6,7 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog'
 
-import { EditarUsuarioForm } from '../forms/EditUsuarioForm'
+import { EditarUsuarioForm } from '@/components/forms/EditUsuarioForm'
 
 interface DialogEdicaoUsuarioProps {
   dadosUsuario: UsuarioType

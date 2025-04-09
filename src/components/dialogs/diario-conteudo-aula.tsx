@@ -7,8 +7,8 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 
-import { DisciplinaEscolaType } from '../../escola/disciplinas/schemas/disciplina'
-import { FormularioConteudoAula } from '../forms/Turma/FormDiarioConteudoAula'
+import { DisciplinaEscolaType } from '@/schemas/disciplina'
+import { FormularioConteudoAula } from '@/components/forms/Turma/FormDiarioConteudoAula'
 
 interface DiarioConteudoDialogProps {
   turmaId: string

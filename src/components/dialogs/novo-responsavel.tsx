@@ -1,14 +1,14 @@
 import {
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
 } from '@/components/ui/dialog'
 
 import {
-  DadosNovoResponsavelProps,
-  FormularioNovoReponsavel,
-} from '../forms/Turma/FormularioNovoResponsavel'
+    DadosNovoResponsavelProps,
+    FormularioNovoReponsavel,
+} from '@/components/forms/Turma/FormularioNovoResponsavel'
 
 export function AdicionaResponsavelAlunoDialog({
   idAluno,

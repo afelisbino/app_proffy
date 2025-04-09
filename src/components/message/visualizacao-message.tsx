@@ -3,7 +3,7 @@ import { ptBR } from 'date-fns/locale'
 
 import { Separator } from '@/components/ui/separator'
 
-import { MensagemAlunoType } from '../../schemas/SchemaMensagemAlunos'
+import { MensagemAlunoType } from '@/schemas/SchemaMensagemAlunos'
 
 interface VisualizacaoMensagemProps {
   mensagem: MensagemAlunoType | null

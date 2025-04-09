@@ -12,7 +12,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-import { EdicaoNotaAlunoDialog } from '../../dialogs/edicao-nota-dialog'
+import { EdicaoNotaAlunoDialog } from '@/components/dialogs/edicao-nota-dialog'
 
 interface MenuTabelaNotasAlunoProps {
   dadosNota: registroNotasTurmaType

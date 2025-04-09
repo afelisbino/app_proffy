@@ -9,9 +9,9 @@ import {
 import { Separator } from '@/components/ui/separator'
 import { useMensagemAluno } from '@/lib/use-case'
 
-import { buscarMensagensAluno } from '../../api/message'
-import { ListagemMensagensAluno } from '../lists/ListagemMensagensAlunos'
-import { VisualizacaoMensagem } from '../message/visualizacao-message'
+import { buscarMensagensAluno } from '@/api/message'
+import { ListagemMensagensAluno } from '@/components/lists/ListagemMensagensAlunos'
+import { VisualizacaoMensagem } from '@/components/message/visualizacao-message'
 
 interface MensagensEnviadasResponsavelAlunoProps {
   idAluno: string

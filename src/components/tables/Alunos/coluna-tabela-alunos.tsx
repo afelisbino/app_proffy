@@ -3,7 +3,7 @@ import { ColumnDef } from '@tanstack/react-table'
 import { Checkbox } from '@/components/ui/checkbox'
 import { aplicarMascaraDocumento, mascararNome } from '@/lib/utils'
 
-import { AlunosTurmaType } from '../../../schemas/SchemaAlunosTurma'
+import { AlunosTurmaType } from '@/schemas/SchemaAlunosTurma'
 
 import { MenuTabelaAluno } from './menu-tabela-alunos'
 

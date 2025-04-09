@@ -1,11 +1,11 @@
 'use client'
 
 import {
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  useReactTable,
+    flexRender,
+    getCoreRowModel,
+    getFilteredRowModel,
+    getPaginationRowModel,
+    useReactTable,
 } from '@tanstack/react-table'
 import { Check, ChevronsUpDown, Plus } from 'lucide-react'
 import React from 'react'
@@ -13,40 +13,40 @@ import React from 'react'
 import { registroNotasTurmaType } from '@/schemas/SchemaDiarioClasse'
 import { Button } from '@/components/ui/button'
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
 } from '@/components/ui/command'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
 } from '@/components/ui/popover'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
 } from '@/components/ui/table'
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { cn } from '@/lib/utils'
 
-import { DiarioTurmaDialog } from '../../dialogs/diario-turma'
+import { DiarioTurmaDialog } from '@/components/dialogs/diario-turma'
 
 import { colunasTabelaDiarioClasse } from './colunas-tabela-diario-classe'
-import { DisciplinaEscolaType } from '@/app/(private)/admin/disciplinas/schemas/disciplina'
+import { DisciplinaEscolaType } from '@/schemas/disciplina'
 
 interface TabelaDiarioClasseProps {
   listaDisciplinas: Array<DisciplinaEscolaType>

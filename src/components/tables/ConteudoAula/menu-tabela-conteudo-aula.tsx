@@ -10,7 +10,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { ConfirmacaoExcluirConteudoAulaDialog } from '../../dialogs/remover-conteudo'
+import { ConfirmacaoExcluirConteudoAulaDialog } from '@/components/dialogs/remover-conteudo'
 import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 
 interface MenuTabelaNotasAlunoProps {

@@ -7,16 +7,16 @@ import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-import { EdicaoResponsavelAluno } from '../../dialogs/edicao-responsavel'
-import { ListaContatosResponsaveisDialog } from '../../dialogs/lista-contatos-responsavel'
-import { NovosContatosResponsavelDialog } from '../../dialogs/novos-telefones-responsavel'
-import { RemocaoVinculoResponsavelDialog } from '../../dialogs/remover-vinculo-responsavel'
+import { EdicaoResponsavelAluno } from '@/components/dialogs/edicao-responsavel'
+import { ListaContatosResponsaveisDialog } from '@/components/dialogs/lista-contatos-responsavel'
+import { NovosContatosResponsavelDialog } from '@/components/dialogs/novos-telefones-responsavel'
+import { RemocaoVinculoResponsavelDialog } from '@/components/dialogs/remover-vinculo-responsavel'
 
 interface MenuTabelaResponsavelProps {
   dadosResponsavel: DadosResponsaveisAluno

@@ -1,14 +1,14 @@
 import {
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
 } from '@/components/ui/dialog'
 
 import {
-  EnviarMensagemAluno,
-  EnviarMensagemAlunoProps,
-} from '../message/enviar-mensagem'
+    EnviarMensagemAluno,
+    EnviarMensagemAlunoProps,
+} from '@/components/message/enviar-mensagem'
 
 export function NotificarResponsavelAluno({
   alunos,

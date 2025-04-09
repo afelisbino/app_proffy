@@ -5,18 +5,18 @@ import { Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 
 import {
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 
-import { desmatricularAluno } from '../../api/turma'
-import { AlunosTurmaType } from '../../schemas/SchemaAlunosTurma'
+import { desmatricularAluno } from '@/api/turma'
+import { AlunosTurmaType } from '@/schemas/SchemaAlunosTurma'
 
 interface DialogConfirmaExclusaoAlunoProps {
   idAluno: string

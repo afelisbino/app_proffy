@@ -3,17 +3,17 @@
 import { useQueryClient } from '@tanstack/react-query'
 
 import {
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
 } from '@/components/ui/dialog'
 
-import { DisciplinaEscolaType } from '../../escola/disciplinas/schemas/disciplina'
+import { DisciplinaEscolaType } from '@/schemas/disciplina'
 import {
-  FormularioEdicaoDiarioClasse,
-  FormularioEdicaoDiarioClasseProps,
-} from '../forms/Turma/FormularioEdicaoNotaAluno'
+    FormularioEdicaoDiarioClasse,
+    FormularioEdicaoDiarioClasseProps,
+} from '@/components/forms/Turma/FormularioEdicaoNotaAluno'
 
 export function EdicaoNotaAlunoDialog({
   id,

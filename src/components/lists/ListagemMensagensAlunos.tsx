@@ -6,7 +6,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useMensagemAluno } from '@/lib/use-case'
 import { cn } from '@/lib/utils'
 
-import { MensagemAlunoType } from '../../schemas/SchemaMensagemAlunos'
+import { MensagemAlunoType } from '@/schemas/SchemaMensagemAlunos'
 
 interface ListaMensagensAlunoProps {
   mensagens: Array<MensagemAlunoType>

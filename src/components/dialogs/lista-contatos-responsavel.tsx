@@ -6,8 +6,8 @@ import {
 } from '@/components/ui/dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
 
-import { ContatoResponsavelType } from '../../api/matricula'
-import { ItemContatoResponsavel } from '../lists/ItemContatoResponsavel'
+import { ContatoResponsavelType } from '@/api/matricula'
+import { ItemContatoResponsavel } from '@/components/lists/ItemContatoResponsavel'
 
 interface ListaContatosProps {
   idAluno: string

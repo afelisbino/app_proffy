@@ -1,11 +1,11 @@
 import {
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
 } from '@/components/ui/dialog'
 
-import { FormularioCadastroTurma } from '../forms/Turma/FormularioCadastroTurma'
+import { FormularioCadastroTurma } from '@/components/forms/Turma/FormularioCadastroTurma'
 
 export function CadastroTurma() {
   return (

@@ -1,6 +1,6 @@
 import { ColumnDef } from '@tanstack/react-table'
 
-import { AlunoAusentesType } from '../../../schemas/SchemaAlunosAusentes'
+import { AlunoAusentesType } from '@/schemas/SchemaAlunosAusentes'
 import { mascararNome } from '@/lib/utils'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'

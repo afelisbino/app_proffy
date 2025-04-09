@@ -30,8 +30,8 @@ import {
     TooltipTrigger,
 } from '@/components/ui/tooltip'
 
-import { MatriculaAlunoDialog } from '../../dialogs/matricula-aluno'
-import { DialogTransferenciaAluno } from '../../dialogs/transferencia-alunos'
+import { MatriculaAlunoDialog } from '@/components/dialogs/matricula-aluno'
+import { DialogTransferenciaAluno } from '@/components/dialogs/transferencia-alunos'
 
 import { colunasTabelaAlunosTurma } from './coluna-tabela-alunos'
 

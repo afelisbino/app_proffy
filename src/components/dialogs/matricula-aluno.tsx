@@ -1,14 +1,14 @@
 import {
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
 } from '@/components/ui/dialog'
 
 import {
-  FormularioMatriculaAluno,
-  FormularioMatriculaAlunoProps,
-} from '../forms/Turma/FormularioMatriculaAluno'
+    FormularioMatriculaAluno,
+    FormularioMatriculaAlunoProps,
+} from '@/components/forms/Turma/FormularioMatriculaAluno'
 
 export function MatriculaAlunoDialog({
   idTurma,

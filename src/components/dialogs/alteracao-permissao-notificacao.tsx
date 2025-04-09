@@ -3,20 +3,20 @@ import { Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 
 import {
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 
 import {
-  alterarPermissaoContatoResponsavel,
-  ResponseDadosAluno,
-} from '../../api/matricula'
+    alterarPermissaoContatoResponsavel,
+    ResponseDadosAluno,
+} from '@/api/matricula'
 
 interface PermissaoNotificacaoContatoResponsavelProps {
   idContato: string

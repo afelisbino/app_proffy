@@ -9,9 +9,9 @@ import {
 } from '@/components/ui/tooltip'
 import { formatarNumeroTelefone } from '@/lib/utils'
 
-import { ContatoResponsavelType } from '../../api/matricula'
-import { PermissaoNotificacaoResponsavelDialog } from '../dialogs/alteracao-permissao-notificacao'
-import { RemocaoContatoResponsavelDialog } from '../dialogs/remover-contato-responsavel'
+import { ContatoResponsavelType } from '@/api/matricula'
+import { PermissaoNotificacaoResponsavelDialog } from '@/components/dialogs/alteracao-permissao-notificacao'
+import { RemocaoContatoResponsavelDialog } from '@/components/dialogs/remover-contato-responsavel'
 
 export interface ContatoResponsavelProps {
   idAluno: string

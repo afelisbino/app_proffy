@@ -13,20 +13,20 @@ import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { DialogFooter } from '@/components/ui/dialog'
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
 } from '@/components/ui/form'
 import { Separator } from '@/components/ui/separator'
 import { Textarea } from '@/components/ui/textarea'
 import { useModelosNotificacao } from '@/lib/use-case'
 
-import { enviarMensagemWhatsApp } from '../../api/message'
-import { AlunosTurmaType } from '../../schemas/SchemaAlunosTurma'
-import ListagemTemplatesAssunto from '../lists/ListagemAssuntosMensagens'
+import { enviarMensagemWhatsApp } from '@/api/message'
+import { AlunosTurmaType } from '@/schemas/SchemaAlunosTurma'
+import ListagemTemplatesAssunto from '@/components/lists/ListagemAssuntosMensagens'
 
 export interface EnviarMensagemAlunoProps {
   alunos?: Array<AlunosTurmaType>

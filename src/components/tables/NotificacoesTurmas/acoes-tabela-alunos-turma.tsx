@@ -3,15 +3,15 @@ import { MessageSquareText, MessagesSquare, MoreVertical } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-import { AlunosTurmaType } from '../../../schemas/SchemaAlunosTurma'
-import { NotificarResponsavelAluno } from '../../dialogs/envio-notificacao-aluno'
-import { NotificacoesAluno } from '../../dialogs/notificacao-aluno-dialog'
+import { AlunosTurmaType } from '@/schemas/SchemaAlunosTurma'
+import { NotificarResponsavelAluno } from '@/components/dialogs/envio-notificacao-aluno'
+import { NotificacoesAluno } from '@/components/dialogs/notificacao-aluno-dialog'
 
 interface MenuTabelaNotificacaoAlunosTurmaProps {
   dadosAluno: AlunosTurmaType

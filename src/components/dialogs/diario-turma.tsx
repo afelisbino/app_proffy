@@ -10,9 +10,9 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 
-import { buscarAlunosTurma } from '../../api/turma'
-import { DisciplinaEscolaType } from '../../escola/disciplinas/schemas/disciplina'
-import { FormularioDiarioClasse } from '../forms/Turma/FormularioDiarioTurma'
+import { buscarAlunosTurma } from '@/api/turma'
+import { DisciplinaEscolaType } from '@/schemas/disciplina'
+import { FormularioDiarioClasse } from '@/components/forms/Turma/FormularioDiarioTurma'
 
 interface DiarioTurmaDialogProps {
   turmaId: string

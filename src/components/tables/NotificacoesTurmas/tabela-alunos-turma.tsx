@@ -1,11 +1,11 @@
 'use client'
 
 import {
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  useReactTable,
+    flexRender,
+    getCoreRowModel,
+    getFilteredRowModel,
+    getPaginationRowModel,
+    useReactTable,
 } from '@tanstack/react-table'
 import { MessageSquareShare } from 'lucide-react'
 import React from 'react'
@@ -15,16 +15,16 @@ import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
 } from '@/components/ui/table'
 
-import { AlunosTurmaType } from '../../../schemas/SchemaAlunosTurma'
-import { NotificarResponsavelAluno } from '../../dialogs/envio-notificacao-aluno'
+import { AlunosTurmaType } from '@/schemas/SchemaAlunosTurma'
+import { NotificarResponsavelAluno } from '@/components/dialogs/envio-notificacao-aluno'
 
 import { colunasTabelaNotificacaoAlunosTurma } from './colunas-tabela-alunos-turma'
 

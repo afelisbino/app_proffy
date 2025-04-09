@@ -6,20 +6,20 @@ import React from 'react'
 
 import { Button } from '@/components/ui/button'
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandItem,
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandItem,
 } from '@/components/ui/command'
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
 } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 
-import { turmaType } from '../../api/turma'
-import { TurmaType } from '../../schemas/SchemaAlunosTurma'
+import { turmaType } from '@/api/turma'
+import { TurmaType } from '@/schemas/SchemaAlunosTurma'
 
 interface ListagemTurmasProps {
   listaTurmas: turmaType[]

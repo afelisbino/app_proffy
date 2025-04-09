@@ -1,14 +1,14 @@
 import {
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
 } from '@/components/ui/dialog'
 
 import {
-  DadosEdicaoResponsavelProps,
-  FormularioEdicaoReponsavel,
-} from '../forms/Turma/FormularioEdicaoResponsavel'
+    DadosEdicaoResponsavelProps,
+    FormularioEdicaoReponsavel,
+} from '@/components/forms/Turma/FormularioEdicaoResponsavel'
 
 export function EdicaoResponsavelAluno({
   idAluno,

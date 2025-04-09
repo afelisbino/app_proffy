@@ -20,10 +20,10 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-import { AlunosTurmaType } from '../../../schemas/SchemaAlunosTurma'
-import { AlteracaoStatusNotificacaoAlunoDialog } from '../../dialogs/alteracao-status-notificacao'
-import { ConfirmacaoExcluirAlunoDialog } from '../../dialogs/remover-aluno'
-import { DialogTransferenciaAluno } from '../../dialogs/transferencia-alunos'
+import { AlunosTurmaType } from '@/schemas/SchemaAlunosTurma'
+import { AlteracaoStatusNotificacaoAlunoDialog } from '@/components/dialogs/alteracao-status-notificacao'
+import { ConfirmacaoExcluirAlunoDialog } from '@/components/dialogs/remover-aluno'
+import { DialogTransferenciaAluno } from '@/components/dialogs/transferencia-alunos'
 
 interface MenuTabelaAlunoProps {
   dadosAluno: AlunosTurmaType
