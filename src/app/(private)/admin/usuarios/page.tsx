@@ -3,7 +3,6 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { buscarUsuariosEscola } from '@/api/escola'
-import { recuperarConfiguracoesExistentes } from '../whatsapp/api/ConfigWhatsapp'
 
 import { DataTableUsuarios } from './components/tabela/lista-usuarios/tabela-usuarios'
 
