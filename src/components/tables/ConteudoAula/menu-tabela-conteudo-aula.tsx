@@ -31,7 +31,7 @@ export function MenuTabelaConteudoAula({
           <span className="sr-only">Abrir menu</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-auto">
+      <DropdownMenuContent align="start" className="w-auto">
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <DropdownMenuItem

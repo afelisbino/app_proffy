@@ -35,16 +35,16 @@ export function MenuTabelaDiarioAluno({
           <span className="sr-only">Abrir menu</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[250px]">
+      <DropdownMenuContent align="start" className="w-[250px]">
         <Dialog>
           <DialogTrigger asChild>
             <DropdownMenuItem
               onSelect={(e) => {
                 e.preventDefault()
               }}
-              className=" gap-2"
+              className="gap-2"
             >
-              <Pencil className="size-5" />
+              <Pencil className="size-4" />
               Editar nota
             </DropdownMenuItem>
           </DialogTrigger>

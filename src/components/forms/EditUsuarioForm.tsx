@@ -91,7 +91,7 @@ export function EditarUsuarioForm({
                 <FormLabel>Confirme a senha</FormLabel>
                 <FormControl>
                   <Input
-                    type="passw0rd"
+                    type="password"
                     {...field}
                   />
                 </FormControl>
