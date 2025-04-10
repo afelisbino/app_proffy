@@ -17,7 +17,6 @@ export default function LoginPage() {
 									src="/logo-app.jpg"
 									alt="Proffy Thumbnail"
 									width={300}
-									loading="lazy"
 									height={300}
 									className="absolute inset-0 h-full w-full object-cover"
 								/>

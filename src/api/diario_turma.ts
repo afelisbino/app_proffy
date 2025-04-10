@@ -177,3 +177,13 @@ export async function removerConteudoAula({ idConteudo }: { idConteudo: string }
       return data.data
     })
 }
+
+export async function removerAvaliacaoAluno({ idConteudo }: { idConteudo: string }) {
+  return await axiosInstance
+    .delete<ResponseLancamentoConteudoTurmaType>(
+      `diario/lancamento/${idConteudo}`,
+    )
+    .then((data) => {
+      return data.data
+    })
+}

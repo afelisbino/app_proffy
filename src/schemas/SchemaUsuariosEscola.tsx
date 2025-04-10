@@ -46,17 +46,29 @@ export type FormularioNovoUsuarioType = z.infer<
 
 export const schemaFormularioEdicaoUsuario = z.object({
   id: z.string().uuid(),
-  nome: z
+  novaSenha: z
     .string({
-      required_error: 'Necessário informar o nome do usuario',
+      required_error: 'Necessário informar a nova do usuário',
     })
-    .trim(),
-  email: z
+    .min(8, {
+      message: 'A senha precisa ter no mínimo 8 caractéres',
+    })
+    .regex(/[a-zA-Z]/, { message: 'Conter pelo menos uma letra.' })
+    .regex(/[0-9]/, { message: 'Conter pelo menos um número.' })
+    .regex(/[^a-zA-Z0-9]/, {
+      message: 'Conter pelo menos um caractere especial.',
+    }),
+  confirmaSenha: z
     .string({
-      required_error: 'Necessário informar o nome do usuário',
+      required_error: 'Necessário informar a nova do usuário',
     })
-    .email({
-      message: 'Email informado é inválido',
+    .min(8, {
+      message: 'A senha precisa ter no mínimo 8 caractéres',
+    })
+    .regex(/[a-zA-Z]/, { message: 'Conter pelo menos uma letra.' })
+    .regex(/[0-9]/, { message: 'Conter pelo menos um número.' })
+    .regex(/[^a-zA-Z0-9]/, {
+      message: 'Conter pelo menos um caractere especial.',
     }),
 })
 

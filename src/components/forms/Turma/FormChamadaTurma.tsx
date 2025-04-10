@@ -31,11 +31,13 @@ import { mascararNome } from '@/lib/utils'
 
 interface ListaAlunosChamadaProps {
   dataChamada: Date
+  turmaId: string
   listaAlunosTurma: Array<AlunosTurmaType>
   carregandoAlunos: boolean
 }
 
 const schemaFormChamadaTurma = z.object({
+  turma: z.string().uuid(),
   alunos: z.array(
     z.object({
       idAluno: z.string().uuid(),
@@ -49,6 +51,7 @@ const schemaFormChamadaTurma = z.object({
 export type ChamadaTurmaType = z.infer<typeof schemaFormChamadaTurma>
 
 export function FormChamadaAlunos({
+  turmaId,
   listaAlunosTurma,
   carregandoAlunos,
   dataChamada
@@ -57,6 +60,7 @@ export function FormChamadaAlunos({
   const formChamadaTurma = useForm<ChamadaTurmaType>({
     resolver: zodResolver(schemaFormChamadaTurma),
     defaultValues: {
+      turma: turmaId,
       alunos: listaAlunosTurma.length > 0
       ? listaAlunosTurma.map((aluno) => {
           return {
@@ -77,8 +81,8 @@ export function FormChamadaAlunos({
   })
 
   const { mutateAsync: encerrarChamadaTurma } = useMutation({
-    mutationFn: ({ alunos }: ChamadaTurmaType) =>
-      realizarChamadaTurma({ alunos }),
+    mutationFn: ({ turma, alunos }: ChamadaTurmaType) =>
+      realizarChamadaTurma({ turma, alunos }),
     onError: (erro) => {
       toast.error('Houve um problema ao encerrar a chamada, tente novamente!', {
         description: erro.message,

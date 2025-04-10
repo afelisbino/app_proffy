@@ -123,6 +123,7 @@ export default function PageChamada() {
             <>
               <Separator />
               <FormChamadaAlunos
+                turmaId={turmaSelecionada}
                 dataChamada={date ?? new Date()}
                 listaAlunosTurma={alunosTurma}
                 carregandoAlunos={carregandoAlunos}

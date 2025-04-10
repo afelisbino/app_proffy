@@ -8,6 +8,6 @@ export async function encerrarSessao() {
   cookies().delete('session-user')
   cookies().delete('session-company')
 
-  redirect('../')
+  redirect('/login')
 }
 

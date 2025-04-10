@@ -25,6 +25,7 @@ export function AppSidebar({
 		queryFn: buscarDadosUsuario,
 		refetchOnWindowFocus: true,
 		initialData: {
+			id: '',
 			nome: '',
 			email: '',
 			perfil: 'PROFESSOR'
@@ -60,7 +61,7 @@ export function AppSidebar({
 				<AppSidebarNav permissoes={dadosUsuario.data.perfil === 'ADMIN' ? permissoesAdmin.permissoes : permissionTeacher.permissoes} />
 			</SidebarContent>
 			<SidebarFooter>
-				<SidebarUserMenu nome={dadosUsuario.data.nome} email={dadosUsuario.data.email} carregando={dadosUsuario.isFetching} />
+				<SidebarUserMenu id={dadosUsuario.data.id} nome={dadosUsuario.data.nome} email={dadosUsuario.data.email} perfil={dadosUsuario.data.perfil} carregando={dadosUsuario.isFetching} />
 			</SidebarFooter>
 		</Sidebar>
 	);

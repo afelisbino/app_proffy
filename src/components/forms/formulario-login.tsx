@@ -49,7 +49,7 @@ export function FormularioLogin() {
 			return
 		}
 
-		router.push('/classe/chamada')
+		router.push('/')
 	}
 
 	return (

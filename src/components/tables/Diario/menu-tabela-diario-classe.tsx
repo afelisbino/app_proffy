@@ -1,18 +1,21 @@
 'use client'
 
-import { MoreVertical, Pencil } from 'lucide-react'
+import { MoreVertical, Pencil, Trash } from 'lucide-react'
 
 import { registroNotasTurmaType } from '@/schemas/SchemaDiarioClasse'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
 import { EdicaoNotaAlunoDialog } from '@/components/dialogs/edicao-nota-dialog'
+import { AlertDialog } from '@radix-ui/react-alert-dialog'
+import { AlertDialogTrigger } from '@/components/ui/alert-dialog'
+import { ConfirmacaoExcluirAvaliacaoAlunoDialog } from '@/components/dialogs/remover-avaliacao'
 
 interface MenuTabelaNotasAlunoProps {
   dadosNota: registroNotasTurmaType
@@ -60,6 +63,20 @@ export function MenuTabelaDiarioAluno({
             listaDisciplinas={[]}
           />
         </Dialog>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <DropdownMenuItem
+              onSelect={(e) => {
+                e.preventDefault()
+              }}
+              className=" gap-2"
+            >
+              <Trash className="size-4" />
+              Remover avaliação
+            </DropdownMenuItem>
+          </AlertDialogTrigger>
+          <ConfirmacaoExcluirAvaliacaoAlunoDialog idConteudo={dadosNota.id} idTurma={dadosNota.turmaId} />
+        </AlertDialog>
       </DropdownMenuContent>
     </DropdownMenu>
   )

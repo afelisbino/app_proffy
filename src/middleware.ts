@@ -1,14 +1,12 @@
 import { NextResponse, type NextRequest } from 'next/server'
 
-const PAGE_LOGIN_USER = '/'
-
 export function middleware(request: NextRequest) {
 
   if (
     !request.cookies.has('session-user') ||
-    !request.cookies.has('session-company')
+    !request.cookies.has('session-company') 
   ) {
-    return NextResponse.redirect(new URL(PAGE_LOGIN_USER, request.url))
+    return NextResponse.redirect(new URL("/login", request.url))
   }
 
   return NextResponse.next()
@@ -16,7 +14,13 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/admin/:path*',
-    '/classe/:path*',
+    /*
+      * Match all request paths except for the ones starting with:
+      * - api (API routes)
+      * - _next/static (static files)
+      * - _next/image (image optimization files)
+      * - favicon.ico (favicon file)
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico|login|admin|classe).*)',
   ],
 }

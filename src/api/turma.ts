@@ -104,8 +104,8 @@ export async function desmatricularAluno(idAluno: string) {
   return response.data
 }
 
-export async function realizarChamadaTurma({ alunos }: ChamadaTurmaType) {
-  const response = await axiosInstance.post(`/turma/chamada`, {
+export async function realizarChamadaTurma({ alunos, turma }: ChamadaTurmaType) {
+  const response = await axiosInstance.post(`/turma/${turma}/chamada`, {
     chamada: alunos.map((chamadaAluno) => {
       return {
         idAluno: chamadaAluno.idAluno,

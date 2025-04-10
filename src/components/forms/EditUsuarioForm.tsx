@@ -5,21 +5,23 @@ import { Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 
 import {
-    FormularioEdicaoUsuarioType,
-    schemaFormularioEdicaoUsuario,
-    UsuarioType,
+  FormularioEdicaoUsuarioType,
+  schemaFormularioEdicaoUsuario,
 } from '@/schemas/SchemaUsuariosEscola'
 import { Button } from '@/components/ui/button'
 import { DialogClose, DialogFooter } from '@/components/ui/dialog'
 import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { alterarSenhaUsuario } from '@/api/auth'
+import { toast } from 'sonner'
+import { UsuarioType } from '@/api/auth'
 
 interface FormularioNovoUsuarioProps {
   dadosUsuario: UsuarioType
@@ -28,35 +30,53 @@ interface FormularioNovoUsuarioProps {
 export function EditarUsuarioForm({
   dadosUsuario,
 }: FormularioNovoUsuarioProps) {
-  const formEditUsuario = useForm<FormularioEdicaoUsuarioType>({
+  const formEditSenhaUsuario = useForm<FormularioEdicaoUsuarioType>({
     resolver: zodResolver(schemaFormularioEdicaoUsuario),
     defaultValues: {
       id: dadosUsuario.id,
-      nome: dadosUsuario.nome,
-      email: dadosUsuario.email,
     },
     mode: 'onChange',
   })
 
-  async function salvarDadosUsuario() {
-    formEditUsuario.reset()
+  async function salvarDadosSenhaUsuario({ id, novaSenha, confirmaSenha }: FormularioEdicaoUsuarioType) {
+    if (novaSenha !== confirmaSenha) {
+      formEditSenhaUsuario.setError('confirmaSenha', {
+        type: 'manual',
+        message: 'As senhas não conferem',
+      })
+      return
+    }
+
+    const response = await alterarSenhaUsuario({
+      id,
+      novaSenha,
+      confirmaSenha
+    })
+
+    if (!response.status) {
+      toast.error(response.msg)
+    }
+    if (response.status) {
+      toast.success('Senha alterada com sucesso!')
+    }
+    formEditSenhaUsuario.reset()
   }
 
   return (
-    <Form {...formEditUsuario}>
+    <Form {...formEditSenhaUsuario}>
       <form
         className="space-y-4"
-        onSubmit={formEditUsuario.handleSubmit(salvarDadosUsuario)}
+        onSubmit={formEditSenhaUsuario.handleSubmit(salvarDadosSenhaUsuario)}
       >
         <div className="grid grid-cols-1 gap-2">
           <FormField
-            control={formEditUsuario.control}
-            name="nome"
+            control={formEditSenhaUsuario.control}
+            name="novaSenha"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nome do usuário</FormLabel>
+                <FormLabel>Nova senha</FormLabel>
                 <FormControl>
-                  <Input placeholder="Nome completo" {...field} />
+                  <Input type='password' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -64,16 +84,14 @@ export function EditarUsuarioForm({
           />
 
           <FormField
-            control={formEditUsuario.control}
-            name="email"
+            control={formEditSenhaUsuario.control}
+            name="confirmaSenha"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email do usuário</FormLabel>
+                <FormLabel>Confirme a senha</FormLabel>
                 <FormControl>
                   <Input
-                    autoComplete="off"
-                    type="email"
-                    placeholder="usuario@email.com.br"
+                    type="passw0rd"
                     {...field}
                   />
                 </FormControl>
@@ -87,29 +105,27 @@ export function EditarUsuarioForm({
             <Button
               type="button"
               variant={'destructive'}
-              onClick={() => formEditUsuario.reset()}
-              className="shadow-md text-sm uppercase leading-none bg-padrao-red rounded text-white hover:bg-red-800"
+              onClick={() => formEditSenhaUsuario.reset()}
+              className="shadow-md text-sm leading-none rounded"
             >
               Cancelar
             </Button>
           </DialogClose>
-          {formEditUsuario.formState.isSubmitting ? (
+          {formEditSenhaUsuario.formState.isSubmitting ? (
             <Button
-              className="shadow-md text-sm uppercase leading-none rounded text-white bg-sky-600  hover:bg-sky-700"
+              className="shadow-md text-sm leading-none rounded bg-app-green-500 hover:bg-app-green-600"
               disabled
             >
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               Salvando...
             </Button>
           ) : (
-            <DialogClose asChild>
-              <Button
-                className="shadow-md text-sm uppercase leading-none rounded text-white bg-sky-600  hover:bg-sky-700"
-                type="submit"
-              >
-                Salvar
-              </Button>
-            </DialogClose>
+            <Button
+              className="shadow-md text-sm leading-none rounded bg-app-green-500 hover:bg-app-green-600"
+              type="submit"
+            >
+              Salvar
+            </Button>
           )}
         </DialogFooter>
       </form>

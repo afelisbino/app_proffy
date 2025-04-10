@@ -27,14 +27,18 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Skeleton } from "../ui/skeleton";
 import { capturarIniciaisNome } from "@/lib/utils";
 import { encerrarSessao } from "@/api/session";
+import { Dialog, DialogTrigger } from "../ui/dialog";
+import { DialogEdicaoSenhaUsuario } from "../dialogs/EdicaoUsuarioDialog";
 
 interface SidebarUserMenuProps {
+	id: string;
 	nome: string;
 	email: string;
+	perfil: string;
 	carregando?: boolean;
 }
 
-export function SidebarUserMenu({ nome, email, carregando }: SidebarUserMenuProps) {
+export function SidebarUserMenu({ id, nome, email, perfil, carregando }: SidebarUserMenuProps) {
 	const queryClient = useQueryClient()
 
 	const { setTheme, theme } = useTheme();
@@ -65,10 +69,22 @@ export function SidebarUserMenu({ nome, email, carregando }: SidebarUserMenuProp
 						align="end"
 						sideOffset={4}
 					>
-						{/* <DropdownMenuItem className="gap-3">
-							<RectangleEllipsis className="h-[1.2rem] w-[1.2rem]" />
-							Alterar senha
-						</DropdownMenuItem> */}
+						<Dialog>
+							<DialogTrigger asChild>
+								<DropdownMenuItem onSelect={(e) => {
+									e.preventDefault()
+								}} className="gap-3">
+									<RectangleEllipsis className="h-[1.2rem] w-[1.2rem]" />
+									Alterar senha
+								</DropdownMenuItem>
+							</DialogTrigger>
+							<DialogEdicaoSenhaUsuario dadosUsuario={{
+								id,
+								nome,
+								email,
+								perfil: perfil === 'PROFESSOR' ? 'PROFESSOR' : 'ADMIN',
+							}} />
+						</Dialog>
 						<DropdownMenuItem
 							className="gap-3"
 							onClick={() => setTheme(theme === "light" ? "dark" : "light")}

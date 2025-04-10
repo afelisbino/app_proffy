@@ -62,7 +62,7 @@ export const permissoesAdmin: PermissoesUsuarioType = {
       itens: [
         {
           titulo: 'Chamada',
-          href: '/classe/chamada',
+          href: '/',
           icon: Speech
         },
         {
@@ -82,7 +82,7 @@ export const permissionTeacher: PermissoesUsuarioType = {
       itens: [
         {
           titulo: 'Chamada',
-          href: '/classe/chamada',
+          href: '/',
           icon: Speech
         },
         {
