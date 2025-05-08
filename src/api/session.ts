@@ -5,10 +5,8 @@ import { redirect } from 'next/navigation'
 
 
 export async function encerrarSessao() {
-  const cookieStore = cookies()
-
-  cookieStore.delete('session-user')
-  cookieStore.delete('session-company')
+  cookies().delete('session-user')
+  cookies().delete('session-company')
 
   redirect("/login")
 }
