@@ -5,6 +5,7 @@ const nextConfig = {
     return config
   },
   skipTrailingSlashRedirect: true,
+  output: 'export',
 }
 
 module.exports = nextConfig
