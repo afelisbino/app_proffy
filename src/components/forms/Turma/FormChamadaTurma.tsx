@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
-import { Loader2 } from 'lucide-react'
+import { CalendarIcon, Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -27,10 +27,17 @@ import {
 } from '@/components/ui/tooltip'
 import { AlunosTurmaType } from '@/schemas/SchemaAlunosTurma'
 import { realizarChamadaTurma } from '@/api/turma'
-import { mascararNome } from '@/lib/utils'
+import { cn, mascararNome } from '@/lib/utils'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { Calendar } from "@/components/ui/calendar"
+import { ptBR } from 'date-fns/locale'
+import { format } from 'date-fns'
 
 interface ListaAlunosChamadaProps {
-  dataChamada: Date
   turmaId: string
   listaAlunosTurma: Array<AlunosTurmaType>
   carregandoAlunos: boolean
@@ -38,12 +45,12 @@ interface ListaAlunosChamadaProps {
 
 const schemaFormChamadaTurma = z.object({
   turma: z.string().uuid(),
+  dataChamada: z.coerce.date(),
   alunos: z.array(
     z.object({
       idAluno: z.string().uuid(),
       presente: z.coerce.boolean(),
       nomeAluno: z.string(),
-      dataChamada: z.coerce.date()
     }),
   ),
 })
@@ -53,24 +60,23 @@ export type ChamadaTurmaType = z.infer<typeof schemaFormChamadaTurma>
 export function FormChamadaAlunos({
   turmaId,
   listaAlunosTurma,
-  carregandoAlunos,
-  dataChamada
+  carregandoAlunos
 }: ListaAlunosChamadaProps) {
   const [todosPresenteSelecionado, selecionarTodosPresente] = useState(false)
   const formChamadaTurma = useForm<ChamadaTurmaType>({
     resolver: zodResolver(schemaFormChamadaTurma),
     defaultValues: {
       turma: turmaId,
+      dataChamada: new Date(),
       alunos: listaAlunosTurma.length > 0
-      ? listaAlunosTurma.map((aluno) => {
+        ? listaAlunosTurma.map((aluno) => {
           return {
             idAluno: aluno.id,
             presente: false,
             nomeAluno: mascararNome(aluno.nome),
-            dataChamada,
           }
         })
-      : [],
+        : [],
     },
     mode: 'onChange',
   })
@@ -81,8 +87,8 @@ export function FormChamadaAlunos({
   })
 
   const { mutateAsync: encerrarChamadaTurma } = useMutation({
-    mutationFn: ({ turma, alunos }: ChamadaTurmaType) =>
-      realizarChamadaTurma({ turma, alunos }),
+    mutationFn: ({ turma, alunos, dataChamada }: ChamadaTurmaType) =>
+      realizarChamadaTurma({ turma, alunos, dataChamada }),
     onError: (erro) => {
       toast.error('Houve um problema ao encerrar a chamada, tente novamente!', {
         description: erro.message,
@@ -90,7 +96,7 @@ export function FormChamadaAlunos({
     },
     onSuccess: () => {
       toast.success('Chamada encerrada com sucesso!')
-
+      selecionarTodosPresente(false)
       formChamadaTurma.reset()
     },
   })
@@ -142,56 +148,96 @@ export function FormChamadaAlunos({
     </div>
   ) : (
     <div className="space-y-4">
-      {alunosTurma.length > 0 && (
-        <>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="flex flex-row gap-2 items-center">
-                <Progress
-                  className="w-full h-2 rounded-sm dark:shadow-none"
-                  value={percentualPresencaTurma}
-                />
-                <span className="text-lg">{`${percentualPresencaTurma}%`}</span>
-              </div>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Percentual de presença na turma</p>
-            </TooltipContent>
-          </Tooltip>
-          <div className="flex flex-row items-center justify-between rounded-lg border p-4">
-            <div className="space-y-0.5">
-              <Label className="text-base">Todos presentes</Label>
-              <p className="text-muted-foreground">
-                Ao selecionar, todos os alunos da turma será marcado como
-                presentes
-              </p>
-            </div>
-            <div>
-              <Switch
-                checked={todosPresenteSelecionado}
-                onCheckedChange={(checked) => {
-                  selecionarTodosPresente(checked)
-
-                  alunosTurma.forEach((_, index) => {
-                    formChamadaTurma.setValue(
-                      `alunos.${index}.presente`,
-                      checked,
-                    )
-                    formChamadaTurma.trigger(`alunos.${index}.presente`)
-                  })
-                }}
-                disabled={!listaAlunosTurma || listaAlunosTurma.length === 0}
-              />
-            </div>
-          </div>
-        </>
-      )}
-
       <Form {...formChamadaTurma}>
         <form
           className="space-y-4"
           onSubmit={formChamadaTurma.handleSubmit(finalizarChamada)}
         >
+          {alunosTurma.length > 0 && (
+            <>
+              <div className="flex-1 justify-center md:flex md:flex-row md:justify-end">
+                <FormField
+                  control={formChamadaTurma.control}
+                  name="dataChamada"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant={'outline'}
+                            className={cn(
+                              'max-w-sm md:w-auto justify-start text-left font-normal gap-2',
+                              !field.value && 'text-muted-foreground',
+                            )}
+                          >
+                            <CalendarIcon />
+                            {field.value ? format(field.value, "PPP", {
+                              locale: ptBR
+                            }) : <span>Seleciona uma data</span>}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="center">
+                          <Calendar
+                            className="border rounded-sm"
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            disabled={(date) =>
+                              date > new Date()
+                            }
+                            locale={ptBR}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="flex flex-row gap-2 items-center">
+                    <Progress
+                      className="w-full h-2 rounded-sm dark:shadow-none"
+                      value={percentualPresencaTurma}
+                    />
+                    <span className="text-lg">{`${percentualPresencaTurma}%`}</span>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Percentual de presença na turma</p>
+                </TooltipContent>
+              </Tooltip>
+              <div className="flex flex-row items-center justify-between rounded-lg border p-4">
+                <div className="space-y-0.5">
+                  <Label className="text-base">Todos presentes</Label>
+                  <p className="text-muted-foreground">
+                    Ao selecionar, todos os alunos da turma será marcado como
+                    presentes
+                  </p>
+                </div>
+                <div>
+                  <Switch
+                    checked={todosPresenteSelecionado}
+                    onCheckedChange={(checked) => {
+                      selecionarTodosPresente(checked)
+
+                      alunosTurma.forEach((_, index) => {
+                        formChamadaTurma.setValue(
+                          `alunos.${index}.presente`,
+                          checked,
+                        )
+                        formChamadaTurma.trigger(`alunos.${index}.presente`)
+                      })
+                    }}
+                    disabled={!listaAlunosTurma || listaAlunosTurma.length === 0}
+                  />
+                </div>
+              </div>
+            </>
+          )}
+
           <div className="grid grid-cols-1 gap-2 space-y-2">
             {alunosTurma.map((aluno, index) => (
               <div

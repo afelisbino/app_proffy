@@ -39,6 +39,7 @@ export default function CalendarioChamada() {
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="center">
         <Calendar
+          className="border rounded-sm"
           mode="single"
           selected={date}
           onSelect={setDate}

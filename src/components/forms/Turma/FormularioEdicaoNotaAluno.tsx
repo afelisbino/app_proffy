@@ -178,11 +178,12 @@ export function FormularioEdicaoDiarioClasse({
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
                     <Calendar
+                      className="border rounded-sm"
                       mode="single"
                       selected={field.value}
                       onSelect={field.onChange}
                       disabled={(date) =>
-                        date > new Date() || date < new Date('1900-01-01')
+                        date > new Date()
                       }
                     />
                   </PopoverContent>

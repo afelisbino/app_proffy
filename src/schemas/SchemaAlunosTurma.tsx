@@ -135,7 +135,7 @@ export const schemaFormularioEdicaoMatriculaAluno = z.object({
   ra: z.string({
     required_error: 'O RA do aluno é obrigatório',
   }),
-  dataNascimento: z.date({
+  dataNascimento: z.coerce.date({
     required_error: 'A data de nascimento do aluno é obrigatória',
   }),
 })

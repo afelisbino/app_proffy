@@ -128,6 +128,7 @@ export function FormularioConteudoAula({
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
                     <Calendar
+                      className="border rounded-sm"
                       mode="single"
                       selected={field.value}
                       onSelect={field.onChange}

@@ -229,6 +229,7 @@ export function FormularioMatriculaAluno({
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="center">
                     <Calendar
+                      className="border rounded-sm"
                       mode={'single'}
                       captionLayout="dropdown-buttons"
                       fromYear={1990}

@@ -11,26 +11,26 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import {
-    atualizarDadosMatricula,
-    ResponseDadosAluno,
+  atualizarDadosMatricula,
+  ResponseDadosAluno,
 } from '@/api/matricula'
 import { schemaFormularioEdicaoMatriculaAluno } from '@/schemas/SchemaAlunosTurma'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { DialogFooter } from '@/components/ui/dialog'
 import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
 } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 
@@ -190,7 +190,11 @@ export function FormularioEdicaoMatriculaAluno({
                         )}
                       >
                         {field.value ? (
-                          format(field.value, 'P', {
+                          format(new Date(
+                            field.value.getFullYear(),
+                            field.value.getMonth(),
+                            field.value.getDate() + 1
+                          ), 'P', {
                             locale: ptBR,
                           })
                         ) : (
@@ -202,10 +206,13 @@ export function FormularioEdicaoMatriculaAluno({
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="center">
                     <Calendar
+                      className="border rounded-sm"
                       mode={'single'}
-                      captionLayout="dropdown-buttons"
-                      fromYear={1990}
-                      toYear={new Date().getFullYear()}
+                      fromDate={new Date(
+                        field.value.getFullYear(),
+                        field.value.getMonth(),
+                        field.value.getDate() + 1
+                      )}
                       selected={field.value}
                       onSelect={field.onChange}
                       locale={ptBR}

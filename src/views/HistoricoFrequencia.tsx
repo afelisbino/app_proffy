@@ -88,7 +88,7 @@ export default function HistoricoFrequencia({ listaTurmas, buscandoTurmas }: Rel
                   </SelectContent>
                 </Select>
                 <Calendar
-                  className="border rounded-sm capitalize"
+                  className="border rounded-sm"
                   initialFocus
                   mode="single"
                   selected={date}
