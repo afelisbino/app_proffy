@@ -138,7 +138,7 @@ export function FormChamadaAlunos({
     queryKey: ['verifica-chamada-turma', turmaId, dataChamada],
     queryFn: () => verificarChamadaTurmaRealizada({
       turma: turmaId,
-      dataChamada: new Date(dataChamada),
+      dataChamada,
     }),
     enabled: !!turmaId && !!dataChamada,
     staleTime: Infinity
