@@ -250,7 +250,7 @@ export function FormChamadaAlunos({
                         formChamadaTurma.trigger(`alunos.${index}.presente`)
                       })
                     }}
-                    disabled={!listaAlunosTurma || listaAlunosTurma.length === 0 || (!verificaChamadaRealizada.isFetching && verificaChamadaRealizada.data.chamada)}
+                    disabled={!listaAlunosTurma || listaAlunosTurma.length === 0 || (!verificaChamadaRealizada.isFetching && verificaChamadaRealizada?.data?.chamada)}
                   />
                 </div>
               </div>
@@ -294,7 +294,7 @@ export function FormChamadaAlunos({
                       </div>
                       <FormControl>
                         <Switch
-                          disabled={(!verificaChamadaRealizada.isFetching && verificaChamadaRealizada.data.chamada)}
+                          disabled={(!verificaChamadaRealizada.isFetching && verificaChamadaRealizada?.data?.chamada)}
                           checked={field.value}
                           onCheckedChange={(value) => {
                             field.onChange(value)
@@ -323,7 +323,7 @@ export function FormChamadaAlunos({
                   !listaAlunosTurma ||
                   listaAlunosTurma.length === 0 ||
                   alunosTurma.length === 0 ||
-                  (!verificaChamadaRealizada.isFetching && verificaChamadaRealizada.data.chamada)
+                  (!verificaChamadaRealizada.isFetching && verificaChamadaRealizada?.data?.chamada)
                 }
                 className="py-8 shadow w-full text-lg bg-app-red-700 hover:bg-app-red-800 text-app-white-50"
                 type="submit"
