@@ -136,12 +136,7 @@ export function FormChamadaAlunos({
       turma: turmaId,
       dataChamada: new Date(formChamadaTurma.watch('dataChamada')),
     }),
-    enabled: !!formChamadaTurma.watch('dataChamada'),
-    initialData: {
-      status: true,
-      msg: '',
-      chamada: false
-    }
+    enabled: !!turmaId && !!formChamadaTurma.watch('dataChamada'),
   })
 
   return carregandoAlunos ? (
@@ -164,7 +159,7 @@ export function FormChamadaAlunos({
   ) : (
     <div className="space-y-4">
       {
-        verificaChamadaRealizada.data.chamada && (
+        (!verificaChamadaRealizada.isFetching && verificaChamadaRealizada?.data?.chamada) && (
           <Alert variant={'destructive'}>
             <AlertTitle>{"Atenção!"}</AlertTitle>
             <AlertDescription className=''>{verificaChamadaRealizada.data.msg}</AlertDescription>
