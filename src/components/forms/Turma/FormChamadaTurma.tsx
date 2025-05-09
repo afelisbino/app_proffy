@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { CalendarIcon, Loader2 } from 'lucide-react'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -130,13 +130,18 @@ export function FormChamadaAlunos({
     }
   }
 
+  const dataChamada = useMemo(() => {
+    return formChamadaTurma.watch('dataChamada')
+  }, [formChamadaTurma.watch('dataChamada')])
+
   const verificaChamadaRealizada = useQuery({
-    queryKey: ['verifica-chamada-turma', turmaId, formChamadaTurma.watch('dataChamada')],
+    queryKey: ['verifica-chamada-turma', turmaId, dataChamada],
     queryFn: () => verificarChamadaTurmaRealizada({
       turma: turmaId,
-      dataChamada: new Date(formChamadaTurma.watch('dataChamada')),
+      dataChamada: new Date(dataChamada),
     }),
-    enabled: !!turmaId && !!formChamadaTurma.watch('dataChamada'),
+    enabled: !!turmaId && !!dataChamada,
+    staleTime: Infinity
   })
 
   return carregandoAlunos ? (
