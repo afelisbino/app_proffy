@@ -15,24 +15,25 @@ import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { DialogClose, DialogFooter } from '@/components/ui/dialog'
 import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from '@/components/ui/form'
 import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
 } from '@/components/ui/popover'
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from '@/components/ui/select'
 import { cn } from '@/lib/utils'
 import { Textarea } from '@/components/ui/textarea'
@@ -158,11 +159,13 @@ export function FormularioConteudoAula({
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {listaDisciplinas.map((disciplina) => (
-                      <SelectItem key={disciplina.id} value={disciplina.id}>
-                        {disciplina.nome}
-                      </SelectItem>
-                    ))}
+                    <SelectGroup>
+                      {listaDisciplinas.map((disciplina) => (
+                        <SelectItem key={disciplina.id} value={disciplina.id}>
+                          {disciplina.nome}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
                 <FormMessage />

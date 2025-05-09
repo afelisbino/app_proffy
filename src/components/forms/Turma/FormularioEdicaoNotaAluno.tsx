@@ -31,6 +31,7 @@ import {
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -249,11 +250,13 @@ export function FormularioEdicaoDiarioClasse({
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {listaDisciplinas.map((disciplina) => (
-                      <SelectItem key={disciplina.id} value={disciplina.id}>
-                        {disciplina.nome}
-                      </SelectItem>
-                    ))}
+                    <SelectGroup>
+                      {listaDisciplinas.map((disciplina) => (
+                        <SelectItem key={disciplina.id} value={disciplina.id}>
+                          {disciplina.nome}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
                 <FormMessage />

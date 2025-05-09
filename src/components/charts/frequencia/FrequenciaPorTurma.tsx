@@ -49,11 +49,11 @@ interface RelatorioFrequenciaEscolarProps {
   buscandoTurmas: boolean
 }
 
+const dataAtual = new Date()
 export function ChartFrequenciaTurma({
   listaTurmas,
   buscandoTurmas,
 }: RelatorioFrequenciaEscolarProps) {
-  const dataAtual = new Date()
 
   const [date, setDate] = useState<DateRange | undefined>({
     from: new Date(dataAtual.getFullYear(), dataAtual.getMonth(), 1),

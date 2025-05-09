@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { TabelaAlunosAusentes } from "@/components/tables/ConfirmacaoChamada/tabela-alunos-ausentes"
+import { DateRange } from "react-day-picker"
 
 const dataAtual = new Date()
 
@@ -25,13 +26,17 @@ export default function HistoricoFrequencia({ listaTurmas, buscandoTurmas }: Rel
   const [openFilterTurma, setOpenFilterTurma] = React.useState(false)
   const [turmaSelecionada, setTurma] = React.useState<string>(listaTurmas[0]?.id)
 
-  const [date, setDate] = React.useState<Date | undefined>(new Date(dataAtual.getFullYear(), dataAtual.getMonth(), dataAtual.getDate()))
+  const [date, setDate] = React.useState<DateRange | undefined>({
+    from: new Date(dataAtual.getFullYear(), dataAtual.getMonth(), 1),
+    to: dataAtual,
+  })
 
   const estatisticasHistoricoFrequencia = useQuery({
     queryKey: ['historicoFrequencia', turmaSelecionada, date],
     queryFn: () => buscaListaFrequenciaTurma({
       idTurma: turmaSelecionada,
-      inicio: date ?? new Date(dataAtual.getFullYear(), dataAtual.getMonth(), dataAtual.getDate())
+      inicio: date?.from ?? dataAtual,
+      fim: date?.to ?? dataAtual
     }),
     enabled: !!turmaSelecionada,
     initialData: []
@@ -90,9 +95,14 @@ export default function HistoricoFrequencia({ listaTurmas, buscandoTurmas }: Rel
                 <Calendar
                   className="border rounded-sm"
                   initialFocus
-                  mode="single"
+                  mode="range"
+                  defaultMonth={date?.from}
                   selected={date}
                   onSelect={setDate}
+                  numberOfMonths={2}
+                  disabled={(date) =>
+                    date > dataAtual
+                  }
                   locale={ptBR}
                 />
               </div>

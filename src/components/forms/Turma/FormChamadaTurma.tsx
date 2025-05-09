@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { CalendarIcon, Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
@@ -26,7 +26,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { AlunosTurmaType } from '@/schemas/SchemaAlunosTurma'
-import { realizarChamadaTurma } from '@/api/turma'
+import { realizarChamadaTurma, verificarChamadaTurmaRealizada } from '@/api/turma'
 import { cn, mascararNome } from '@/lib/utils'
 import {
   Popover,
@@ -36,6 +36,7 @@ import {
 import { Calendar } from "@/components/ui/calendar"
 import { ptBR } from 'date-fns/locale'
 import { format } from 'date-fns'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
 interface ListaAlunosChamadaProps {
   turmaId: string
@@ -129,6 +130,20 @@ export function FormChamadaAlunos({
     }
   }
 
+  const verificaChamadaRealizada = useQuery({
+    queryKey: ['verifica-chamada-turma', turmaId, formChamadaTurma.watch('dataChamada')],
+    queryFn: () => verificarChamadaTurmaRealizada({
+      turma: turmaId,
+      dataChamada: new Date(formChamadaTurma.watch('dataChamada')),
+    }),
+    enabled: !!formChamadaTurma.watch('dataChamada'),
+    initialData: {
+      status: true,
+      msg: '',
+      chamada: false
+    }
+  })
+
   return carregandoAlunos ? (
     <div className="grid space-y-4">
       <div className="flex items-center justify-center gap-2">
@@ -148,6 +163,14 @@ export function FormChamadaAlunos({
     </div>
   ) : (
     <div className="space-y-4">
+      {
+        verificaChamadaRealizada.data.chamada && (
+          <Alert variant={'destructive'}>
+            <AlertTitle>{"Atenção!"}</AlertTitle>
+            <AlertDescription className=''>{verificaChamadaRealizada.data.msg}</AlertDescription>
+          </Alert>
+        )
+      }
       <Form {...formChamadaTurma}>
         <form
           className="space-y-4"
@@ -219,6 +242,7 @@ export function FormChamadaAlunos({
                 </div>
                 <div>
                   <Switch
+
                     checked={todosPresenteSelecionado}
                     onCheckedChange={(checked) => {
                       selecionarTodosPresente(checked)
@@ -231,7 +255,7 @@ export function FormChamadaAlunos({
                         formChamadaTurma.trigger(`alunos.${index}.presente`)
                       })
                     }}
-                    disabled={!listaAlunosTurma || listaAlunosTurma.length === 0}
+                    disabled={!listaAlunosTurma || listaAlunosTurma.length === 0 || (!verificaChamadaRealizada.isFetching && verificaChamadaRealizada.data.chamada)}
                   />
                 </div>
               </div>
@@ -275,6 +299,7 @@ export function FormChamadaAlunos({
                       </div>
                       <FormControl>
                         <Switch
+                          disabled={(!verificaChamadaRealizada.isFetching && verificaChamadaRealizada.data.chamada)}
                           checked={field.value}
                           onCheckedChange={(value) => {
                             field.onChange(value)
@@ -302,7 +327,8 @@ export function FormChamadaAlunos({
                 disabled={
                   !listaAlunosTurma ||
                   listaAlunosTurma.length === 0 ||
-                  alunosTurma.length === 0
+                  alunosTurma.length === 0 ||
+                  (!verificaChamadaRealizada.isFetching && verificaChamadaRealizada.data.chamada)
                 }
                 className="py-8 shadow w-full text-lg bg-app-red-700 hover:bg-app-red-800 text-app-white-50"
                 type="submit"

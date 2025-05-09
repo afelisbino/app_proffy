@@ -1,11 +1,11 @@
 'use client'
 
 import {
-    flexRender,
-    getCoreRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    useReactTable,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  useReactTable,
 } from '@tanstack/react-table'
 import { Check, ChevronsUpDown, Plus } from 'lucide-react'
 import React from 'react'
@@ -13,33 +13,33 @@ import React from 'react'
 import { registroNotasTurmaType } from '@/schemas/SchemaDiarioClasse'
 import { Button } from '@/components/ui/button'
 import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-    CommandList,
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
 } from '@/components/ui/command'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
 } from '@/components/ui/popover'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from '@/components/ui/table'
 import {
-    Tooltip,
-    TooltipContent,
-    TooltipTrigger,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { cn } from '@/lib/utils'
 
@@ -82,7 +82,7 @@ export function TabelaDiarioClasse({
                 <DialogTrigger asChild>
                   <TooltipTrigger asChild>
                     <Button
-                      className="bg-app-orange-500 hover:bg-app-orange-600 text-background shadow gap-2"
+                      className="bg-app-orange-500 hover:bg-app-orange-600 text-background shadow gap-2 w-full md:w-auto"
                       size={'default'}
                     >
                       <Plus className="size-5 hidden md:flex" />
@@ -106,12 +106,10 @@ export function TabelaDiarioClasse({
                 variant="outline"
                 role="combobox"
                 aria-expanded={open}
-                className="flex justify-between md:justify-start gap-2"
+                className="flex justify-between md:justify-start gap-2 w-full md:w-auto capitalize"
               >
-                {disciplinaSelecionada
-                  ? listaDisciplinas.find(
-                    (disciplina) => disciplina.id === disciplinaSelecionada,
-                  )?.nome
+                {disciplinaSelecionada !== '' ?
+                  disciplinaSelecionada
                   : 'Filtrar disciplina...'}
                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
@@ -126,7 +124,7 @@ export function TabelaDiarioClasse({
                       <CommandItem
                         className="capitalize"
                         key={disciplina.id}
-                        value={disciplina.id}
+                        value={disciplina.nome}
                         onSelect={(currentValue) => {
                           setDisciplinaSelecionada(
                             currentValue === disciplinaSelecionada
@@ -136,9 +134,7 @@ export function TabelaDiarioClasse({
                           table
                             .getColumn('disciplina')
                             ?.setFilterValue(
-                              listaDisciplinas.find(
-                                (disciplina) => disciplina.id === currentValue,
-                              )?.nome,
+                              currentValue
                             )
                           setOpen(false)
                         }}
@@ -146,7 +142,7 @@ export function TabelaDiarioClasse({
                         <Check
                           className={cn(
                             'mr-2 h-4 w-4',
-                            disciplinaSelecionada === disciplina.id
+                            disciplinaSelecionada === disciplina.nome.toLowerCase()
                               ? 'opacity-100'
                               : 'opacity-0',
                           )}

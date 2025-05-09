@@ -104,7 +104,7 @@ export async function desmatricularAluno(idAluno: string) {
   return response.data
 }
 
-export async function realizarChamadaTurma({ alunos, turma,dataChamada }: ChamadaTurmaType) {
+export async function realizarChamadaTurma({ alunos, turma, dataChamada }: ChamadaTurmaType) {
   const response = await axiosInstance.post(`/turma/${turma}/chamada`, {
     chamada: alunos.map((chamadaAluno) => {
       return {
@@ -113,6 +113,20 @@ export async function realizarChamadaTurma({ alunos, turma,dataChamada }: Chamad
         dataChamada
       }
     }),
+  })
+
+  return response.data
+}
+
+export async function verificarChamadaTurmaRealizada({ turma, dataChamada }: Omit<ChamadaTurmaType, 'alunos'>) {
+  const response = await axiosInstance.get<{
+    status: boolean,
+    msg: string,
+    chamada: boolean
+  }>(`/chamada/${turma}/verificacao`, {
+    params: {
+      dataChamada
+    }
   })
 
   return response.data

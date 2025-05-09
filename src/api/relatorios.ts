@@ -89,12 +89,13 @@ export async function buscarRelatorioAvaliacaoAlunos({
   return response.data
 }
 
-export async function buscaListaFrequenciaTurma({ inicio: dataChamada, idTurma }: Pick<EstatisticaAvaliacoesProps, 'inicio' | 'idTurma'>) {
+export async function buscaListaFrequenciaTurma({ inicio, fim, idTurma }: Pick<EstatisticaAvaliacoesProps, 'inicio' | 'fim' | 'idTurma'>) {
   const response = await axiosInstance.get<Array<AlunoAusentesType>>(
     `turma/chamada/${idTurma}`,
     {
       params: {
-        dataChamada
+        inicio,
+        fim
       }
     }
   )
