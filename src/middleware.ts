@@ -2,11 +2,18 @@ import { NextResponse, type NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
 
-  if (
-    !request.cookies.has('session-user') ||
-    !request.cookies.has('session-company') 
-  ) {
-    return NextResponse.redirect(new URL("/login", request.url))
+  const sessionUserCookie = request.cookies.get('session-user')
+  const sessionSchoolCookie = request.cookies.get('session-company')
+  const pathname = request.nextUrl.pathname
+
+  // Se não tem cookie de sessão e não está na página de login, redireciona para login
+  if ((!sessionUserCookie?.value || !sessionSchoolCookie?.value) && pathname !== '/login') {
+    return NextResponse.redirect(new URL('/login', request.url))
+  }
+
+  // Se tem cookie de sessão e está na página de login, redireciona para dashboard
+  if (sessionUserCookie?.value && sessionSchoolCookie?.value && pathname === '/login') {
+    return NextResponse.redirect(new URL('/', request.url))
   }
 
   return NextResponse.next()
@@ -14,13 +21,6 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    /*
-      * Match all request paths except for the ones starting with:
-      * - api (API routes)
-      * - _next/static (static files)
-      * - _next/image (image optimization files)
-      * - favicon.ico (favicon file)
-     */
-    '/((?!api|_next/static|_next/image|favicon.ico|login|admin|classe|.*\\.png$|.*\\.jpg$).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.png$|.*\\.jpg$|.*\\.jpeg$|.*\\.svg$).*)',
   ],
 }
