@@ -87,7 +87,7 @@ export function TabelaAlunos({ data, isLoading, idTurma }: TabelaAlunosProps) {
                 <TooltipTrigger asChild>
                   <Button
                     size={'icon'}
-                    className="bg-app-orange-500 hover:bg-app-orange-600 shadow text-background gap-2 p-2 w-full"
+                    className=" shadow text-background gap-2 p-2 w-full"
                     disabled={!idTurma}
                   >
                     <Plus className="size-5 hidden md:flex" />

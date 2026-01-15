@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
-import { CalendarIcon, Loader2, Save } from 'lucide-react'
+import { CalendarIcon, Loader2 } from 'lucide-react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -313,7 +313,7 @@ export function FormularioDiarioClasse({
             </div>
           ))}
         </ScrollArea>
-        <DialogFooter className="flex flex-col md:flex-row items-center gap-2">
+        <DialogFooter className="flex flex-col md:flex-row items-center">
           <DialogClose asChild>
             <Button
               type="button"
@@ -326,18 +326,17 @@ export function FormularioDiarioClasse({
           </DialogClose>
           {formDiario.formState.isSubmitting ? (
             <Button
-              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow w-full md:w-auto"
+              className="gap-2 shadow w-full md:w-auto"
               disabled
             >
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              <Loader2 className="h-4 w-4 animate-spin" />
               Salvando...
             </Button>
           ) : (
             <Button
               type="submit"
-              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow w-full md:w-auto"
+              className="shadow w-full md:w-auto"
             >
-              <Save className="size-5" />
               Salvar
             </Button>
           )}

@@ -51,7 +51,7 @@ export function SidebarUserMenu({ id, nome, email, perfil, carregando }: Sidebar
 					<DropdownMenuTrigger asChild>
 						<SidebarMenuButton
 							size="lg"
-							className="focus-visible:ring-0 text-app-azulClaro-950 dark:hover:text-app-azulEscuro-950 bg-app-azulClaro-100 hover:bg-app-azulClaro-200 gap-4 rounded-lg shadow-lg dark:shadow-none"
+							className="focus-visible:ring-0 gap-4 bg-primary text-primary-foreground rounded-lg shadow-lg dark:shadow-none"
 						>
 							<Avatar className="h-8 w-8 rounded-lg">
 								<AvatarFallback className="rounded-lg bg-transparent">{capturarIniciaisNome(nome)}</AvatarFallback>

@@ -11,26 +11,26 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import {
-  atualizarDadosMatricula,
-  ResponseDadosAluno,
+    atualizarDadosMatricula,
+    ResponseDadosAluno,
 } from '@/api/matricula'
 import { schemaFormularioEdicaoMatriculaAluno } from '@/schemas/SchemaAlunosTurma'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { DialogFooter } from '@/components/ui/dialog'
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
 } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 
@@ -225,11 +225,12 @@ export function FormularioEdicaoMatriculaAluno({
             )}
           />
         </div>
-        <DialogFooter className="flex flex-col md:flex-row items-center gap-2">
+        <DialogFooter className="flex flex-col md:flex-row items-center">
           <DialogClose asChild>
             <Button
               type="button"
-              className="bg-app-red-500 hover:bg-app-red-600 gap-2 shadow w-full md:w-auto"
+              variant={'destructive'}
+              className="shadow w-full md:w-auto"
             >
               Cancelar
             </Button>
@@ -237,7 +238,7 @@ export function FormularioEdicaoMatriculaAluno({
           {formMatriculaAluno.formState.isSubmitting ? (
             <Button
               disabled
-              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow w-full md:w-auto"
+              className="gap-2 shadow w-full md:w-auto"
             >
               <Loader2 className="size-4 animate-spin" />
               Salvando...
@@ -245,9 +246,8 @@ export function FormularioEdicaoMatriculaAluno({
           ) : (
             <Button
               type="submit"
-              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow w-full md:w-auto"
+              className="shadow w-full md:w-auto"
             >
-              <Save />
               Salvar
             </Button>
           )}

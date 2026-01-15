@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { CalendarIcon, Loader2 } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { Loader2 } from 'lucide-react'
+import { useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -26,20 +26,13 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { AlunosTurmaType } from '@/schemas/SchemaAlunosTurma'
-import { realizarChamadaTurma, verificarChamadaTurmaRealizada } from '@/api/turma'
-import { cn, mascararNome } from '@/lib/utils'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
-import { Calendar } from "@/components/ui/calendar"
-import { ptBR } from 'date-fns/locale'
-import { format } from 'date-fns'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { realizarChamadaTurma } from '@/api/turma'
+import { mascararNome } from '@/lib/utils'
+import { DialogFooter } from '@/components/ui/dialog'
 
 interface ListaAlunosChamadaProps {
   turmaId: string
+  dataChamada: Date
   listaAlunosTurma: Array<AlunosTurmaType>
   carregandoAlunos: boolean
 }
@@ -60,15 +53,17 @@ export type ChamadaTurmaType = z.infer<typeof schemaFormChamadaTurma>
 
 export function FormChamadaAlunos({
   turmaId,
+  dataChamada,
   listaAlunosTurma,
   carregandoAlunos
 }: ListaAlunosChamadaProps) {
+  const queryClient = useQueryClient()
   const [todosPresenteSelecionado, selecionarTodosPresente] = useState(false)
   const formChamadaTurma = useForm<ChamadaTurmaType>({
     resolver: zodResolver(schemaFormChamadaTurma),
     defaultValues: {
       turma: turmaId,
-      dataChamada: new Date(),
+      dataChamada: dataChamada,
       alunos: listaAlunosTurma.length > 0
         ? listaAlunosTurma.map((aluno) => {
           return {
@@ -98,7 +93,11 @@ export function FormChamadaAlunos({
     onSuccess: () => {
       toast.success('Chamada encerrada com sucesso!')
       selecionarTodosPresente(false)
+      
       formChamadaTurma.reset()
+
+      queryClient.invalidateQueries({queryKey: ['historicoFrequencia', turmaId, dataChamada]})
+      queryClient.invalidateQueries({queryKey: ['verifica-chamada-turma', turmaId, dataChamada]})
     },
   })
 
@@ -130,20 +129,6 @@ export function FormChamadaAlunos({
     }
   }
 
-  const dataChamada = useMemo(() => {
-    return formChamadaTurma.watch('dataChamada')
-  }, [formChamadaTurma.watch('dataChamada')])
-
-  const verificaChamadaRealizada = useQuery({
-    queryKey: ['verifica-chamada-turma', turmaId, dataChamada],
-    queryFn: () => verificarChamadaTurmaRealizada({
-      turma: turmaId,
-      dataChamada,
-    }),
-    enabled: !!turmaId && !!dataChamada,
-    staleTime: Infinity
-  })
-
   return carregandoAlunos ? (
     <div className="grid space-y-4">
       <div className="flex items-center justify-center gap-2">
@@ -163,14 +148,7 @@ export function FormChamadaAlunos({
     </div>
   ) : (
     <div className="space-y-4">
-      {
-        (!verificaChamadaRealizada.isFetching && verificaChamadaRealizada?.data?.chamada) && (
-          <Alert variant={'destructive'}>
-            <AlertTitle>{"Atenção!"}</AlertTitle>
-            <AlertDescription className=''>{verificaChamadaRealizada.data.msg}</AlertDescription>
-          </Alert>
-        )
-      }
+
       <Form {...formChamadaTurma}>
         <form
           className="space-y-4"
@@ -178,46 +156,6 @@ export function FormChamadaAlunos({
         >
           {alunosTurma.length > 0 && (
             <>
-              <div className="flex-1 justify-center md:flex md:flex-row md:justify-end">
-                <FormField
-                  control={formChamadaTurma.control}
-                  name="dataChamada"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col">
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <Button
-                            variant={'outline'}
-                            className={cn(
-                              'max-w-sm md:w-auto justify-start text-left font-normal gap-2',
-                              !field.value && 'text-muted-foreground',
-                            )}
-                          >
-                            <CalendarIcon />
-                            {field.value ? format(field.value, "PPP", {
-                              locale: ptBR
-                            }) : <span>Seleciona uma data</span>}
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="center">
-                          <Calendar
-                            className="border rounded-sm"
-                            mode="single"
-                            selected={field.value}
-                            onSelect={field.onChange}
-                            disabled={(date) =>
-                              date > new Date()
-                            }
-                            locale={ptBR}
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div className="flex flex-row gap-2 items-center">
@@ -255,7 +193,7 @@ export function FormChamadaAlunos({
                         formChamadaTurma.trigger(`alunos.${index}.presente`)
                       })
                     }}
-                    disabled={!listaAlunosTurma || listaAlunosTurma.length === 0 || (!verificaChamadaRealizada.isFetching && verificaChamadaRealizada?.data?.chamada)}
+                    disabled={!listaAlunosTurma || listaAlunosTurma.length === 0}
                   />
                 </div>
               </div>
@@ -299,7 +237,6 @@ export function FormChamadaAlunos({
                       </div>
                       <FormControl>
                         <Switch
-                          disabled={(!verificaChamadaRealizada.isFetching && verificaChamadaRealizada?.data?.chamada)}
                           checked={field.value}
                           onCheckedChange={(value) => {
                             field.onChange(value)
@@ -313,29 +250,31 @@ export function FormChamadaAlunos({
               </div>
             ))}
 
-            {formChamadaTurma.formState.isSubmitting ? (
-              <Button
-                type="button"
-                className="py-8 shadow w-full text-lg bg-app-red-700 hover:bg-app-red-800 text-app-white-50 gap-4"
-                disabled
-              >
-                <Loader2 className="size-5" />
-                Encerrando...
-              </Button>
-            ) : (
-              <Button
-                disabled={
-                  !listaAlunosTurma ||
-                  listaAlunosTurma.length === 0 ||
-                  alunosTurma.length === 0 ||
-                  (!verificaChamadaRealizada.isFetching && verificaChamadaRealizada?.data?.chamada)
-                }
-                className="py-8 shadow w-full text-lg bg-app-red-700 hover:bg-app-red-800 text-app-white-50"
-                type="submit"
-              >
-                Encerrar chamada
-              </Button>
-            )}
+            <DialogFooter>
+              {formChamadaTurma.formState.isSubmitting ? (
+                <Button
+                  type="button"
+                  className="py-8 shadow w-full text-lg gap-4"
+                  disabled
+                  variant={'destructive'}
+                >
+                  <Loader2 className="size-5" />
+                  Encerrando...
+                </Button>
+              ) : (
+                <Button
+                  disabled={
+                    !listaAlunosTurma ||
+                    listaAlunosTurma.length === 0 ||
+                    alunosTurma.length === 0
+                  }
+                  className="py-8 shadow w-full text-lg"
+                  type="submit"
+                >
+                  Encerrar chamada
+                </Button>
+              )}
+            </DialogFooter>
           </div>
         </form>
       </Form>

@@ -102,7 +102,7 @@ export function FormularioLogin() {
 					</div>
 				</div>
 
-				<Button disabled={formAuth.formState.isSubmitting} className="capitalize font-medium text-base text-center text-white bg-app-verdeMedio-600 hover:bg-app-verdeMedio-700 w-full shadow-md">
+				<Button disabled={formAuth.formState.isSubmitting} className="capitalize font-medium text-base text-center w-full shadow-md">
 					{formAuth.formState.isSubmitting ? "validando..." : "entrar"}
 				</Button>
 			</form>

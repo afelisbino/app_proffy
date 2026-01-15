@@ -8,24 +8,24 @@ import { toast } from 'sonner'
 
 import { inserirNovoUsuario } from '@/api/escola'
 import {
-    FormularioNovoUsuarioType,
-    schemaFormularioNovoUsuario,
+  FormularioNovoUsuarioType,
+  schemaFormularioNovoUsuario,
 } from '@/schemas/SchemaUsuariosEscola'
 import { Button } from '@/components/ui/button'
 import { DialogClose, DialogFooter } from '@/components/ui/dialog'
 import {
-    Form,
-    FormControl, FormField,
-    FormItem,
-    FormLabel,
-    FormMessage
+  Form,
+  FormControl, FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
 } from '@/components/ui/form'
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select"
 import { Input } from '@/components/ui/input'
 
@@ -165,7 +165,7 @@ export function NovoUsuarioForm() {
           </DialogClose>
           {isPending ? (
             <Button
-              className="shadow-md text-sm leading-none rounded bg-app-green-500 hover:bg-app-green-600"
+              className="shadow-md text-sm leading-none rounded "
               disabled
             >
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -174,7 +174,7 @@ export function NovoUsuarioForm() {
           ) : (
             <DialogClose asChild>
               <Button
-                className="shadow-md text-sm leading-none rounded bg-app-green-500 hover:bg-app-green-600"
+                className="shadow-md text-sm leading-none rounded "
                 type="submit"
               >
                 Salvar usuário

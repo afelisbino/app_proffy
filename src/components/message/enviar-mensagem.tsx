@@ -142,7 +142,7 @@ export function EnviarMensagemAluno({
                 <div className="flex items-center">
                   {formNotificacaoResponsavel.formState.isSubmitting ? (
                     <Button
-                      className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow"
+                      className=" gap-2 shadow"
                       disabled
                     >
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -152,7 +152,7 @@ export function EnviarMensagemAluno({
                     <Button
                       type="submit"
                       size="sm"
-                      className="ml-auto bg-app-green-500 hover:bg-app-green-600 gap-2"
+                      className="ml-auto  gap-2"
                     >
                       <Send className="size-5" />
                       Enviar

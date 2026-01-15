@@ -6,19 +6,19 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import {
-  adicionarNovosContatosResponsavel,
-  ResponseDadosAluno,
+    adicionarNovosContatosResponsavel,
+    ResponseDadosAluno,
 } from '@/api/matricula'
 import { Button } from '@/components/ui/button'
 import { DialogClose, DialogFooter } from '@/components/ui/dialog'
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
@@ -227,11 +227,12 @@ export function FormularioNovosContatosReponsavel({
             ))}
           </div>
         </div>
-        <DialogFooter className="flex flex-col md:flex-row items-center gap-2">
+        <DialogFooter className="flex flex-col md:flex-row items-center">
           <DialogClose asChild>
             <Button
+              variant={'destructive'}
               type="button"
-              className="bg-app-red-500 hover:bg-app-red-600 gap-2 shadow md:w-auto w-full"
+              className="shadow md:w-auto w-full"
             >
               Cancelar
             </Button>
@@ -239,7 +240,7 @@ export function FormularioNovosContatosReponsavel({
           {formDadosContatosResponsavel.formState.isSubmitting ? (
             <Button
               disabled
-              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow md:w-auto w-full"
+              className=" gap-2 shadow md:w-auto w-full"
             >
               <Loader2 className="size-4 animate-spin" />
               Salvando...
@@ -247,9 +248,8 @@ export function FormularioNovosContatosReponsavel({
           ) : (
             <Button
               type="submit"
-              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow md:w-auto w-full"
+              className="shadow md:w-auto w-full"
             >
-              <Save />
               Salvar
             </Button>
           )}

@@ -15,26 +15,26 @@ import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { DialogClose, DialogFooter } from '@/components/ui/dialog'
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
 } from '@/components/ui/popover'
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from '@/components/ui/select'
 import { cn, mascararNome } from '@/lib/utils'
 
@@ -318,7 +318,7 @@ export function FormularioEdicaoDiarioClasse({
           </DialogClose>
           {formEdicaoNota.formState.isSubmitting ? (
             <Button
-              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow w-full md:w-auto"
+              className=" gap-2 shadow w-full md:w-auto"
               disabled
             >
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -327,7 +327,7 @@ export function FormularioEdicaoDiarioClasse({
           ) : (
             <Button
               type="submit"
-              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow w-full md:w-auto"
+              className=" gap-2 shadow w-full md:w-auto"
             >
               <Save className="size-5" />
               Salvar

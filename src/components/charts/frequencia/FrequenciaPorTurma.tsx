@@ -27,32 +27,20 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { mascararNome } from '@/lib/utils'
 import { buscaEstatisticasFrequenciaAlunos } from '@/api/relatorios'
-import { turmaType } from '@/api/turma'
 
 interface RelatorioFrequenciaEscolarProps {
-  listaTurmas: Array<turmaType>
-  buscandoTurmas: boolean
+  idTurma: string
 }
 
 const dataAtual = new Date()
 export function ChartFrequenciaTurma({
-  listaTurmas,
-  buscandoTurmas,
+  idTurma,
 }: RelatorioFrequenciaEscolarProps) {
 
   const [date, setDate] = useState<DateRange | undefined>({
@@ -60,8 +48,6 @@ export function ChartFrequenciaTurma({
     to: dataAtual,
   })
 
-  const [open, setOpen] = React.useState(false)
-  const [turmaSelecionada, setTurma] = React.useState<string>('')
   const [dadosGrafico, setDadosGrafico] = React.useState<
     Array<{
       aluno: string
@@ -72,7 +58,7 @@ export function ChartFrequenciaTurma({
   const chartConfig = {
     falta: {
       label: 'Faltas',
-      color: '#e03322',
+      color: '#566381',
     },
   } satisfies ChartConfig
 
@@ -94,10 +80,10 @@ export function ChartFrequenciaTurma({
   }
 
   useEffect(() => {
-    if (turmaSelecionada && date && date.from && date.to) {
-      buscaRelatorio(date.from, date.to, turmaSelecionada)
+    if (idTurma && date && date.from && date.to) {
+      buscaRelatorio(date.from, date.to, idTurma)
     }
-  }, [turmaSelecionada, date])
+  }, [idTurma, date])
 
   return (
     <Card>
@@ -125,31 +111,6 @@ export function ChartFrequenciaTurma({
           </Tooltip>
           <PopoverContent className="w-full overflow-auto h-[300px] md:h-auto">
             <div className="grid gap-2">
-              <div>
-                <Select
-                  onOpenChange={setOpen}
-                  onValueChange={setTurma}
-                  value={turmaSelecionada}
-                  open={open}
-                  disabled={buscandoTurmas}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione uma turma" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Turmas</SelectLabel>
-                      {listaTurmas.map((turma) => {
-                        return (
-                          <SelectItem key={turma.id} value={turma.id}>
-                            {turma.nome}
-                          </SelectItem>
-                        )
-                      })}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
               <Calendar
                 className="border rounded-sm"
                 initialFocus
@@ -165,13 +126,15 @@ export function ChartFrequenciaTurma({
         </Popover>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig}>
+        <ChartContainer config={chartConfig} className="h-[300px] w-full">
           <BarChart
             accessibilityLayer
             data={dadosGrafico}
             margin={{
               top: 20,
             }}
+            barSize={40}
+            barGap={8}
           >
             <CartesianGrid vertical={false} />
             <XAxis
@@ -184,14 +147,7 @@ export function ChartFrequenciaTurma({
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey="faltas" fill="var(--color-falta)" radius={8}>
-              <LabelList
-                position="top"
-                offset={12}
-                className="fill-foreground"
-                fontSize={12}
-              />
-            </Bar>
+            <Bar dataKey="faltas" fill="var(--color-falta)" radius={8} />
           </BarChart>
         </ChartContainer>
       </CardContent>

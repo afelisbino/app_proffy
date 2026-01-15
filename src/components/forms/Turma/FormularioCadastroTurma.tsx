@@ -94,18 +94,17 @@ export function FormularioCadastroTurma() {
           <div className="flex items-center">
             {formCadastroTurma.formState.isSubmitting ? (
               <Button
-                className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow"
+                className="gap-2 shadow"
                 disabled
               >
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <Loader2 className="h-4 w-4 animate-spin" />
                 Salvando...
               </Button>
             ) : (
               <Button
                 type="submit"
-                className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow"
+                className="shadow"
               >
-                <Save className="size-5" />
                 Salvar
               </Button>
             )}

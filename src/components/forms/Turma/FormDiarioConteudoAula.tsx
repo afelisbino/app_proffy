@@ -15,25 +15,25 @@ import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { DialogClose, DialogFooter } from '@/components/ui/dialog'
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
 } from '@/components/ui/form'
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
 } from '@/components/ui/popover'
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from '@/components/ui/select'
 import { cn } from '@/lib/utils'
 import { Textarea } from '@/components/ui/textarea'
@@ -190,7 +190,7 @@ export function FormularioConteudoAula({
             </FormItem>
           )}
         />
-        <DialogFooter className="flex flex-col md:flex-row items-center gap-2">
+        <DialogFooter className="flex flex-col md:flex-row items-center">
           <DialogClose asChild>
             <Button
               type="button"
@@ -203,7 +203,7 @@ export function FormularioConteudoAula({
           </DialogClose>
           {formDiario.formState.isSubmitting ? (
             <Button
-              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow w-full md:w-auto"
+              className=" gap-2 shadow w-full md:w-auto"
               disabled
             >
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -212,9 +212,8 @@ export function FormularioConteudoAula({
           ) : (
             <Button
               type="submit"
-              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow w-full md:w-auto"
+              className="shadow w-full md:w-auto"
             >
-              <Save className="size-5" />
               Salvar
             </Button>
           )}

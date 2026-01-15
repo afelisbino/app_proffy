@@ -95,7 +95,7 @@ export function FormNovaDisciplina() {
             </Button>
             {isPending ? (
               <Button
-                className="shadow-md text-sm leading-none rounded bg-app-green-500 hover:bg-app-green-600"
+                className="shadow-md text-sm leading-none rounded "
                 disabled
               >
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -103,7 +103,7 @@ export function FormNovaDisciplina() {
               </Button>
             ) : (
               <Button
-                className="shadow-md text-sm leading-none rounded bg-app-green-500 hover:bg-app-green-600"
+                className="shadow-md text-sm leading-none rounded "
                 type="submit"
               >
                 Salvar disciplina

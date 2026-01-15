@@ -1,4 +1,4 @@
-import { LayoutDashboard, type LucideIcon, Speech, Shapes, Users, UserRoundPen, BookCheck, Unplug, MessageSquareText, MessagesSquare } from "lucide-react";
+import { LayoutDashboard, type LucideIcon, Speech, Shapes, Users, UserRoundPen, BookCheck, Unplug, MessageSquareText, MessagesSquare, FileText, User } from "lucide-react";
 
 export type MenuSidebar = {
   titulo: string
@@ -38,6 +38,11 @@ export const permissoesAdmin: PermissoesUsuarioType = {
         {
           titulo: 'Usuários',
           href: '/admin/usuarios',
+          icon: User
+        },
+        {
+          titulo: 'Professores',
+          href: '/admin/professores',
           icon: UserRoundPen
         },
         {
@@ -69,6 +74,11 @@ export const permissoesAdmin: PermissoesUsuarioType = {
           titulo: 'Atividades',
           href: '/classe/diario',
           icon: Shapes
+        },
+        {
+          titulo: 'Relatórios de desempenho',
+          href: '/classe/relatorio_desempenho',
+          icon: FileText
         }
       ]
     }
@@ -89,6 +99,11 @@ export const permissionTeacher: PermissoesUsuarioType = {
           titulo: 'Atividades',
           href: '/classe/diario',
           icon: Shapes
+        },
+        {
+          titulo: 'Relatórios de desempenho',
+          href: '/classe/relatorio',
+          icon: FileText
         }
       ]
     }

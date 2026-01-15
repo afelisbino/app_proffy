@@ -5,18 +5,18 @@ import { Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 
 import {
-  FormularioEdicaoUsuarioType,
-  schemaFormularioEdicaoUsuario,
+    FormularioEdicaoUsuarioType,
+    schemaFormularioEdicaoUsuario,
 } from '@/schemas/SchemaUsuariosEscola'
 import { Button } from '@/components/ui/button'
 import { DialogClose, DialogFooter } from '@/components/ui/dialog'
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { alterarSenhaUsuario } from '@/api/auth'
@@ -113,7 +113,7 @@ export function EditarUsuarioForm({
           </DialogClose>
           {formEditSenhaUsuario.formState.isSubmitting ? (
             <Button
-              className="shadow-md text-sm leading-none rounded bg-app-green-500 hover:bg-app-green-600"
+              className="shadow-md text-sm leading-none rounded "
               disabled
             >
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -121,7 +121,7 @@ export function EditarUsuarioForm({
             </Button>
           ) : (
             <Button
-              className="shadow-md text-sm leading-none rounded bg-app-green-500 hover:bg-app-green-600"
+              className="shadow-md text-sm leading-none rounded "
               type="submit"
             >
               Salvar

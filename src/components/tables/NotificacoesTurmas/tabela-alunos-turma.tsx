@@ -66,7 +66,7 @@ export function TabelaNotificacaoAlunosTurma({
         <Dialog>
           <DialogTrigger asChild>
             <Button
-              className="bg-app-orange-500 hover:bg-app-orange-600 text-background shadow gap-2"
+              className=" text-background shadow gap-2"
               disabled={table.getSelectedRowModel().rows.length === 0}
             >
               <MessageSquareShare />

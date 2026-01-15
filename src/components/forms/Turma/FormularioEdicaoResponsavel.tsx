@@ -170,11 +170,12 @@ export function FormularioEdicaoReponsavel({
             />
           </div>
         </div>
-        <DialogFooter className="flex flex-col md:flex-row items-center gap-2">
+        <DialogFooter className="flex flex-col md:flex-row items-center">
           <DialogClose asChild>
             <Button
               type="button"
-              className="bg-app-red-500 hover:bg-app-red-600 gap-2 shadow w-full md:w-auto"
+              variant={'destructive'}
+              className="shadow w-full md:w-auto"
             >
               Cancelar
             </Button>
@@ -182,7 +183,7 @@ export function FormularioEdicaoReponsavel({
           {formDadosResponsavel.formState.isSubmitting ? (
             <Button
               disabled
-              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow w-full md:w-auto"
+              className="gap-2 shadow w-full md:w-auto"
             >
               <Loader2 className="size-4 animate-spin" />
               Salvando...
@@ -190,9 +191,8 @@ export function FormularioEdicaoReponsavel({
           ) : (
             <Button
               type="submit"
-              className="bg-app-green-500 hover:bg-app-green-600 gap-2 shadow w-full md:w-auto"
+              className="shadow w-full md:w-auto"
             >
-              <Save />
               Salvar
             </Button>
           )}

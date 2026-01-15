@@ -15,8 +15,16 @@ interface NovoUsuarioProps {
   perfil: 'ADMIN' | 'PROFESSOR'
 }
 
-export async function buscarUsuariosEscola() {
-  const response = await axiosInstance.get<Array<UsuarioType>>('escola/usuario')
+export async function buscarUsuariosEscola(perfil?: 'ADMIN' | 'PROFESSOR') {
+
+  const response = await axiosInstance.get<Array<UsuarioType>>(
+    `escola/usuario`,
+    {
+      params: {
+        perfil,
+      }
+    }
+  )
 
   return response.data
 }

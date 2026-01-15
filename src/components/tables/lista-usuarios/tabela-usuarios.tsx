@@ -62,7 +62,7 @@ export function DataTableUsuarios({ data, isLoading }: DataTableUsuarioProps) {
               <TooltipTrigger asChild>
                 <Button
                   size={'icon'}
-                  className="bg-app-orange-500 hover:bg-app-orange-600 shadow text-background gap-2 p-2"
+                  className="shadow gap-2 p-2"
                 >
                   <Plus className="size-5" />
                 </Button>

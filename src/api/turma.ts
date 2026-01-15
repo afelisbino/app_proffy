@@ -5,9 +5,12 @@ import { limparFormatacaoDocumento } from '@/lib/utils'
 
 import { ChamadaTurmaType } from '@/components/forms/Turma/FormChamadaTurma'
 import {
-  AlunosTurmaType,
+  AlunosTurmaType as AlunosTurmaTypeOriginal,
   schemaFormularioMatriculaAluno,
 } from '@/schemas/SchemaAlunosTurma'
+
+// Re-exporta o tipo para uso externo
+export type AlunosTurmaType = AlunosTurmaTypeOriginal
 
 export type turmaType = {
   id: string
@@ -128,6 +131,23 @@ export async function verificarChamadaTurmaRealizada({ turma, dataChamada }: Omi
       dataChamada
     }
   })
+
+  return response.data
+}
+
+export interface AlterarPresencaChamadaResponse {
+  mensagem: string
+  presenca: boolean
+}
+
+export async function alterarPresencaChamada(
+  idChamada: string,
+  presenca: boolean,
+): Promise<AlterarPresencaChamadaResponse> {
+  const response = await axiosInstance.patch<AlterarPresencaChamadaResponse>(
+    `/turma/chamada/${idChamada}`,
+    { presenca },
+  )
 
   return response.data
 }

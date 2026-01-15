@@ -43,18 +43,15 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { mascararNome } from '@/lib/utils'
-import { turmaType } from '@/api/turma'
 import { buscarListaDisciplinas } from '@/api/escola'
 import { buscarRelatorioAvaliacaoAlunos } from '@/api/relatorios'
 
 interface RelatorioFrequenciaEscolarProps {
-  listaTurmas: Array<turmaType>
-  buscandoTurmas: boolean
+  idTurma: string
 }
 
 export function ChartAvalicoesTurma({
-  listaTurmas,
-  buscandoTurmas,
+  idTurma,
 }: RelatorioFrequenciaEscolarProps) {
   const dataAtual = new Date()
 
@@ -62,9 +59,6 @@ export function ChartAvalicoesTurma({
     from: new Date(dataAtual.getFullYear(), dataAtual.getMonth(), 1),
     to: dataAtual,
   })
-
-  const [openFilterTurma, setOpenFilterTurma] = React.useState(false)
-  const [turmaSelecionada, setTurma] = React.useState<string>('')
 
   const [openFilterDisciplina, setOpenFilterDisciplina] = React.useState(false)
   const [disciplinaSelecionada, setDisciplina] = React.useState<string>('')
@@ -156,7 +150,7 @@ export function ChartAvalicoesTurma({
   useEffect(() => {
     if (
       disciplinaSelecionada &&
-      turmaSelecionada &&
+      idTurma &&
       periodo > 0 &&
       date &&
       date.from &&
@@ -165,12 +159,12 @@ export function ChartAvalicoesTurma({
       buscaRelatorio(
         date.from,
         date.to,
-        turmaSelecionada,
+        idTurma,
         disciplinaSelecionada,
       )
     }
   }, [
-    turmaSelecionada,
+    idTurma,
     disciplinaSelecionada,
     date,
     tipoPeriodoSelecionado,
@@ -232,31 +226,6 @@ export function ChartAvalicoesTurma({
                 </div>
                 <div>
                   <Select
-                    onOpenChange={setOpenFilterTurma}
-                    onValueChange={setTurma}
-                    value={turmaSelecionada}
-                    open={openFilterTurma}
-                    disabled={buscandoTurmas}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione uma turma" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Turmas</SelectLabel>
-                        {listaTurmas.map((turma) => {
-                          return (
-                            <SelectItem key={turma.id} value={turma.id}>
-                              {turma.nome}
-                            </SelectItem>
-                          )
-                        })}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Select
                     onOpenChange={setOpenFilterDisciplina}
                     onValueChange={setDisciplina}
                     value={disciplinaSelecionada}
@@ -299,13 +268,15 @@ export function ChartAvalicoesTurma({
         </div>
       </CardHeader>
       <CardContent className="space-y-2">
-        <ChartContainer config={chartConfig}>
+        <ChartContainer config={chartConfig} className="h-[300px] w-full">
           <BarChart
             accessibilityLayer
             data={dadosGrafico}
             margin={{
               top: 20,
             }}
+            barSize={40}
+            barGap={8}
           >
             <CartesianGrid vertical={false} />
             <XAxis

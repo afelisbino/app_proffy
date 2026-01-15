@@ -37,9 +37,9 @@ export function AppSidebar({
 			<SidebarHeader className="flex items-center justify-between ">
 				<SidebarMenu>
 					<SidebarMenuItem>
-						<SidebarMenuButton className="bg-white dark:bg-sidebar" size="lg" asChild>
-							<a className="flex flex-row justify-between px-4" href="#">
-								<div className="flex aspect-square size-8 items-center justify-center rounded-full bg-sidebar-primary text-sidebar-primary-foreground">
+						<SidebarMenuButton size="lg" asChild>
+							<div className="flex justify-between px-4">
+								<div className="flex aspect-square size-8 items-center justify-center rounded-full ">
 									<Image
 										alt="proffy"
 										src="/proffy-app-logo.png"
@@ -50,9 +50,9 @@ export function AppSidebar({
 								</div>
 								<div className="flex flex-col justify-center items-end leading-none">
 									<span className="font-semibold text-base">Proffy</span>
-									<span className="text-xs text-muted-foreground dark:text-white/65">v1.0.1</span>
+									<span className="text-xs">v1.0.1</span>
 								</div>
-							</a>
+							</div>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
 				</SidebarMenu>

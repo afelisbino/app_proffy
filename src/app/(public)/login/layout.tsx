@@ -25,7 +25,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="pt-BR">
       <body
         className={cn(
-          'antialiased bg-app-amareloEscuro-450',
+          'antialiased bg-foreground font-sans text-base text-foreground',
           fontSans.variable,
         )}
       >

@@ -5,11 +5,11 @@ import { Pencil, Plus } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from '@/components/ui/card'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
@@ -19,7 +19,7 @@ import { buscarAlunosTurma, buscarTurmas } from '@/api/turma'
 import { CadastroTurma } from '@/components/dialogs/cadastro-turma'
 import { EditarTurma } from '@/components/dialogs/edicao-turma'
 import ListagemTurmasEscola, {
-    useTurmaEscola,
+  useTurmaEscola,
 } from '@/components/lists/ListagemTurmasEscola'
 import { TabelaAlunos } from '@/components/tables/Alunos/tabela-alunos'
 
@@ -41,63 +41,60 @@ export default function TurmasEscola() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Turmas escolares</CardTitle>
+        <CardTitle>Turmas/Classes</CardTitle>
         <CardDescription>
           Área para gerenciar turmas e alunos, como novas matriculas e
           transferencias de alunos para outra turma
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <section className="space-y-6">
-          <div className="flex flex-col md:flex-row gap-2">
-            {carregandoTurmas ? (
-              <Skeleton className="h-4 w-full rounded" />
-            ) : (
-              <ListagemTurmasEscola listaTurmas={listaTurmas ?? []} />
-            )}
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button
-                  variant={'default'}
-                  disabled={carregandoTurmas}
-                  className="w-full shadow gap-2"
-                >
-                  <Plus />
-                  Turma
-                </Button>
-              </DialogTrigger>
-              <CadastroTurma />
-            </Dialog>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button
-                  variant={'default'}
-                  className="w-full shadow gap-2"
-                  disabled={!turmaSelecionada.selected}
-                >
-                  <Pencil />
-                  Editar
-                </Button>
-              </DialogTrigger>
-              <EditarTurma
-                turma={
-                  listaTurmas?.find(
-                    (turma) => turmaSelecionada.selected === turma.id,
-                  ) ?? {
-                    id: '',
-                    nome: '',
-                  }
+      <CardContent className="space-y-6">
+        <div className="flex flex-col md:flex-row gap-2">
+          {carregandoTurmas ? (
+            <Skeleton className="h-4 w-full rounded" />
+          ) : (
+            <ListagemTurmasEscola listaTurmas={listaTurmas ?? []} />
+          )}
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                disabled={carregandoTurmas}
+                className="w-full shadow gap-2"
+              >
+                <Plus />
+                Nova turma
+              </Button>
+            </DialogTrigger>
+            <CadastroTurma />
+          </Dialog>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                variant={'secondary'}
+                className="w-full shadow gap-2"
+                disabled={!turmaSelecionada.selected}
+              >
+                <Pencil />
+                Editar
+              </Button>
+            </DialogTrigger>
+            <EditarTurma
+              turma={
+                listaTurmas?.find(
+                  (turma) => turmaSelecionada.selected === turma.id,
+                ) ?? {
+                  id: '',
+                  nome: '',
                 }
-              />
-            </Dialog>
-          </div>
-          <Separator />
-          <TabelaAlunos
-            data={alunosTurma ?? []}
-            isLoading={carregandoAlunos}
-            idTurma={turmaSelecionada.selected}
-          />
-        </section>
+              }
+            />
+          </Dialog>
+        </div>
+        <Separator />
+        <TabelaAlunos
+          data={alunosTurma ?? []}
+          isLoading={carregandoAlunos}
+          idTurma={turmaSelecionada.selected}
+        />
       </CardContent>
     </Card>
   )

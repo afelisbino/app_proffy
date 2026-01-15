@@ -1,11 +1,11 @@
 import {
-    flexRender,
-    getCoreRowModel,
-    getFacetedRowModel,
-    getFacetedUniqueValues,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    useReactTable,
+  flexRender,
+  getCoreRowModel,
+  getFacetedRowModel,
+  getFacetedUniqueValues,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  useReactTable,
 } from '@tanstack/react-table'
 import { Plus } from 'lucide-react'
 
@@ -15,17 +15,17 @@ import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from '@/components/ui/table'
 import {
-    Tooltip,
-    TooltipContent,
-    TooltipTrigger,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
 } from '@/components/ui/tooltip'
 
 import { colunasTabelaModeloMensagem } from './colunas-tabela-modelos'
@@ -60,7 +60,7 @@ export function DataTableModeloMensagens({
               <TooltipTrigger asChild>
                 <Button
                   size={'icon'}
-                  className="bg-app-orange-500 hover:bg-app-orange-600 shadow text-background gap-2 p-2"
+                  className=" shadow text-background gap-2 p-2"
                 >
                   <Plus className="size-5" />
                 </Button>

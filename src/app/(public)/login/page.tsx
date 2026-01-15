@@ -23,9 +23,9 @@ export default function LoginPage() {
 							</div>
 						</CardContent>
 					</Card>
-					<div className="leading-none font-semibold text-center text-xs text-black/90 [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-primary">
+					<p className="leading-none font-semibold text-center text-xs text-muted">
 						{"Em desenvolvimento </>"}
-					</div>
+					</p>
 				</div>
 			</div>
 		</div>

@@ -8,7 +8,7 @@ import { DataTableUsuarios } from '@/components/tables/lista-usuarios/tabela-usu
 export default function PageUsuariosEscola() {
   const { data: listaUsuariosEscola, isLoading } = useQuery({
     queryKey: ['usuariosEscola'],
-    queryFn: buscarUsuariosEscola,
+    queryFn: () => buscarUsuariosEscola(),
   })
 
   return (

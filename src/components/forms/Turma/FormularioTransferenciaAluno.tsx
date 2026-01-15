@@ -178,7 +178,7 @@ export function FormularioTransferenciaAluno({
           </DialogClose>
           {formTransferenciaAluno.formState.isSubmitting ? (
             <Button
-              className="shadow bg-app-green-500 hover:bg-app-green-600 gap-2 w-full md:w-auto"
+              className="shadow  gap-2 w-full md:w-auto"
               disabled
             >
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -186,7 +186,7 @@ export function FormularioTransferenciaAluno({
             </Button>
           ) : (
             <Button
-              className="bg-app-green-500 hover:bg-app-green-600 shadow gap-2 w-full md:w-auto"
+              className=" shadow gap-2 w-full md:w-auto"
               type="submit"
             >
               <ArrowRightLeft className="size-5" />
