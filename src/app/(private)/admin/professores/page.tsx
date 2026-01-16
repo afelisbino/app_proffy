@@ -40,9 +40,7 @@ export default function ProfessoresPage() {
   const { data: vinculos, isLoading: carregandoVinculos } = useQuery({
     queryKey: ['vinculos-professores', professorSelecionado],
     queryFn: () =>
-      listarVinculos(
-        professorSelecionado ? { idProfessor: professorSelecionado } : undefined,
-      ),
+      listarVinculos(),
   })
 
   const professorAtual = professores?.find((p) => p.id === professorSelecionado)
@@ -102,23 +100,6 @@ export default function ProfessoresPage() {
         </CardContent>
       </Card>
 
-      {professorSelecionado && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Turmas vinculadas</CardTitle>
-            <CardDescription>
-              Lista de turmas vinculadas ao professor selecionado
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <DataTableVinculos
-              data={vinculos?.vinculos ?? []}
-              isLoading={carregandoVinculos}
-            />
-          </CardContent>
-        </Card>
-      )}
-
       {!professorSelecionado && (
         <Card>
           <CardContent className="py-12">
@@ -144,6 +125,21 @@ export default function ProfessoresPage() {
           onOpenChange={setDialogAberto}
         />
       )}
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Turmas vinculadas</CardTitle>
+          <CardDescription>
+            Lista de turmas vinculadas ao professor selecionado
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <DataTableVinculos
+            data={vinculos?.vinculos ?? []}
+            isLoading={carregandoVinculos}
+          />
+        </CardContent>
+      </Card>
     </div>
   )
 }
