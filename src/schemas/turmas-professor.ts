@@ -30,7 +30,6 @@ export interface MinhasTurmasResponse {
 }
 
 export interface TurmaProfessorVinculo {
-  id: string
   idTurma: string
   nomeTurma: string
   idProfessor: string
@@ -41,7 +40,6 @@ export interface TurmaProfessorVinculo {
 export interface VincularResponse {
   mensagem: string
   vinculo: {
-    id: string
     turma: {
       id: string
       nome: string
@@ -70,7 +68,6 @@ export interface AtualizarVinculosResponse {
     totalMantidos: number
     totalVinculos: number
     turmasAdicionadas: Array<{
-      id: string
       nome: string
     }>
   }

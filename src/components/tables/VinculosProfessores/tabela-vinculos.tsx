@@ -97,7 +97,7 @@ export function DataTableVinculos({ data, isLoading }: DataTableVinculosProps) {
             ) : table.getRowModel().rows?.length > 0 ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
-                  key={row.id}
+                  key={`${row.original.idTurma}-${row.original.idProfessor}`}
                   data-state={row.getIsSelected() && 'selected'}
                 >
                   {row.getVisibleCells().map((cell) => (
